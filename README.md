@@ -1,8 +1,8 @@
 <img src="https://raw.githubusercontent.com/bansakai/Mythos/Master/Resources/Logo.png" width="90" /><br>
 # Mythos
-**Designed with OLED in mind, Mythos is a reimagining of the Playnite theme [Mythic](https://github.com/darklinkpower/Mythic) built using [Dune](https://github.com/sakasakiking/Dune).**
+**Mythos is a reimagining of the Playnite theme [Mythic](https://github.com/darklinkpower/Mythic) built using [Dune](https://github.com/sakasakiking/Dune).**
 
-While primarily grounded in Fluent Design, it incorporates subtle Apple principles and draws inspiration from the Epic Games Launcher to deliver a clean, minimal, and visually balanced experience.
+While primarily grounded in Fluent UI, it incorporates subtle Apple design principles and draws inspiration from the Epic Games Launcher to deliver a clean and visually balanced experience. Mythos is best experienced on 4K OLED displays.
 <br>
 <br>![DownloadCount](https://img.shields.io/github/downloads/bansakai/Mythos/total.svg)<br><br>
 ![Screenshot](https://raw.githubusercontent.com/bansakai/Mythos/Master/Screenshots/4.png)
