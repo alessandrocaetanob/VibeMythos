@@ -49,9 +49,21 @@ I don't currently have plans to implement additional extension support.
 For the best experience, replicate the settings under the dropdown below.
 
 <details>
-<summary>Settings Used in Showcase</summary>
-  
-![Screenshot](https://github.com/bansakai/Mythos/blob/Master/Screenshots/5.png)
+<summary>Show Settings Used in Showcase</summary>
+<br>
+   
+## Appearance > General<br>
+<img src="https://raw.githubusercontent.com/bansakai/Mythos/Master/Screenshots/Settings_General.png" width="600" /><br><br>
+## Appearance > Advanced<br>
+<img src="https://raw.githubusercontent.com/bansakai/Mythos/Master/Screenshots/Settings_Advanced.png" width="600" /><br><br>
+## Appearance > Details View<br>
+<img src="https://raw.githubusercontent.com/bansakai/Mythos/Master/Screenshots/Settings_Details.png" width="600" /><br><br>
+## Appearance > Grid View<br>
+<img src="https://raw.githubusercontent.com/bansakai/Mythos/Master/Screenshots/Settings_Grid.png" width="600" /><br><br>
+## Appearance > Layout<br>
+<img src="https://raw.githubusercontent.com/bansakai/Mythos/Master/Screenshots/Settings_Layout.png" width="600" /><br><br>
+## Appearance > Top Panel<br>
+<img src="https://raw.githubusercontent.com/bansakai/Mythos/Master/Screenshots/SettingsTopPanel.png" width="600" /><br><br>
 </details>
 <br>
 
