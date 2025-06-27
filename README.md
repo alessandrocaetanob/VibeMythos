@@ -1,18 +1,22 @@
 # Mythos
-Designed with OLED in mind, Mythos is a reimagining of the Playnite theme [Mythic](https://github.com/darklinkpower/Mythic) built using [Dune](https://github.com/sakasakiking/Dune)
-<br><br>
+**Designed with OLED in mind, Mythos is a reimagining of the Playnite theme [Mythic](https://github.com/darklinkpower/Mythic) built using [Dune](https://github.com/sakasakiking/Dune).**
 
+While primarily grounded in Fluent Design, it incorporates subtle Apple principles and draws inspiration from the Epic Games Launcher to deliver a clean, minimal, and visually balanced experience.
+<br>
+
+![Screenshot](https://raw.githubusercontent.com/bansakai/Mythos/Master/Screenshots/4.png)
+<br>
 <details>
-<summary>Introduction</summary>
+<summary>No Rights Reserved</summary>
 <br>
 This theme was originally designed for personal use, so it primarily reflects my own preferences and use cases.
 <br><br>
 That said, it may lack full support for popular extensions I don’t personally use. I decided to release it publicly after receiving positive feedback in the Playnite Discord. Please note that I don't plan to actively maintain or update it much beyond the initial release, as it’s been running without issue on my system for over a year.
 <br><br>
 Feel free to modify or build upon it however you like. I don’t claim ownership over any third-party content included in this theme.
+<br>
 </details>
 
-![Screenshot](https://raw.githubusercontent.com/bansakai/Mythos/Master/Screenshots/4.png)
 
 ## Installation
 
@@ -28,9 +32,9 @@ Download the latest packaged `.pthm` theme file from [Releases](https://github.c
 
 4. **Game Synopsis:** The synopsis portion, below the trailer, simply displays the `Notes` metadata for a selected title. Unfortunately, this must be configured manually. I intended to write an automated solution for this, but it extended a bit beyond the scope of this project.
 
-5. **Sidebar:** Download [Filter Presets Quick Launcher](https://playnite.link/addons.html#FilterPresetsQuickLauncher_ef9df36c-24c2-418c-8468-eed95a09d950) and navigate to the plugin's settings page to set up sidebar filters. The icons used in my screenshots can be found in `Mythos\Icons\Sidebar`.
+5. **Sidebar:** Download [Filter Presets Quick Launcher](https://playnite.link/addons.html#FilterPresetsQuickLauncher_ef9df36c-24c2-418c-8468-eed95a09d950) and navigate to the plugin's settings page to set up sidebar filters. Ensure you have Sidebar Left enabled in `Main Menu > View > Sidebar.` The icons used in my screenshots can be found in `Mythos\Icons\Sidebar.`
 
-6. **Platform Icon:** These are the icons displayed on the right side of Details View. I've included a handful of commonly used platforms icons, but not nearly enough to cover all of them. If a specific platform does not have an icon, find a `.png` online, drop it in `Mythos\Icons\Labels`, and name the file accordingly.
+6. **Platform Icon:** If enabled, platform icons are displayed on the bottom right of Details View. I've included a handful of commonly used platform icons, but not nearly enough to cover all of them. If a specific platform does not have an icon, find a `.png` online, drop it in `Mythos\Icons\Labels,` and name the file accordingly.
 <br><br>
 ## Recommended Fonts
 
