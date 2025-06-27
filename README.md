@@ -1,4 +1,4 @@
-<img src="https://raw.githubusercontent.com/bansakai/Mythos/Master/Resources/Logo.png" width="100" /><br>
+<img src="https://raw.githubusercontent.com/bansakai/Mythos/Master/Resources/Logo.png" width="90" /><br>
 # Mythos
 **Designed with OLED in mind, Mythos is a reimagining of the Playnite theme [Mythic](https://github.com/darklinkpower/Mythic) built using [Dune](https://github.com/sakasakiking/Dune).**
 
