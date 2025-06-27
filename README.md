@@ -2,9 +2,9 @@
 # Mythos
 **Mythos is a reimagining of the Playnite theme [Mythic](https://github.com/darklinkpower/Mythic) built using [Dune](https://github.com/sakasakiking/Dune).**
 
-While primarily grounded in Fluent UI, it incorporates subtle Apple design principles and draws inspiration from the Epic Games Launcher to deliver a clean and visually balanced experience. Mythos is best experienced on 4K OLED displays.
-<br>
-<br>![DownloadCount](https://img.shields.io/github/downloads/bansakai/Mythos/total.svg)<br><br>
+While primarily grounded in Fluent UI, it incorporates subtle Apple design principles and draws inspiration from the Epic Games Launcher to deliver a clean and visually balanced experience.
+<br><br>
+![DownloadCount](https://img.shields.io/github/downloads/bansakai/Mythos/total?style=flat&label=Downloads)<br><br>
 ![Screenshot](https://raw.githubusercontent.com/bansakai/Mythos/Master/Screenshots/4.png)
 <br>
 <details>
@@ -24,19 +24,44 @@ Feel free to modify or build upon it however you like. I don’t claim ownership
 Download the latest packaged `.pthm` theme file from [Releases](https://github.com/bansakai/Mythos/releases/latest) and open it.
 <br><br>
 ## Theme Functions & Setup
-
-1. **Custom Play Button:** If you're someone like me who uses Playnite to open external launchers or applications, you can enter custom Play button text under the `Version` metadata of your game, and that will be shown instead. By default, the Play button is labeled "Launch."
-
-2. **Game Rating:** In Details View, Mythos will display the ESRB rating of the selected game underneath the logo. For age ratings to work, your Playnite rating configuration needs to mirror the following:
+### Custom Play Button
+If you're someone like me who uses Playnite to open external launchers or applications, you can enter custom Play button text under the `Version` metadata of your game, and that will be shown instead. By default, the Play button is labeled "Launch."
+### Age Ratings
+In Details View, Mythos will display the ESRB rating of the selected game underneath the logo. For age ratings to work, your Playnite rating configuration needs to mirror the following:
 
    `ESRB E10` `ESRB E` `ESRB T` `ESRB M` `ESRB AO` `ESRB RP` or `Application`
 
-4. **Game Synopsis:** The synopsis portion, below the trailer, simply displays the `Notes` metadata for a selected title. Unfortunately, this must be configured manually. I intended to write an automated solution for this, but it extended a bit beyond the scope of this project.
+### Game Summary
+The synopsis portion, below the trailer, simply displays the `Notes` metadata for a selected title. Unfortunately, this must be configured manually. I intended to write an automated solution for this, but it extended a bit beyond the scope of this project.
 
-5. **Sidebar:** Download [Filter Presets Quick Launcher](https://playnite.link/addons.html#FilterPresetsQuickLauncher_ef9df36c-24c2-418c-8468-eed95a09d950) and navigate to the plugin's settings page to set up sidebar filters. Ensure you have Sidebar Left enabled in `Main Menu > View > Sidebar.` The icons used in my screenshots can be found in `Mythos\Icons\Sidebar.`
+### Sidebar
+Download [Filter Presets Quick Launcher](https://playnite.link/addons.html#FilterPresetsQuickLauncher_ef9df36c-24c2-418c-8468-eed95a09d950) and navigate to the plugin's settings page to set up sidebar filters. Ensure you have Sidebar Left enabled in `Main Menu > View > Sidebar.` The icons used in my screenshots can be found in `Mythos\Icons\Sidebar.`
 
-6. **Platform Icon:** If enabled, platform icons are displayed on the bottom right of Details View. I've included a handful of commonly used platform icons, but not nearly enough to cover all of them. If a specific platform does not have an icon, find a `.png` online, drop it in `Mythos\Icons\Labels,` and name the file accordingly.
+### Platform Icons
+If enabled, platform icons are displayed on the bottom right of Details View. I've included a handful of commonly used platform icons, but not nearly enough to cover all of them. If a specific platform does not have an icon, find a `.png` online, drop it in `Mythos\Icons\Labels,` and name the file accordingly.
 <br><br>
+
+## Theme Settings
+![Static Badge](https://img.shields.io/badge/Highly%20Recommended-red?style=flat)<br>
+
+<details>
+<summary>Click to Expand - Settings Used in Showcase</summary>
+<br>
+   
+### Appearance → General<br>
+<img src="https://raw.githubusercontent.com/bansakai/Mythos/Master/Screenshots/Settings_General.png" width="600" /><br>
+### Appearance → Advanced<br>
+<img src="https://raw.githubusercontent.com/bansakai/Mythos/Master/Screenshots/Settings_Advanced.png" width="600" /><br>
+### Appearance → Details View<br>
+<img src="https://raw.githubusercontent.com/bansakai/Mythos/Master/Screenshots/Settings_Details.png" width="600" /><br>
+### Appearance → Grid View<br>
+<img src="https://raw.githubusercontent.com/bansakai/Mythos/Master/Screenshots/Settings_Grid.png" width="600" /><br>
+### Appearance → Layout<br>
+<img src="https://raw.githubusercontent.com/bansakai/Mythos/Master/Screenshots/Settings_Layout.png" width="600" /><br>
+### Appearance → Top Panel<br>
+<img src="https://raw.githubusercontent.com/bansakai/Mythos/Master/Screenshots/SettingsTopPanel.png" width="600" />
+</details><br>
+
 ## Recommended Fonts
 
 - **Application Font:** [Inter by Google](https://fonts.google.com/specimen/Inter).
@@ -50,28 +75,6 @@ Download the latest packaged `.pthm` theme file from [Releases](https://github.c
 
 I don't currently have plans to implement additional extension support.
 <br><br>
-
-## Recommended Settings <img src="https://cdn-icons-png.freepik.com/512/1828/1828640.png" width="20" />
-**For the best experience, replicate the settings under the dropdown below.**
-
-<details>
-<summary>Expand - Settings Used in Showcase</summary>
-<br>
-   
-## Appearance > General<br>
-<img src="https://raw.githubusercontent.com/bansakai/Mythos/Master/Screenshots/Settings_General.png" width="600" /><br><br>
-## Appearance > Advanced<br>
-<img src="https://raw.githubusercontent.com/bansakai/Mythos/Master/Screenshots/Settings_Advanced.png" width="600" /><br><br>
-## Appearance > Details View<br>
-<img src="https://raw.githubusercontent.com/bansakai/Mythos/Master/Screenshots/Settings_Details.png" width="600" /><br><br>
-## Appearance > Grid View<br>
-<img src="https://raw.githubusercontent.com/bansakai/Mythos/Master/Screenshots/Settings_Grid.png" width="600" /><br><br>
-## Appearance > Layout<br>
-<img src="https://raw.githubusercontent.com/bansakai/Mythos/Master/Screenshots/Settings_Layout.png" width="600" /><br><br>
-## Appearance > Top Panel<br>
-<img src="https://raw.githubusercontent.com/bansakai/Mythos/Master/Screenshots/SettingsTopPanel.png" width="600" />
-</details><br>
-
 
 ## Additional Resources
 - **Download:** [Age Rating Template](https://raw.githubusercontent.com/bansakai/Mythos/Master/Resources/Age%20Rating%20Template.ai) to create your own rating images.
