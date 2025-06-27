@@ -41,7 +41,7 @@ Download the latest packaged `.pthm` theme file from [Releases](https://github.c
 ## Recommended Extensions
 
 - **For Logos:** [Extra Metadata Loader](https://playnite.link/addons.html#ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429) extension.
-- **For Videos** [Extra Metadata Loader](https://playnite.link/addons.html#ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429) extension.
+- **For Videos:** [Extra Metadata Loader](https://playnite.link/addons.html#ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429) extension.
 
 I don't currently have plans to implement additional extension support.
 <br><br>
@@ -64,9 +64,13 @@ I don't currently have plans to implement additional extension support.
 ## Appearance > Layout<br>
 <img src="https://raw.githubusercontent.com/bansakai/Mythos/Master/Screenshots/Settings_Layout.png" width="600" /><br><br>
 ## Appearance > Top Panel<br>
-<img src="https://raw.githubusercontent.com/bansakai/Mythos/Master/Screenshots/SettingsTopPanel.png" width="600" /><br><br>
-</details>
-<br>
+<img src="https://raw.githubusercontent.com/bansakai/Mythos/Master/Screenshots/SettingsTopPanel.png" width="600" />
+</details><br>
+
+
+## Additional Resources
+- **Download:** [Age Rating Template](https://raw.githubusercontent.com/bansakai/Mythos/Master/Resources/Age%20Rating%20Template.ai) to create your own rating images.
+<br><br>
 
 ## Showcase
 
