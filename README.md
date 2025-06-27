@@ -45,11 +45,12 @@ Download the latest packaged `.pthm` theme file from [Releases](https://github.c
 
 I don't currently have plans to implement additional extension support.
 <br><br>
-## Recommended Settings
-For the best experience, replicate the settings under the dropdown below.
+
+## Recommended Settings <img src="https://cdn-icons-png.freepik.com/512/1828/1828640.png" width="20" />
+**For the best experience, replicate the settings under the dropdown below.**
 
 <details>
-<summary>Show Settings Used in Showcase</summary>
+<summary>Expand Settings Used in Showcase</summary>
 <br>
    
 ## Appearance > General<br>
