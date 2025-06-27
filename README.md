@@ -50,7 +50,7 @@ I don't currently have plans to implement additional extension support.
 **For the best experience, replicate the settings under the dropdown below.**
 
 <details>
-<summary>Expand Settings Used in Showcase</summary>
+<summary>Expand - Settings Used in Showcase</summary>
 <br>
    
 ## Appearance > General<br>
