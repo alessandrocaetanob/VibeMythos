@@ -7,7 +7,7 @@ SourceUrl: https://github.com/bansakai/Mythos
 ShortDescription: OLED Theme for Playnite Desktop Mode.
 Description: Designed with OLED in mind, Mythos is a reimagining of the Playnite theme Mythic built on top of Dune.
 Tags: ["Theme", "Clean"]
-IconUrl: https://raw.githubusercontent.com/sakasakiking/Dune/refs/heads/main/Source/Images/applogo.png
+IconUrl: https://raw.githubusercontent.com/bansakai/Mythos/Master/Resources/applogo.png
 Links:
     GitHub: https://github.com/bansakai/Mythos
     Issues Tracker: https://github.com/bansakai/Mythos/issues
