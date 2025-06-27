@@ -21,18 +21,17 @@ Fow now, it supports:
 
 ## Screenshots
 
-<details>
-<summary>Settings used in screenshots (Click to expand)</summary>
-
-
-![Screenshot](https://github.com/bansakai/Mythos/blob/Master/Screenshots/1.png)
-
-![Screenshot](https://github.com/bansakai/Mythos/blob/Master/Screenshots/2.png)
-
-![Screenshot](https://github.com/bansakai/Mythos/blob/Master/Screenshots/3.png)
-
-![Screenshot](https://github.com/bansakai/Mythos/blob/Master/Screenshots/4.png)
-
 ![Screenshot](https://github.com/bansakai/Mythos/blob/Master/Screenshots/5.png)
 
 ![Screenshot](https://github.com/bansakai/Mythos/blob/Master/Screenshots/6.png)
+
+![Screenshot](https://github.com/bansakai/Mythos/blob/Master/Screenshots/1.png)
+
+![Screenshot](https://github.com/bansakai/Mythos/blob/Master/Screenshots/3.png)
+
+![Screenshot](https://github.com/bansakai/Mythos/blob/Master/Screenshots/2.png)
+
+![Screenshot](https://github.com/bansakai/Mythos/blob/Master/Screenshots/4.png)
+
+<details>
+<summary>Settings used in screenshots (Click to expand)</summary>
