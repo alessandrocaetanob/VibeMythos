@@ -7,7 +7,7 @@ Designed with OLED in mind, Mythos is a reimagining of the Playnite theme [Mythi
 <br>
 This theme was originally designed for personal use, so it primarily reflects my own preferences and use cases.
 <br><br>
-That said, it may lack full support for popular extensions I don’t personally use. I decided to release it publicly after receiving positive feedback in the Playnite Discord. Please note that I don't plan to actively maintain or update it beyond the initial release, as it’s been running without issue on my system for over a year.
+That said, it may lack full support for popular extensions I don’t personally use. I decided to release it publicly after receiving positive feedback in the Playnite Discord. Please note that I don't plan to actively maintain or update it much beyond the initial release, as it’s been running without issue on my system for over a year.
 <br><br>
 Feel free to modify or build upon it however you like. I don’t claim ownership over any third-party content included in this theme.
 </details>
@@ -26,7 +26,7 @@ Download the latest packaged `.pthm` theme file from [Releases](https://github.c
 
    `ESRB E10` `ESRB E` `ESRB T` `ESRB M` `ESRB AO` `ESRB RP` or `Application`
 
-4. **Game Synopsis:** The synopsis portion (below the trailer) simply displays the `Notes` metadata for the selected title. Unfortunately, these must be configured manually. I intended to write an automated solution for this, but it extended a bit beyond the scope of this project.
+4. **Game Synopsis:** The synopsis portion, below the trailer, simply displays the `Notes` metadata for a selected title. Unfortunately, this must be configured manually. I intended to write an automated solution for this, but it extended a bit beyond the scope of this project.
 
 5. **Sidebar:** Download [Filter Presets Quick Launcher](https://playnite.link/addons.html#FilterPresetsQuickLauncher_ef9df36c-24c2-418c-8468-eed95a09d950) and navigate to the plugin's settings page to set up sidebar filters. The icons used in my screenshots can be found in `Mythos\Icons\Sidebar`.
 
