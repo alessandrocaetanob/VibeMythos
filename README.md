@@ -1,3 +1,5 @@
+![DownloadCount](https://img.shields.io/github/downloads/bansakai/Mythos/total.svg)
+
 # Mythos
 **Designed with OLED in mind, Mythos is a reimagining of the Playnite theme [Mythic](https://github.com/darklinkpower/Mythic) built using [Dune](https://github.com/sakasakiking/Dune).**
 
