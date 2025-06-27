@@ -23,7 +23,7 @@ Option C: Download from the Addons browser in Playnite.
 ## Required Fonts
 
 - **Application Font:** [Inter by Google](https://fonts.google.com/specimen/Inter).
-- **Monospaced Font:** [Modified Inter](https://fonts.google.com/specimen/Inter).
+- **Monospaced Font:** [Modified Inter](https://raw.githubusercontent.com/bansakai/Mythos/Master/Resources/Inter-Mod-Regular.ttf).
 - **Icon Font:** [Segoe UI and MDL2 Icon Fonts](https://aka.ms/SegoeFonts). `Not required for Windows 11.`
 
 ## Required Extensions
@@ -42,7 +42,7 @@ I don't currently have any plans to implement additional extension support.
 
 ## Screenshots
 
-![Screenshot](https://github.com/bansakai/Mythos/blob/Master/Screenshots/5.png)
+![Screenshot](https://raw.githubusercontent.com/bansakai/Mythos/Master/Screenshots/5.png)
 
 ![Screenshot](https://github.com/bansakai/Mythos/blob/Master/Screenshots/6.png)
 
