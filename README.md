@@ -9,7 +9,7 @@ While primarily grounded in Fluent Design, it incorporates subtle Apple principl
 ![Screenshot](https://raw.githubusercontent.com/bansakai/Mythos/Master/Screenshots/4.png)
 <br>
 <details>
-<summary>No Rights Reserved</summary>
+<summary>Disclaimer</summary>
 <br>
 This theme was originally designed for personal use, so it primarily reflects my own preferences and use cases.
 <br><br>
@@ -76,6 +76,7 @@ I don't currently have plans to implement additional extension support.
 
 ## Additional Resources
 - **Download:** [Age Rating Template](https://raw.githubusercontent.com/bansakai/Mythos/Master/Resources/Age%20Rating%20Template.ai) to create your own rating images.
+- **Download:** [MacOS Icon](https://raw.githubusercontent.com/bansakai/Mythos/Master/Resources/Age%20Rating%20Template.ai) for MyDockFinder users.
 <br><br>
 
 
