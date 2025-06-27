@@ -25,23 +25,14 @@ Fow now, it supports:
 <summary>Settings used in screenshots (Click to expand)</summary>
 
 
-![Screenshot](https://raw.githubusercontent.com/darklinkpower/Mythic/master/screenshots/settings_01.jpg)
+![Screenshot](https://raw.githubusercontent.com/bansakai/Mythic/master/screenshots/1.png)
 
-![Screenshot](https://raw.githubusercontent.com/darklinkpower/Mythic/master/screenshots/settings_02.jpg)
+![Screenshot](https://raw.githubusercontent.com/bansakai/Mythic/master/screenshots/2.png)
 
-![Screenshot](https://raw.githubusercontent.com/darklinkpower/Mythic/master/screenshots/settings_03.jpg)
+![Screenshot](https://raw.githubusercontent.com/bansakai/Mythic/master/screenshots/3.png)
 
-![Screenshot](https://raw.githubusercontent.com/darklinkpower/Mythic/master/screenshots/settings_04.jpg)
+![Screenshot](https://raw.githubusercontent.com/bansakai/Mythic/master/screenshots/4.png)
 
-![Screenshot](https://raw.githubusercontent.com/darklinkpower/Mythic/master/screenshots/settings_05.jpg)
+![Screenshot](https://raw.githubusercontent.com/bansakai/Mythic/master/screenshots/5.png)
 
-![Screenshot](https://raw.githubusercontent.com/darklinkpower/Mythic/master/screenshots/settings_06.jpg)
-</details>
-
-![Screenshot](https://raw.githubusercontent.com/darklinkpower/Mythic/master/screenshots/screenshot_01.webp)
-
-![Screenshot](https://raw.githubusercontent.com/darklinkpower/Mythic/master/screenshots/screenshot_02.webp)
-
-![Screenshot](https://raw.githubusercontent.com/darklinkpower/Mythic/master/screenshots/screenshot_03.webp)
-
-![Screenshot](https://raw.githubusercontent.com/darklinkpower/Mythic/master/screenshots/screenshot_04.webp)
+![Screenshot](https://raw.githubusercontent.com/bansakai/Mythic/master/screenshots/6.png)
