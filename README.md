@@ -1,6 +1,7 @@
 # Mythos
 Mythos is a reimagining of the original Playnite theme [Mythic](https://github.com/darklinkpower/Mythic) built on [Dune](https://github.com/sakasakiking/Dune).
 
+![Screenshot](https://raw.githubusercontent.com/bansakai/Mythos/Master/Screenshots/5.png)
 
 ## Installation
 
@@ -13,18 +14,18 @@ Download the latest packaged `.pthm` theme file from [Releases](https://github.c
 
    `ESRB E10` `ESRB E` `ESRB T` `ESRB M` `ESRB AO` `ESRB RP` or `Application`
 
-4. **Game Synopsis:** The synopsis portion, under the Video, simply displays your "Notes" metadata for that specific title. Unfortunately, these must be added manually. I intended to build an automated solution for this, but it extended a bit beyond the scope of this project.
+4. **Game Synopsis:** The synopsis portion (below the trailer) simply displays your `Notes` metadata for that specific title. Unfortunately, these must be added individually. I intended to write an automated solution for this, but it extended a bit beyond the scope of this project.
 
-5. **Sidebar:** Download [Filter Presets Quick Launcher](https://playnite.link/addons.html#FilterPresetsQuickLauncher_ef9df36c-24c2-418c-8468-eed95a09d950) and utilize the plugin's settings page to set up custom sidebar filters.
+5. **Sidebar:** Download [Filter Presets Quick Launcher](https://playnite.link/addons.html#FilterPresetsQuickLauncher_ef9df36c-24c2-418c-8468-eed95a09d950) and utilize the plugin's settings page to set up custom sidebar filters. The icons used in my screenshots can be found in `Mythos\Icons\Sidebar`
 
-## Required Fonts
+## Recommended Fonts
 
 - **Application Font:** [Inter by Google](https://fonts.google.com/specimen/Inter).
 - **Monospaced Font:** [Inter with Modified Line Height](https://raw.githubusercontent.com/bansakai/Mythos/Master/Resources/Inter-Mod-Regular.ttf).
-- **Icon Font:** [Microsoft's MDL2 Icon Fonts](https://aka.ms/SegoeFonts). `Not required for Windows 11.`
+- **Icon Font:** [Microsoft's MDL2 Icons](https://aka.ms/SegoeFonts). `Required for Windows 10`
 
-## Required Extensions
-For Mythos to function correctly, download the following:
+## Recommended Extensions
+For the best experience, please download the following:
 - **For Logos:** [Extra Metadata Loader](https://playnite.link/addons.html#ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429) extension.
 - **For Videos** [Extra Metadata Loader](https://playnite.link/addons.html#ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429) extension.
 
@@ -38,8 +39,6 @@ I don't currently have any plans to implement additional extension support.
 </details>
 
 ## Screenshots
-
-![Screenshot](https://raw.githubusercontent.com/bansakai/Mythos/Master/Screenshots/5.png)
 
 ![Screenshot](https://raw.githubusercontent.com/bansakai/Mythos/Master/Screenshots/6.png)
 
