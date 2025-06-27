@@ -42,11 +42,9 @@ I don't currently have any plans to implement additional extension support.
 
 ![Screenshot](https://raw.githubusercontent.com/bansakai/Mythos/Master/Screenshots/6.png)
 
-![Screenshot](https://raw.githubusercontent.com/bansakai/Mythos/Master/Screenshots/1.png)
-
-![Screenshot](https://raw.githubusercontent.com/bansakai/Mythos/Master/Screenshots/3.png)
-
 ![Screenshot](https://raw.githubusercontent.com/bansakai/Mythos/Master/Screenshots/2.png)
+
+![Screenshot](https://raw.githubusercontent.com/bansakai/Mythos/Master/Screenshots/1.png)
 
 ![Screenshot](https://raw.githubusercontent.com/bansakai/Mythos/Master/Screenshots/4.png)
 
