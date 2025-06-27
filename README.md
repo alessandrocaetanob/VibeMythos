@@ -76,6 +76,7 @@ I don't currently have plans to implement additional extension support.
 - **Download:** [Age Rating Template](https://raw.githubusercontent.com/bansakai/Mythos/Master/Resources/Age%20Rating%20Template.ai) to create your own rating images.
 <br><br>
 
+
 ## Showcase
 
 ![Screenshot](https://raw.githubusercontent.com/bansakai/Mythos/Master/Screenshots/5.png)
