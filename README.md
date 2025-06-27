@@ -3,28 +3,25 @@ Mythos is a reimagining of the original Playnite theme [Mythic](https://github.c
 
 
 ## Installation
-Option A: Click the `Download` button in the [addon database entry here](https://playnite.link/addons.html#Mythic_e231056c-4fa7-49d8-ad2b-0a6f1c589eb8) to start the install process.
 
-Option B: Download the latest packaged `pthm` theme file from the [Releases page](https://github.com/darklinkpower/Mythic/releases/latest) and open it.
-
-Option C: Download from the Addons browser in Playnite.
+Download the latest packaged `.pthm` theme file from [Releases](https://github.com/bansakai/Mythos/releases/latest) and open it.
 
 ## Theme Functions & Setup
-1. **Custom Play Button:** If you're someone who uses launchers or other applications with Playnite, you can enter custom text in the "Version" metadata and that will be shown, i.e., "Open Launcher."  By default, the Play button text will default to "Launch."
+1. **Custom Play Button:** If you're someone who uses Playnite to open external launchers or applications, you can enter custom Play button text in the `Version` metadata box of your game, and that will be shown. By default, the Play button displays "Launch."
 
-2. **Game Rating:** This displays the game's ESRB rating underneath it's logo - no PEGI, sorry Europeans. For these to work, your Playnite ratings must align with the following terminology:
+2. **Game Rating:** Mythos displays the selected game's ESRB rating underneath it's logo - no PEGI, sorry Europeans. For these to work, your Playnite ratings must align with the following terminology:
 
    `ESRB E10` `ESRB E` `ESRB T` `ESRB M` `ESRB AO` `ESRB RP` or `Application`
 
 4. **Game Synopsis:** The synopsis portion, under the Video, simply displays your "Notes" metadata for that specific title. Unfortunately, these must be added manually. I intended to build an automated solution for this, but it extended a bit beyond the scope of this project.
 
-5. **Sidebar:** Download [Filter Presets Quick Launcher](https://playnite.link/addons.html#FilterPresetsQuickLauncher_ef9df36c-24c2-418c-8468-eed95a09d950) and utilize the plugin's provided documentation to set up custom sidebar filters.
+5. **Sidebar:** Download [Filter Presets Quick Launcher](https://playnite.link/addons.html#FilterPresetsQuickLauncher_ef9df36c-24c2-418c-8468-eed95a09d950) and utilize the plugin's settings page to set up custom sidebar filters.
 
 ## Required Fonts
 
 - **Application Font:** [Inter by Google](https://fonts.google.com/specimen/Inter).
-- **Monospaced Font:** [Modified Inter](https://raw.githubusercontent.com/bansakai/Mythos/Master/Resources/Inter-Mod-Regular.ttf).
-- **Icon Font:** [Segoe UI and MDL2 Icon Fonts](https://aka.ms/SegoeFonts). `Not required for Windows 11.`
+- **Monospaced Font:** [Inter with Modified Line Height](https://raw.githubusercontent.com/bansakai/Mythos/Master/Resources/Inter-Mod-Regular.ttf).
+- **Icon Font:** [Microsoft's MDL2 Icon Fonts](https://aka.ms/SegoeFonts). `Not required for Windows 11.`
 
 ## Required Extensions
 For Mythos to function correctly, download the following:
@@ -35,7 +32,7 @@ I don't currently have any plans to implement additional extension support.
 
 ## Playnite Settings
 <details>
-<summary>Settings Used in Screenshots (Click to Expand)</summary>
+<summary>Settings used in Screenshots (Click to Expand)</summary>
   
 ![Screenshot](https://github.com/bansakai/Mythos/blob/Master/Screenshots/5.png)
 </details>
@@ -44,13 +41,13 @@ I don't currently have any plans to implement additional extension support.
 
 ![Screenshot](https://raw.githubusercontent.com/bansakai/Mythos/Master/Screenshots/5.png)
 
-![Screenshot](https://github.com/bansakai/Mythos/blob/Master/Screenshots/6.png)
+![Screenshot](https://raw.githubusercontent.com/bansakai/Mythos/Master/Screenshots/6.png)
 
-![Screenshot](https://github.com/bansakai/Mythos/blob/Master/Screenshots/1.png)
+![Screenshot](https://raw.githubusercontent.com/bansakai/Mythos/Master/Screenshots/1.png)
 
-![Screenshot](https://github.com/bansakai/Mythos/blob/Master/Screenshots/3.png)
+![Screenshot](https://raw.githubusercontent.com/bansakai/Mythos/Master/Screenshots/3.png)
 
-![Screenshot](https://github.com/bansakai/Mythos/blob/Master/Screenshots/2.png)
+![Screenshot](https://raw.githubusercontent.com/bansakai/Mythos/Master/Screenshots/2.png)
 
-![Screenshot](https://github.com/bansakai/Mythos/blob/Master/Screenshots/4.png)
+![Screenshot](https://raw.githubusercontent.com/bansakai/Mythos/Master/Screenshots/4.png)
 
