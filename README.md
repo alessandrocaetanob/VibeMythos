@@ -72,6 +72,7 @@ If enabled, platform icons are displayed on the bottom right of Details View. I'
 
 - **For Logos:** [Extra Metadata Loader](https://playnite.link/addons.html#ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429) extension.
 - **For Videos:** [Extra Metadata Loader](https://playnite.link/addons.html#ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429) extension.
+- **HowLongToBeat:** [How Long To Beat](https://playnite.link/addons.html#playnite-howlongtobeat-plugin) extension.
 
 I don't currently have plans to implement additional extension support.
 <br><br>
