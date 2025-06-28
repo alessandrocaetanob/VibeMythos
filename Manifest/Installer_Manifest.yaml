@@ -3,7 +3,16 @@ Packages:
   - Version: 1.2
     RequiredApiVersion: 2.8.0
     ReleaseDate: 2025-06-27
-    PackageUrl: https://github.com/bansakai/Mythos/releases/download/Latest/Mythos_9f42c1a7-6d8e-4b3f-b0a2-7e9c5d3f18a4_1_2.pthm
+    PackageUrl: https://github.com/bansakai/Mythos/releases/download/Initial/Mythos_9f42c1a7-6d8e-4b3f-b0a2-7e9c5d3f18a4_1_2.pthm
     Changelog: 
       - Added Support for Playnite 2.8.0
-      - Added Support for PEGI Age Ratings
+      - Added Support for PEGI Age Rating
+  - Version: 1.21
+    RequiredApiVersion: 2.8.0
+    ReleaseDate: 2025-06-28
+    PackageUrl: https://github.com/bansakai/Mythos/releases/download/1.21/Mythos_9f42c1a7-6d8e-4b3f-b0a2-7e9c5d3f18a4_1_21.pthm
+    Changelog: 
+      - Reworked Grid View to better resemble Details View
+      - Added Age Ratings to Grid View
+      - Redesigned HowLongToBeat Plugin
+      - Changed styling on links
