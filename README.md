@@ -27,9 +27,9 @@ Download the latest packaged `.pthm` theme file from [Releases](https://github.c
 ### Custom Play Button
 If you're someone like me who uses Playnite to open external launchers or applications, you can enter custom Play button text under the `Version` metadata of your game, and that will be shown instead. By default, the Play button is labeled "Launch."
 ### Age Ratings
-In Details View, Mythos will display the ESRB rating of the selected game underneath the logo. For age ratings to work, your Playnite rating configuration needs to mirror the following:
+In Details View, Mythos will display the ESRB or PEGI rating of the selected game underneath the logo. For age ratings to work, your Playnite rating configuration needs to mirror the following:
 
-   `ESRB E10` `ESRB E` `ESRB T` `ESRB M` `ESRB AO` `ESRB RP` or `Application`
+ North America:  `ESRB E10` `ESRB E` `ESRB T` `ESRB M` `ESRB AO` `ESRB RP`<br>Europe: `PEGI 3` `PEGI 7` `PEGI 12` `PEGI 16` `PEGI 18`
 
 ### Game Summary
 The synopsis portion, below the trailer, simply displays the `Notes` metadata for a selected title. Unfortunately, this must be configured manually. I intended to write an automated solution for this, but it extended a bit beyond the scope of this project.
