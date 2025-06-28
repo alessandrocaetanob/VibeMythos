@@ -21,7 +21,8 @@ Feel free to modify or build upon it however you like. I don’t claim ownership
 
 ## Installation
 
-Download the latest packaged `.pthm` theme file from [Releases](https://github.com/bansakai/Mythos/releases/latest) and open it.
+**A.** Download directly from [Playnite.](https://playnite.link/addons.html#Mythos_9f42c1a7-6d8e-4b3f-b0a2-7e9c5d3f18a4)<br>
+**B.** Download the latest packaged `.pthm` theme file from [Releases](https://github.com/bansakai/Mythos/releases/latest) and open it.
 <br><br>
 ## Theme Functions & Setup
 ### Custom Play Button
