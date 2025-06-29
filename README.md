@@ -12,17 +12,17 @@ While primarily grounded in Fluent UI, it incorporates subtle Apple design princ
 <br>
 This theme was originally designed for personal use, so it primarily reflects my own preferences and use cases.
 <br><br>
-That said, it may lack full support for popular extensions I don’t personally use. I decided to release it publicly after receiving positive feedback in the Playnite Discord. Please note that I don't plan to actively maintain or update it much beyond the initial release, as it’s been running without issue on my system for over a year.
+That said, it may lack full support for popular extensions I don’t personally use. Please note that I don't plan to actively maintain or update it long-term. For that reason, feel free to modify or build upon it however you like.
 <br><br>
-Feel free to modify or build upon it however you like. I don’t claim ownership over any third-party content included in this theme.
+I don’t claim ownership over any third-party content included in this theme.
 <br>
 </details>
 
 
 ## Installation
 
-**A.** Download directly from [Playnite.](https://playnite.link/addons.html#Mythos_9f42c1a7-6d8e-4b3f-b0a2-7e9c5d3f18a4)<br>
-**B.** Download the latest packaged `.pthm` theme file from [Releases](https://github.com/bansakai/Mythos/releases/latest) and open it.
+A. Download directly from [Playnite.](https://playnite.link/addons.html#Mythos_9f42c1a7-6d8e-4b3f-b0a2-7e9c5d3f18a4)<br><br>
+B. Download the latest packaged `.pthm` theme file from [Releases](https://github.com/bansakai/Mythos/releases/latest) and open it.
 <br><br>
 ## Theme Functions & Setup
 ### Custom Play Button
@@ -74,6 +74,7 @@ If enabled, platform icons are displayed on the bottom right of Details View. I'
 - **For Logos:** [Extra Metadata Loader](https://playnite.link/addons.html#ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429) extension.
 - **For Videos:** [Extra Metadata Loader](https://playnite.link/addons.html#ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429) extension.
 - **HowLongToBeat:** [How Long To Beat](https://playnite.link/addons.html#playnite-howlongtobeat-plugin) extension.
+- **Achievements:** [SuccessStory](https://playnite.link/addons.html#playnite-successstory-plugin) extension support is pretty half-baked.
 
 I don't currently have plans to implement additional extension support.
 <br><br>
