@@ -25,6 +25,8 @@ A. Download directly from [Playnite.](https://playnite.link/addons.html#Mythos_9
 B. Download the latest packaged `.pthm` theme file from [Releases](https://github.com/bansakai/Mythos/releases/latest) and open it.
 <br><br>
 ## Theme Functions & Setup
+### Cover Images
+By default, cover images aren't enabled. Head to `Appearance > Details View` to enable Cover images. Covers will replace logos, specifically in Details View.
 ### Custom Play Button
 If you're someone like me who uses Playnite to open external launchers or applications, you can enter custom Play button text under the `Version` metadata of your game, and that will be shown instead. By default, the Play button is labeled "Launch."
 ### Age Ratings
