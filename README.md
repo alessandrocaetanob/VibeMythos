@@ -80,9 +80,10 @@ I don't currently have plans to implement additional extension support.
 <br><br>
 
 ## Additional Resources
-- **Download:** [Age Rating Template](https://raw.githubusercontent.com/bansakai/Mythos/Master/Resources/Age%20Rating%20Template.ai) to create your own rating images.
+- **Download:** [Mythos MacOS Icon](https://raw.githubusercontent.com/bansakai/Mythos/Master/Resources/Mythos.png) for MyDockFinder users.
 - **Download:** [Playnite MacOS Icon](https://raw.githubusercontent.com/bansakai/Mythos/Master/Resources/Playnite.png) for MyDockFinder users.
 - **Download:** [Playnite Fullscreen MacOS Icon](https://raw.githubusercontent.com/bansakai/Mythos/Master/Resources/Playnite%20FS.png) for MyDockFinder users.
+- **Download:** [Age Rating Template](https://raw.githubusercontent.com/bansakai/Mythos/Master/Resources/Age%20Rating%20Template.ai) to create your own rating images.
 <br><br>
 
 
