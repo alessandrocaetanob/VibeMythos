@@ -31,4 +31,5 @@ Packages:
       - Replaced main menu image for when sidebar is disabled
       - Loading glyph now spins in top right
       - Replaced various glyphs with new ones
+      - Removed pegi.com text from PEGI banners
       - Additional minor tweaks to layout and spacing
