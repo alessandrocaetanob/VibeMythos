@@ -40,3 +40,11 @@ Packages:
     Changelog: 
       - Added folder for 1080p users to replace all borders with thicker ones
       - Added support for Cover Images in Details view [Enable in Settings]
+  - Version: 1.25
+    RequiredApiVersion: 2.8.0
+    ReleaseDate: 2025-07-21
+    PackageUrl: https://github.com/bansakai/Mythos/releases/download/1.25/Mythos_9f42c1a7-6d8e-4b3f-b0a2-7e9c5d3f18a4_1_25.pthm
+    Changelog: 
+      - Enabling 'Background Image' will now replace the video banner with the game's background image
+      - Fixed 'Time Played' missing in Details View
+      - Right side panel is now sticky and no longer scrolls alongside description content
