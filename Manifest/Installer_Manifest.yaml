@@ -48,3 +48,13 @@ Packages:
       - Enabling 'Background Image' will now replace the video banner with the game's background image
       - Fixed 'Time Played' missing in Details View
       - Right side panel is now sticky and no longer scrolls alongside description content
+  - Version: 1.26
+    RequiredApiVersion: 2.8.0
+    ReleaseDate: 2025-07-23
+    PackageUrl: https://github.com/bansakai/Mythos/releases/download/1.26/Mythos_9f42c1a7-6d8e-4b3f-b0a2-7e9c5d3f18a4_1_26.pthm
+    Changelog: 
+      - Video player now displays custom playback and mute buttons on hover
+      - Video player now defaults to sound-on if enabled in addon settings
+      - Trailer banner border no longer overlaps video by 1px
+      - Cleaned up background image logic
+      - Background images can be used alongside videos, although not recommended
