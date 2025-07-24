@@ -7,17 +7,10 @@ While primarily grounded in Fluent UI, it incorporates subtle Apple design princ
 ![DownloadCount](https://img.shields.io/github/downloads/bansakai/Mythos/total?style=flat&label=Downloads)<br><br>
 ![Screenshot](https://raw.githubusercontent.com/bansakai/Mythos/Master/Screenshots/4.png)
 <br>
-<details>
-<summary>Disclaimer</summary>
-<br>
-This theme was originally designed for personal use, so it primarily reflects my own preferences and use cases.
-<br><br>
-That said, it may lack full support for popular extensions I don’t personally use. Please note that I don't plan to actively maintain or update it long-term. For that reason, feel free to modify or build upon it however you like.
-<br><br>
-I don’t claim ownership over any third-party content included in this theme.
-<br>
-</details>
 
+<a href='https://ko-fi.com/bansakai' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://cdn.ko-fi.com/cdn/kofi1.png?v=2' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
+
+<br>
 
 ## Installation
 
