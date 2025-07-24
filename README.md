@@ -74,7 +74,7 @@ I plan to eventually implement additional extension support.
 - **For Logos:** [Extra Metadata Loader](https://playnite.link/addons.html#ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429) extension.
 - **For Videos:** [Extra Metadata Loader](https://playnite.link/addons.html#ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429) extension.
 - **HowLongToBeat:** [How Long To Beat](https://playnite.link/addons.html#playnite-howlongtobeat-plugin) extension.
-- **Achievements:** [SuccessStory](https://playnite.link/addons.html#playnite-successstory-plugin) extension support is pretty half-baked.
+- **Achievements:** [SuccessStory](https://playnite.link/addons.html#playnite-successstory-plugin) extension.
 <br><br>
 
 ## Additional Resources
