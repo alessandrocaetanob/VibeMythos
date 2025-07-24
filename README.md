@@ -86,6 +86,7 @@ I plan to eventually implement additional extension support.
 
 
 ## Showcase
+![Static Badge](https://img.shields.io/badge/Based%20on%20Initial%20Release-grey?style=flat)<br>
 
 ![Screenshot](https://raw.githubusercontent.com/bansakai/Mythos/Master/Screenshots/5.png)
 
