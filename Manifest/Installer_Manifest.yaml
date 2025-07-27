@@ -69,3 +69,22 @@ Packages:
       - Changed borders on playback buttons for better contrast
       - Changed border around video banner for better contrast
       - Removed residual test files
+  - Version: 1.28
+    RequiredApiVersion: 2.8.0
+    ReleaseDate: 2025-07-27
+    PackageUrl: https://github.com/bansakai/Mythos/releases/download/1.28/Mythos_9f42c1a7-6d8e-4b3f-b0a2-7e9c5d3f18a4_1_28.pthm
+    Changelog: 
+      - Support for two SuccessStory views: **Achievement List** & **Compact List**
+      - More visual tweaks to SuccessStory
+      - Redesigned and re-wrote link panels
+      - Social Links have been moved to the bottom of left column
+      - Social Links rely on default IGDB and IGN metadata titles
+      - Steam Links have been moved to the top of left column
+      - Steam Links rely on default 'Official Store' metadata titles
+      - Steam Links also rely on the existence of a 'Community Hub' link
+      - Descriptions now auto-truncate with a 'Read More' and 'Read Less' button
+      - Minor tweaks to borders and transparency values
+      - Reduced Synopsis spacing for those not using notes metadata
+      - Icon support for a majority of default link names
+      - Modified min and max width of left column
+      - Note: Use the Link Utilities plugin to convert Steam web links to client links
