@@ -88,3 +88,13 @@ Packages:
       - Icon support for a majority of default link names
       - Modified min and max width of left column
       - Note, Use the Link Utilities plugin to convert Steam web links to client links
+  - Version: 1.29
+    RequiredApiVersion: 2.8.0
+    ReleaseDate: 2025-07-29
+    PackageUrl: https://github.com/bansakai/Mythos/releases/download/1.29/Mythos_9f42c1a7-6d8e-4b3f-b0a2-7e9c5d3f18a4_1_29.pthm
+    Changelog: 
+      - Background Image missing bug seems to be fixed
+      - Cleaned up a few Social Link icon images to be pixel-perfect
+      - Added a fallback icon for cases when only Steam Links are present
+      - Re-added support for Game Scores
+      - Tweaked SuccessStory button so it's more distinguishable below Genre and Feature tags
