@@ -105,3 +105,15 @@ Packages:
     Changelog: 
       - Smallest update ever, sorry
       - Updated link icons to match new IGDB naming scheme
+  - Version: 1.31
+    RequiredApiVersion: 2.8.0
+    ReleaseDate: 2025-08-03
+    PackageUrl: https://github.com/bansakai/Mythos/releases/download/1.31/Mythos_9f42c1a7-6d8e-4b3f-b0a2-7e9c5d3f18a4_1_31.pthm
+    Changelog: 
+      - Added icon support for Nexus Mods links
+      - Minor tweaks to other Social Link icons
+      - Notification alert box icon is now a bell
+      - Notification alert box is now generally less intrusive
+      - Notification panel recedes further, in cases where there are many notifications
+      - Changed hover background of system buttons for improved contrast
+      - Additional minor tweaks
