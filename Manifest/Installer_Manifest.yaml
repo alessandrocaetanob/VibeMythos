@@ -117,3 +117,12 @@ Packages:
       - Notification panel recedes further, in cases where there are many notifications
       - Changed hover background of system buttons for improved contrast
       - Additional minor tweaks
+  - Version: 1.32
+    RequiredApiVersion: 2.8.0
+    ReleaseDate: 2025-08-19
+    PackageUrl: https://github.com/bansakai/Mythos/releases/download/1.32/Mythos_9f42c1a7-6d8e-4b3f-b0a2-7e9c5d3f18a4_1_32.pthm
+    Changelog: 
+      - Reverted static right column so that it now scrolls with main content again
+      - Reverted left column cut-off bug by re-working video banner
+      - Fixed dynamic scaling of video/image banner
+      - Removed gradient overlay on video hover as it interfered with scaling
