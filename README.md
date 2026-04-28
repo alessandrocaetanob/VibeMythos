@@ -71,6 +71,7 @@ I plan to eventually implement additional extension support.
 <br><br>
 
 ## Additional Resources
+- **Download:** [Playnite SVG Logo](https://raw.githubusercontent.com/bansakai/Mythos/Master/Resources/PlayniteLogo.svg) as requested by Gu57avo. Right-click "Save Link As..."
 - **Download:** [Mythos MacOS Icon](https://raw.githubusercontent.com/bansakai/Mythos/Master/Resources/Mythos.png) for MyDockFinder users.
 - **Download:** [Playnite MacOS Icon](https://raw.githubusercontent.com/bansakai/Mythos/Master/Resources/Playnite.png) for MyDockFinder users.
 - **Download:** [Playnite Fullscreen MacOS Icon](https://raw.githubusercontent.com/bansakai/Mythos/Master/Resources/Playnite%20FS.png) for MyDockFinder users.
