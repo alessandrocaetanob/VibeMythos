@@ -126,3 +126,17 @@ Packages:
       - Reverted left column cut-off bug by re-working video banner
       - Fixed dynamic scaling of video/image banner
       - Removed gradient overlay on video hover as it interfered with scaling
+  - Version: 1.33
+    RequiredApiVersion: 2.8.0
+    ReleaseDate: 2026-04-29
+    PackageUrl: https://github.com/bansakai/Mythos/releases/download/1.33/Mythos_9f42c1a7-6d8e-4b3f-b0a2-7e9c5d3f18a4_1_33.pthm
+    Changelog: 
+      - Added completion status to details
+      - Improved English and Russian localization - Credit to holyCherryPerry
+      - Grid view icon improvements - Credit to holyCherryPerry
+      - Added support for additional link icons like SteamDB, RAWG, HowLongToBeat, and ProtonDB
+      - Fixed black corners around videos by removing the black video placeholder
+      - Temporarily fixed videos exceeding their borders by removing my custom controls - this is an EMDL issue
+      - Redesigned and added additional platform icons - PS4 icon requested by Silver-Skyy
+      - Returned the close button to Grid View - rquested by emotran
+      - Sorry for the lack of updates, I've not had a PC for about 6 months. More updates with fixes, platform icons and link icons to come!
