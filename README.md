@@ -4,7 +4,7 @@
 
 While primarily grounded in Fluent UI, it incorporates subtle Apple design principles and draws inspiration from the Epic Games Launcher to deliver a clean and visually balanced experience.
 <br><br>
-![DownloadCount](https://img.shields.io/github/downloads/bansakai/Mythos/total?style=flat&label=Downloads)<br><br>
+![DownloadCount](https://img.shields.io/github/downloads/bansakai/Mythos/total)<br><br>
 ![Screenshot](https://raw.githubusercontent.com/bansakai/Mythos/Master/Screenshots/4.png)
 <br>
 
