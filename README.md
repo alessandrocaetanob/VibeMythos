@@ -7,9 +7,6 @@ While primarily grounded in Fluent UI, it incorporates subtle Apple design princ
 ![DownloadCount](https://img.shields.io/github/downloads/bansakai/Mythos/total)<br><br>
 ![Screenshot](https://raw.githubusercontent.com/bansakai/Mythos/Master/Screenshots/4.png)
 <br>
-
-<a href='https://ko-fi.com/bansakai' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://cdn.ko-fi.com/cdn/kofi1.png?v=2' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
-
 <br>
 
 ## Installation
@@ -33,6 +30,9 @@ The synopsis portion, below the trailer, simply displays the `Notes` metadata fo
 If enabled, platform icons are displayed on the bottom right of Details View. I've included a handful of commonly used platform icons, but not nearly enough to cover all of them. If a specific platform does not have an icon, find a `.png` online, drop it in `Mythos\Icons\Labels,` and name the file accordingly.
 ### Sidebar
 Download [Filter Presets Quick Launcher](https://playnite.link/addons.html#FilterPresetsQuickLauncher_ef9df36c-24c2-418c-8468-eed95a09d950) and navigate to the plugin's settings page to set up sidebar filters. Ensure you have Sidebar Left enabled in `Main Menu > View > Sidebar.` The icons used in my screenshots can be found in `Mythos\Icons\Sidebar.`
+### Steam Links Bar
+Mythos introduces what I'm calling the "Steam Links Bar," which elegantly displays all Steam client links directly below the game's video banner. To use this feature correctly, your Steam links should be imported before all other links. Make sure to use the **Official Store** metadata option to import these easily.<br><br> Alternatively, ensure you have a **Steam Community Hub** link and move it up to one of the first six slots. Mythos will auto-detect Steam Links from that point. From there, you can convert all Steam web links to client links using [Link Utilities.](https://playnite.link/addons.html#LinkUtilties_f692b4bb-238d-4080-ae76-4aaefde6f7a1) <br><br>
+![Steam Links Bar](https://github.com/bansakai/Mythos/blob/Master/Screenshots/steam_link_bar.png)
 <br><br>
 
 ## Theme Settings
