@@ -140,3 +140,15 @@ Packages:
       - Redesigned and added additional platform icons - PS4 icon requested by Silver-Skyy
       - Returned the close button to Grid View - requested by emotran
       - Sorry for the lack of updates, I've not had a PC for about 6 months. More updates with fixes, platform icons and link icons to come!
+  - Version: 1.34
+    RequiredApiVersion: 2.9.0
+    ReleaseDate: 2026-04-29
+    PackageUrl: https://github.com/bansakai/Mythos/releases/download/1.34/Mythos_9f42c1a7-6d8e-4b3f-b0a2-7e9c5d3f18a4_1_34.pthm
+    Changelog: 
+      - Theme API version increase
+      - Added a few more English localizations and tweaks to terminology
+      - Fixed details page text flow direction after the last attempted Tags fix
+      - Reworked Tags section entirely
+      - Commented out Link list from Grid View in favor of Tags
+      - Commented out Add Link button
+      - Reordered Completion Status to set above other details
