@@ -152,3 +152,21 @@ Packages:
       - Commented out Link list from Grid View in favor of Tags
       - Commented out Add Link button
       - Reordered Completion Status to set above other details
+  - Version: 1.35
+    RequiredApiVersion: 2.9.0
+    ReleaseDate: 2026-04-30
+    PackageUrl: https://github.com/bansakai/Mythos/releases/download/1.35/Mythos_9f42c1a7-6d8e-4b3f-b0a2-7e9c5d3f18a4_1_35.pthm
+    Changelog: 
+      - Finally added rounded corners to Grid View cover images
+      - Prettied up selection borders in Grid View to complement the corner radii
+      - Prettied up the Favorites badge in Grid View to complement the corner radii
+      - Cleaned up various aspects of Grid View rendering
+      - Minor improvements to button alignment and color contrast
+      - Reworked the alignment of the game list in Details View
+      - Further improvements to video display and black fallback image placeholder
+      - Disabling Age Rating now works correctly via Playnite settings
+      - Disabling Time Played now works correctly via Playnite settings
+      - Added more dynamic references to text that can be updated via localization
+      - Re-instated Library metadata, no clue what happened there
+      - Disabled remnants of "separators between panels" for those using the default settings
+      - Additional recommendation, Turn OFF "Draw Grid Item Background" in Grid View settings
