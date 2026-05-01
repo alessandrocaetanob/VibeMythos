@@ -1,10 +1,15 @@
 <img src="https://raw.githubusercontent.com/bansakai/Mythos/Master/Resources/Logo.png" width="90" /><br>
 # Mythos
+![DownloadCount](https://img.shields.io/github/downloads/bansakai/Mythos/total)<br><br>
 **Mythos is a reimagining of the Playnite theme [Mythic](https://github.com/darklinkpower/Mythic) built using [Dune](https://github.com/sakasakiking/Dune).**
 
 While primarily grounded in Fluent UI, it incorporates subtle Apple design principles and draws inspiration from the Epic Games Launcher to deliver a clean and visually balanced experience.
+
+#### Attribution:
+[sakasakiking](https://github.com/sakasakiking) - Creator of the Dune theme, whose work served as the visual foundation and inspiration for Mythos.<br>
+[darklinkpower](https://github.com/darklinkpower) - Legend behind the original Mythic theme, without which this project wouldn't exist.<br>
+[holyCherryPerry](https://github.com/holyCherryPerry) - Valued contributor to various fixes and refinements.<br>
 <br><br>
-![DownloadCount](https://img.shields.io/github/downloads/bansakai/Mythos/total)<br><br>
 ![Screenshot](https://raw.githubusercontent.com/bansakai/Mythos/Master/Screenshots/4.png)
 <br>
 <br>
