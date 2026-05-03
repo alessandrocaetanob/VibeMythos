@@ -44,7 +44,7 @@ Mythos introduces what I'm calling the "Steam Links Bar," which elegantly displa
 ![Static Badge](https://img.shields.io/badge/Highly%20Recommended-red?style=flat)<br>
 
 <details>
-<summary>Click to Expand - Settings Used in Showcase</summary>
+<summary>Click to view settings used in the showcase:</summary>
 <br>
    
 ### Appearance → General<br>
@@ -61,20 +61,21 @@ Mythos introduces what I'm calling the "Steam Links Bar," which elegantly displa
 <img src="https://raw.githubusercontent.com/bansakai/Mythos/Master/Screenshots/SettingsTopPanel.png" width="600" />
 </details><br>
 
+## Required Extensions
+- **Display Logos:** [ExtraMetadataLoader](https://playnite.link/addons.html#ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429) extension.
+- **Display Videos:** [ExtraMetadataLoader](https://playnite.link/addons.html#ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429) extension.
+<br><br>
+## Supported Extensions
+- **Change Theme Settings:** [ThemeModifier](https://playnite.link/addons.html#playnite-thememodifier-plugin) extension. ![New Badge](https://img.shields.io/badge/soon-0379ff)
+- **Additional Theme Settings:** [ThemeExtras](https://playnite.link/addons.html#felixkmh_Extras_Plugin) extension. ![New Badge](https://img.shields.io/badge/soon-0379ff)
+- **HowLongToBeat Support:** [HowLongToBeat](https://playnite.link/addons.html#playnite-howlongtobeat-plugin) extension.
+- **Achievements Support:** [SuccessStory](https://playnite.link/addons.html#playnite-successstory-plugin) extension.
+<br><br>
 ## Recommended Fonts
-
 - **Application Font:** [Inter by Google](https://fonts.google.com/specimen/Inter).
 - **Monospaced Font:** [Inter with Modified Line Height](https://raw.githubusercontent.com/bansakai/Mythos/Master/Resources/Inter-Mod-Regular.ttf).
 - **Icon Font:** [Microsoft's MDL2 Icons](https://aka.ms/SegoeFonts). `Required for Windows 10`
 <br><br>
-## Recommended Extensions
-I plan to eventually implement additional extension support.
-- **For Logos:** [Extra Metadata Loader](https://playnite.link/addons.html#ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429) extension.
-- **For Videos:** [Extra Metadata Loader](https://playnite.link/addons.html#ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429) extension.
-- **HowLongToBeat:** [How Long To Beat](https://playnite.link/addons.html#playnite-howlongtobeat-plugin) extension.
-- **Achievements:** [SuccessStory](https://playnite.link/addons.html#playnite-successstory-plugin) extension.
-<br><br>
-
 ## Additional Resources
 - **Download:** [Playnite SVG Logo](https://raw.githubusercontent.com/bansakai/Mythos/Master/Resources/PlayniteLogo.svg) as requested by Gu57avo. Right-click "Save Link As..."
 - **Download:** [Mythos MacOS Icon](https://raw.githubusercontent.com/bansakai/Mythos/Master/Resources/Mythos.png) for MyDockFinder users.
