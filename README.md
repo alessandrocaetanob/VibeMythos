@@ -64,8 +64,8 @@ Mythos introduces what I'm calling the "Steam Links Bar," which elegantly displa
 - **Display Videos:** [ExtraMetadataLoader](https://playnite.link/addons.html#ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429) extension.
 <br><br>
 ## Supported Extensions
-- **Change Theme Settings:** [ThemeModifier](https://playnite.link/addons.html#playnite-thememodifier-plugin) extension. ![New Badge](https://img.shields.io/badge/soon-0379ff)
-- **Additional Theme Settings:** [ThemeExtras](https://playnite.link/addons.html#felixkmh_Extras_Plugin) extension. ![New Badge](https://img.shields.io/badge/soon-0379ff)
+- **Change Theme Settings:** [ThemeModifier](https://playnite.link/addons.html#playnite-thememodifier-plugin) extension. ![New Badge](https://img.shields.io/badge/2.0-0379ff)
+- **Additional Theme Features:** [ThemeExtras](https://playnite.link/addons.html#felixkmh_Extras_Plugin) extension. ![New Badge](https://img.shields.io/badge/2.0-0379ff)
 - **HowLongToBeat Support:** [HowLongToBeat](https://playnite.link/addons.html#playnite-howlongtobeat-plugin) extension.
 - **Achievements Support:** [SuccessStory](https://playnite.link/addons.html#playnite-successstory-plugin) extension.
 <br><br>
