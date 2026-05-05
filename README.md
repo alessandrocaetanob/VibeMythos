@@ -1,13 +1,11 @@
 <img src="https://raw.githubusercontent.com/bansakai/Mythos/Master/Resources/Logo.png" width="90" /><br>
 # Mythos
-### A Fluent UI theme, elegantly crafted for 4K OLED.
-![DownloadCount](https://img.shields.io/github/downloads/bansakai/Mythos/total)<br><br>
 
-#### Credit:
+#### Credits:
 [sakasakiking](https://github.com/sakasakiking) - Creator of the Dune theme, whose work served as the visual foundation and inspiration for Mythos.<br>
 [darklinkpower](https://github.com/darklinkpower) - Legend behind the original Mythic theme, without which this project wouldn't exist.<br>
-[holyCherryPerry](https://github.com/holyCherryPerry) - Valued contributor to various fixes and refinements.<br>
-<br><br>
+[holyCherryPerry](https://github.com/holyCherryPerry) - Valued contributor to various fixes and refinements.<br><br>
+![DownloadCount](https://img.shields.io/github/downloads/bansakai/Mythos/total)<br><br>
 ![Screenshot](https://raw.githubusercontent.com/bansakai/Mythos/Master/Screenshots/4.png)
 <br>
 <br>
@@ -38,11 +36,33 @@ Mythos introduces what I'm calling the "Steam Links Bar," which elegantly displa
 ![Steam Links Bar](https://github.com/bansakai/Mythos/blob/Master/Screenshots/steam_link_bar.png)
 <br><br>
 
-## Theme Settings
+## Required Extensions
+- **Display Logos:** [ExtraMetadataLoader](https://playnite.link/addons.html#ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429) extension.
+- **Display Videos:** [ExtraMetadataLoader](https://playnite.link/addons.html#ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429) extension.
+<br><br>
+## Supported Extensions
+- **Customize Theme:** [ThemeModifier](https://playnite.link/addons.html#playnite-thememodifier-plugin) extension. ![New Badge](https://img.shields.io/badge/2.0-0379ff)
+- **Additional Theme Features:** [ThemeExtras](https://playnite.link/addons.html#felixkmh_Extras_Plugin) extension. ![New Badge](https://img.shields.io/badge/2.0-0379ff)
+- **HowLongToBeat Support:** [HowLongToBeat](https://playnite.link/addons.html#playnite-howlongtobeat-plugin) extension.
+- **Achievements Support:** [SuccessStory](https://playnite.link/addons.html#playnite-successstory-plugin) extension.
+<br><br>
+## Recommended Fonts
+- **Application Font:** [Inter by Google](https://fonts.google.com/specimen/Inter).
+- **Monospaced Font:** [Inter with Modifications for Mythos](https://raw.githubusercontent.com/bansakai/Mythos/Master/Resources/Inter-Mod-Regular.ttf).
+- **Icon Font:** [Microsoft's MDL2 Icons](https://aka.ms/SegoeFonts). `Required for Windows 10`
+<br><br>
+## Additional Resources
+- **Download:** [Playnite Logo Concept](https://raw.githubusercontent.com/bansakai/Mythos/Master/Resources/PlayniteLogo.svg) used in Mythos.
+- **Download:** [Mythos MacOS Icon](https://raw.githubusercontent.com/bansakai/Mythos/Master/Resources/Mythos.png) for MyDockFinder users.
+- **Download:** [Playnite MacOS Icon](https://raw.githubusercontent.com/bansakai/Mythos/Master/Resources/Playnite.png) for MyDockFinder users.
+- **Download:** [Playnite Fullscreen MacOS Icon](https://raw.githubusercontent.com/bansakai/Mythos/Master/Resources/Playnite%20FS.png) for MyDockFinder users.
+- **Download:** [Age Rating Template](https://raw.githubusercontent.com/bansakai/Mythos/Master/Resources/Age%20Rating%20Template.ai) to create your own rating images.
+<br><br>
+## Playnite Settings
 ![Static Badge](https://img.shields.io/badge/Highly%20Recommended-red?style=flat)<br>
 
 <details>
-<summary>Click to view settings used in the showcase:</summary>
+<summary>Expand - All settings used in the showcase:</summary>
 <br>
    
 ### Appearance → General<br>
@@ -59,33 +79,8 @@ Mythos introduces what I'm calling the "Steam Links Bar," which elegantly displa
 <img src="https://raw.githubusercontent.com/bansakai/Mythos/Master/Screenshots/SettingsTopPanel.png" width="600" />
 </details><br>
 
-## Required Extensions
-- **Display Logos:** [ExtraMetadataLoader](https://playnite.link/addons.html#ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429) extension.
-- **Display Videos:** [ExtraMetadataLoader](https://playnite.link/addons.html#ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429) extension.
-<br><br>
-## Supported Extensions
-- **Change Theme Settings:** [ThemeModifier](https://playnite.link/addons.html#playnite-thememodifier-plugin) extension. ![New Badge](https://img.shields.io/badge/2.0-0379ff)
-- **Additional Theme Features:** [ThemeExtras](https://playnite.link/addons.html#felixkmh_Extras_Plugin) extension. ![New Badge](https://img.shields.io/badge/2.0-0379ff)
-- **HowLongToBeat Support:** [HowLongToBeat](https://playnite.link/addons.html#playnite-howlongtobeat-plugin) extension.
-- **Achievements Support:** [SuccessStory](https://playnite.link/addons.html#playnite-successstory-plugin) extension.
-<br><br>
-## Recommended Fonts
-- **Application Font:** [Inter by Google](https://fonts.google.com/specimen/Inter).
-- **Monospaced Font:** [Inter with Modified Line Height](https://raw.githubusercontent.com/bansakai/Mythos/Master/Resources/Inter-Mod-Regular.ttf).
-- **Icon Font:** [Microsoft's MDL2 Icons](https://aka.ms/SegoeFonts). `Required for Windows 10`
-<br><br>
-## Additional Resources
-- **Download:** [Playnite SVG Logo](https://raw.githubusercontent.com/bansakai/Mythos/Master/Resources/PlayniteLogo.svg) as requested by Gu57avo. Right-click "Save Link As..."
-- **Download:** [Mythos MacOS Icon](https://raw.githubusercontent.com/bansakai/Mythos/Master/Resources/Mythos.png) for MyDockFinder users.
-- **Download:** [Playnite MacOS Icon](https://raw.githubusercontent.com/bansakai/Mythos/Master/Resources/Playnite.png) for MyDockFinder users.
-- **Download:** [Playnite Fullscreen MacOS Icon](https://raw.githubusercontent.com/bansakai/Mythos/Master/Resources/Playnite%20FS.png) for MyDockFinder users.
-- **Download:** [Age Rating Template](https://raw.githubusercontent.com/bansakai/Mythos/Master/Resources/Age%20Rating%20Template.ai) to create your own rating images.
-<br><br>
-
 
 ## Showcase
-![Static Badge](https://img.shields.io/badge/Based%20on%20Initial%20Release-grey?style=flat)<br>
-
 ![Screenshot](https://raw.githubusercontent.com/bansakai/Mythos/Master/Screenshots/5.png)
 
 ![Screenshot](https://raw.githubusercontent.com/bansakai/Mythos/Master/Screenshots/6.png)
