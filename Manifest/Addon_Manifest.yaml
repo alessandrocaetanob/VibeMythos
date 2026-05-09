@@ -4,8 +4,8 @@ InstallerManifestUrl: https://raw.githubusercontent.com/bansakai/Mythos/Master/M
 Name: Mythos
 Author: bansakai
 SourceUrl: https://github.com/bansakai/Mythos
-ShortDescription: A Fluent UI theme, elegantly crafted for 4K OLED.
-Description: A Fluent UI theme, elegantly crafted for 4K OLED. Mythos blends Fluent UI with subtle design principles from the Epic Games Launcher to deliver a clean, visually balanced library experience.
+ShortDescription: Mythos is Fluent UI inspired theme for Playnite Desktop Mode.
+Description: Mythos blends Fluent UI with subtle design principles from the Epic Games Launcher to deliver a clean, visually balanced library experience.
 Tags: ["Theme", "Clean"]
 IconUrl: https://raw.githubusercontent.com/bansakai/Mythos/Master/Resources/applogo.png
 Links:
