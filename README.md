@@ -51,7 +51,7 @@ The Steam Links Bar elegantly displays all Steam client links directly below the
 - **Header Font:** [Inter Tight by Google](https://fonts.google.com/specimen/Inter+Tight).
 - **Body Font:** [Inter by Google](https://fonts.google.com/specimen/Inter).
 - **Monospace Font:** [Inter with Modifications for Mythos](https://raw.githubusercontent.com/bansakai/Mythos/Master/Resources/Inter-Mod-Regular.ttf).
-- **Icon Font:** [Microsoft's MDL2 Icons](https://aka.ms/SegoeFonts). `Required for Windows 10`
+- **Icon Font:** [Microsoft's Fluent Icons](https://aka.ms/SegoeFluentIcons). `Required for Windows 10`
 <br><br>
 ## Additional Resources
 - **Download:** [Playnite Logo Concept](https://raw.githubusercontent.com/bansakai/Mythos/Master/Resources/PlayniteLogo.svg) used in Mythos.
