@@ -63,15 +63,7 @@ The Steam Links Bar elegantly displays all Steam client links directly below the
 ![Static Badge](https://img.shields.io/badge/Highly%20Recommended-red?style=flat)<br>
 
 <details>
-<summary>Unsupported Features:</summary>
-<br>
-   
-- Top, right, and bottom sidebar alignment. The sidebar will always display on the left if enabled.
-- Non-English localizations. Many locale files still need to be written to support features added by Mythos. Open an issue if interested.
-</details><br>
-
-<details>
-<summary>Expand - All settings used in the showcase:</summary>
+<summary><strong>⚙️ Recommended Settings</strong> - Click to Expand</summary>
 <br>
    
 ### Appearance → General<br>
@@ -88,6 +80,12 @@ The Steam Links Bar elegantly displays all Steam client links directly below the
 <img src="https://raw.githubusercontent.com/bansakai/Mythos/Master/Screenshots/SettingsTopPanel.png" width="600" />
 </details><br>
 
+> [!NOTE]
+> **Settings NOT Supported by Mythos:**
+> - Sidebar Alignment - The sidebar will always display on the left if enabled.
+> - Filter Panel Alignment - Due to the layout of the theme, the Filter Panel will always align left.
+> - Non-English Localizations - Many locale files still need to be written to support features added by Mythos.
+<br><br>
 
 ## Showcase
 ![Screenshot](https://raw.githubusercontent.com/bansakai/Mythos/Master/Screenshots/5.png)
