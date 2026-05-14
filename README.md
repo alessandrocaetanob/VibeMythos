@@ -63,6 +63,16 @@ The Steam Links Bar elegantly displays all Steam client links directly below the
 ![Static Badge](https://img.shields.io/badge/Highly%20Recommended-red?style=flat)<br>
 
 <details>
+<summary><strong>🪟 Hide Playnite Splash Screen</strong> - Click to Expand</summary>
+<br>
+   
+1. Create a Playnite Shortcut
+2. Right-click, and open `Properties`
+3. Under `Target` add ` --hidesplashscreen` to the end
+4. Apply and Exit
+</details>
+
+<details>
 <summary><strong>⚙️ Recommended Settings</strong> - Click to Expand</summary>
 <br>
    
