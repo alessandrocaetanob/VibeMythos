@@ -96,7 +96,8 @@ The Steam Links Bar elegantly displays all Steam client links directly below the
 > - Sidebar Alignment - The sidebar will always display on the left when enabled.
 > - Filter Panel Alignment - Due to the layout of the theme, the Filter Panel will always align left.
 > - Non-English Localizations - Many locale files still need to be written to support features added by Mythos.
-> - Game Version - This field is repurposed to support Play Button text.
+> - Game Version - This field has been repurposed to support [Play Button](https://github.com/bansakai/Mythos/edit/Master/README.md#custom-play-button) text.
+> - Notes - This field has been repurposed to support [Synopsis](https://github.com/bansakai/Mythos/edit/Master/README.md#game-summary) text.
 > - Draw Separators Between Panels - This feature is disabled entirely.
 <br><br>
 
