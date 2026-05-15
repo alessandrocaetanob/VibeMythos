@@ -28,7 +28,7 @@ For those using Playnite to open external launchers or applications, you can rep
 ### Game Summary
 The game summary found below the trailer simply displays the `Synopsis` metadata for the selected title. This must be configured manually in `Game Settings > Advanced > Synopsis`.
 ### Platform Icons
-Platform icons are displayed on the bottom right of Details View. Mythos includes a handful of commonly used platform icons, but not nearly enough to cover all of them. If a specific platform does not have an icon, find a `.png` online, drop it in `Mythos\Icons\Labels` and name the file accordingly. Name your icon files based on the IDs found [here.](https://github.com/JosefNemec/Playnite/blob/master/source/Playnite/Emulation/Platforms.yaml)
+Platform icons are displayed on the bottom right of Details View. Mythos includes a handful of commonly used platform icons, but not nearly enough to cover all of them. If a specific platform does not have an icon, find a `.png` online, drop it in `Mythos\Icons\Labels`. Name icon files according to the IDs found [here.](https://github.com/JosefNemec/Playnite/blob/master/source/Playnite/Emulation/Platforms.yaml)
 ### Sidebar
 Download [Filter Presets Quick Launcher](https://playnite.link/addons.html#FilterPresetsQuickLauncher_ef9df36c-24c2-418c-8468-eed95a09d950) and navigate to the plugin's settings page to set up sidebar filters. Ensure you have Sidebar Left enabled in `Main Menu > View > Sidebar.` The icons used in my screenshots can be found in `Mythos\Icons\Sidebar.`
 ### Steam Links Bar
@@ -42,9 +42,10 @@ The Steam Links Bar elegantly displays all Steam client links directly below the
 ## Recommended Extensions
 - **Customize Theme:** [ThemeModifier](https://playnite.link/addons.html#playnite-thememodifier-plugin) extension. ![New Badge](https://img.shields.io/badge/2.0-0379ff)
 - **Extra Features:** [ThemeExtras](https://playnite.link/addons.html#felixkmh_Extras_Plugin) extension. ![New Badge](https://img.shields.io/badge/2.0-0379ff)
-- **HowLongToBeat:** [HowLongToBeat](https://playnite.link/addons.html#playnite-howlongtobeat-plugin) extension.
 - **Achievements:** [SuccessStory](https://playnite.link/addons.html#playnite-successstory-plugin) extension.
+- **HowLongToBeat:** [HowLongToBeat](https://playnite.link/addons.html#playnite-howlongtobeat-plugin) extension.
 - **Convert Links:** [Link Utilities](https://playnite.link/addons.html#LinkUtilties_f692b4bb-238d-4080-ae76-4aaefde6f7a1) extension.
+- **Sidebar Icons:** [Filter Presets Quick Launcher](https://playnite.link/addons.html#FilterPresetsQuickLauncher_ef9df36c-24c2-418c-8468-eed95a09d950) extension.
 <br><br>
 ## Recommended Fonts
 - **Icon Font:** [Microsoft's Fluent Icons](https://aka.ms/SegoeFluentIcons). `Required for Windows 10`
