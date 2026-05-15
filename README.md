@@ -1,4 +1,4 @@
-<img src="https://raw.githubusercontent.com/bansakai/Mythos/Master/Resources/Logo.png" width="90" /><br>
+<img src="https://raw.githubusercontent.com/bansakai/Mythos/Master/Resources/Mythos2.png" width="90" /><br>
 # Mythos
 
 #### Credits:
@@ -17,16 +17,16 @@ B. Download the latest packaged `.pthm` theme file from [Releases](https://githu
 <br><br>
 ## Theme Functions & Setup
 ### Age Ratings
-Mythos will display the ESRB or PEGI rating of the selected game underneath the logo. For age ratings to work, your Playnite rating configuration needs to mirror the following:
+Mythos will display the ESRB or PEGI rating of the selected game within the details panel. For age ratings to work, enable in `Appearance > Details View` and mirror the following terminology:
 
-North America:  `ESRB E10` `ESRB E` `ESRB T` `ESRB M` `ESRB AO` `ESRB RP`<br>Europe: `PEGI 3` `PEGI 7` `PEGI 12` `PEGI 16` `PEGI 18`
+North America: `ESRB E10` `ESRB E` `ESRB T` `ESRB M` `ESRB AO` `ESRB RP`<br>Europe: `PEGI 3` `PEGI 7` `PEGI 12` `PEGI 16` `PEGI 18`
 
 ### Cover Images
 By default, cover art isn't visible in Details View. Open [ThemeModifier](https://playnite.link/addons.html#playnite-thememodifier-plugin) and check `Replace Logos with Cover Images`. Additionally, ensure Cover Images are enabled in `Appearance > Details View` under `Cover Image`. Logos will be replaced by cover images when enabled.
-### Custom Launch Text
-For those using Playnite to open external launchers or applications, you can enter custom Launch text under the `Version` metadata of your game. Any text entered there will replace the default string.
+### Custom Play Button
+For those using Playnite to open external launchers or applications, you can replace the default Launch text in `Game Settings > Advanced > Play Button`. To reset to default, delete all text and restart Playnite.
 ### Game Summary
-The synopsis portion, below the trailer, simply displays the `Notes` metadata for the selected title. Unfortunately, this must be configured manually. I intended to write an automated solution for this, but it extended a bit beyond the scope of this project.
+The game summary found below the trailer simply displays the `Synopsis` metadata for the selected title. This must be configured manually in `Game Settings > Advanced > Synopsis`.
 ### Platform Icons
 Platform icons are displayed on the bottom right of Details View. Mythos includes a handful of commonly used platform icons, but not nearly enough to cover all of them. If a specific platform does not have an icon, find a `.png` online, drop it in `Mythos\Icons\Labels` and name the file accordingly. Name your icon files based on the IDs found [here.](https://github.com/JosefNemec/Playnite/blob/master/source/Playnite/Emulation/Platforms.yaml)
 ### Sidebar
