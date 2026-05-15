@@ -92,10 +92,11 @@ The Steam Links Bar elegantly displays all Steam client links directly below the
 </details><br>
 
 > [!NOTE]
-> **Features NOT Supported in Mythos:**
+> **Features NOT Natively Supported in Mythos:**
 > - Sidebar Alignment - The sidebar will always display on the left when enabled.
 > - Filter Panel Alignment - Due to the layout of the theme, the Filter Panel will always align left.
 > - Non-English Localizations - Many locale files still need to be written to support features added by Mythos.
+> - Game Version - This field is repurposed to support Play Button text.
 > - Draw Separators Between Panels - This feature is disabled entirely.
 <br><br>
 
