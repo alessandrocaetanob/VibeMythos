@@ -15,25 +15,25 @@
 A. Download directly from [Playnite.](https://playnite.link/addons.html#Mythos_9f42c1a7-6d8e-4b3f-b0a2-7e9c5d3f18a4)<br><br>
 B. Download the latest packaged `.pthm` theme file from [Releases](https://github.com/bansakai/Mythos/releases/latest) and open it.
 <br><br>
-## Theme Functions & Setup
-### Age Ratings
-Mythos will display the ESRB or PEGI rating of the selected game within the details panel. For age ratings to work, enable in `Appearance > Details View` and mirror the following terminology:
+## Core Functions & Setup
+### Age Rating Banners
+Mythos will display the ESRB or PEGI rating of the selected game within the details panel. To enable them, go to `Appearance > Details View` and select Age Rating. Once enabled, mirror the following terminology in Library Manager:
 
 North America: `ESRB E10` `ESRB E` `ESRB T` `ESRB M` `ESRB AO` `ESRB RP`<br>Europe: `PEGI 3` `PEGI 7` `PEGI 12` `PEGI 16` `PEGI 18`
 
 ### Cover Images
-By default, cover art isn't visible in Details View. Open [ThemeModifier](https://playnite.link/addons.html#playnite-thememodifier-plugin) and check `Replace Logos with Cover Images`. Additionally, ensure Cover Images are enabled in `Appearance > Details View` under `Cover Image`. Logos will be replaced by cover images when enabled.
-### Custom Play Button
-For those using Playnite to open external launchers or applications, you can replace the default Launch text in `Game Settings > Advanced > Play Button`. To reset to default, delete all text and restart Playnite.
+By default, cover art isn't visible in Details View. Open [ThemeModifier](https://playnite.link/addons.html#playnite-thememodifier-plugin) and select `Replace Logos with Cover Images`. Additionally, ensure Cover Images are enabled in `Appearance > Details View` under `Cover Image`. Logos will be replaced by cover images when enabled.
 ### Game Summary
-The game summary found below the trailer simply displays the `Synopsis` metadata for the selected title. This must be configured manually in `Game Settings > Advanced > Synopsis`.
+The game summary, found below the trailer, simply displays the `Synopsis` metadata for the selected title. This must be configured manually in `Game Settings > Advanced > Synopsis`.
 ### Platform Icons
-Platform icons are displayed on the bottom right of Details View. Mythos includes a handful of commonly used platform icons, but not nearly enough to cover all of them. If a specific platform does not have an icon, find a `.png` online, drop it in `Mythos\Icons\Labels`. Name icon files according to the IDs found [here.](https://github.com/JosefNemec/Playnite/blob/master/source/Playnite/Emulation/Platforms.yaml)
+Platform icons are displayed on the bottom right of detail panels. Mythos includes a handful of commonly used platform icons, but not all of them. If a specific platform does not have an icon, find a `.png` online, drop it in `Mythos\Icons\Labels`. Name icon files according to the IDs found [here.](https://github.com/JosefNemec/Playnite/blob/master/source/Playnite/Emulation/Platforms.yaml)
+### Play Button Text
+For those using Playnite to open external launchers or applications, you can replace the default Launch text in `Game Settings > Advanced > Play Button`. To reset to default, delete all text and restart Playnite.
 ### Sidebar
 Download [Filter Presets Quick Launcher](https://playnite.link/addons.html#FilterPresetsQuickLauncher_ef9df36c-24c2-418c-8468-eed95a09d950) and navigate to the plugin's settings page to set up sidebar filters. Ensure you have the Sidebar enabled in `Main Menu > View > Sidebar.` The icons used in my screenshots can be found in `Mythos\Icons\Sidebar.`
 ### Steam Links Bar
 ![Steam Links Bar](https://github.com/bansakai/Mythos/blob/Master/Screenshots/steam_link_bar.png)<br><br>
-The Steam Links Bar elegantly displays all Steam client links directly below the game's image or video banner. To use this feature, download [ThemeModifier](https://playnite.link/addons.html#playnite-thememodifier-plugin) and check `Enable Steam Links Bar`.<br><br>It's recommended to use the `Official Store` metadata option to import these seamlessly. Mythos will auto-detect a valid Steam Store Page link within the first `10` links, and display the remaining links dynamically.<br><br>Additionally, you can convert all Steam web links to client links using [Link Utilities.](https://playnite.link/addons.html#LinkUtilties_f692b4bb-238d-4080-ae76-4aaefde6f7a1) <br><br>
+The Steam Links Bar displays all Steam client links directly below the game's image or video banner. To use this feature, download [ThemeModifier](https://playnite.link/addons.html#playnite-thememodifier-plugin) and check `Enable Steam Links Bar`.<br><br>It's recommended to use the `Official Store` metadata option to import these seamlessly. Mythos will auto-detect a valid Steam Store Page link within the first `10` links, and display the remaining links dynamically.<br><br>Additionally, you can convert all Steam web links to client links using [Link Utilities.](https://playnite.link/addons.html#LinkUtilties_f692b4bb-238d-4080-ae76-4aaefde6f7a1) <br><br>
 
 ## Required Extensions
 - **Display Logos:** [ExtraMetadataLoader](https://playnite.link/addons.html#ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429) extension.
@@ -64,16 +64,6 @@ The Steam Links Bar elegantly displays all Steam client links directly below the
 ![Static Badge](https://img.shields.io/badge/Highly%20Recommended-red?style=flat)<br>
 
 <details>
-<summary><strong>🪟 Hide Playnite Splash Screen</strong> - Click to Expand</summary>
-<br>
-   
-1. Create a Playnite Shortcut
-2. Right-click, and open `Properties`
-3. Under `Target` add ` --hidesplashscreen` to the end
-4. Apply and Exit
-</details>
-
-<details>
 <summary><strong>⚙️ Recommended Settings</strong> - Click to Expand</summary>
 <br>
    
@@ -92,14 +82,14 @@ The Steam Links Bar elegantly displays all Steam client links directly below the
 </details><br>
 
 > [!NOTE]
-> **Features NOT Natively Supported in Mythos:**
+> **Features NOT Supported in Mythos:**
 > - Sidebar Alignment - The sidebar will always display on the left when enabled.
 > - Filter Panel Alignment - Due to the layout of the theme, the Filter Panel will always align left.
 > - Non-English Localizations - Many locale files still need to be written to support features added by Mythos.
 > - Game Version - This field has been repurposed to support [Play Button](https://github.com/bansakai/Mythos#custom-play-button) text.
 > - Notes - This field has been repurposed to support [Synopsis](https://github.com/bansakai/Mythos#game-summary) text.
-> - Draw Separators Between Panels - This feature is disabled entirely.
-<br><br>
+> - Draw Separators Between Panels - This feature has been disabled almost entirely.
+
 
 ## Showcase
 ![Screenshot](https://raw.githubusercontent.com/bansakai/Mythos/Master/Screenshots/5.png)
