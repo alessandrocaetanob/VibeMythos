@@ -28,7 +28,7 @@ The game summary, found below the trailer, simply displays the `Synopsis` metada
 ### Platform Icons
 Platform icons are displayed on the bottom right of detail panels. Mythos includes a handful of commonly used platform icons, but not all of them. If a specific platform does not have an icon, find a `.png` online, drop it in `Mythos\Icons\Labels`. Name icon files according to the IDs found [here.](https://github.com/JosefNemec/Playnite/blob/master/source/Playnite/Emulation/Platforms.yaml)
 ### Play Button Text
-For those using Playnite to open external launchers or applications, you can replace the default Launch text in `Game Details > Advanced > Play Button`. To reset to default, delete all text and restart Playnite.
+For those using Playnite to open external launchers or applications, you can replace the default Launch text in `Game Details > Advanced > Play Button`.
 ### Sidebar
 Download [Filter Presets Quick Launcher](https://playnite.link/addons.html#FilterPresetsQuickLauncher_ef9df36c-24c2-418c-8468-eed95a09d950) and navigate to the plugin's settings page to set up sidebar filters. Ensure you have the Sidebar enabled in `Main Menu > View > Sidebar.` The icons used in my screenshots can be found in `Mythos\Icons\Sidebar.`
 ### Steam Links Bar
