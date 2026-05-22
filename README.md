@@ -24,11 +24,11 @@ North America: `ESRB E10` `ESRB E` `ESRB T` `ESRB M` `ESRB AO` `ESRB RP`<br>Euro
 ### Cover Images
 By default, cover art isn't visible in Details View. Open [ThemeModifier](https://playnite.link/addons.html#playnite-thememodifier-plugin) and select `Replace Logos with Cover Images`. Additionally, ensure Cover Images are enabled in `Appearance > Details View` under `Cover Image`. Logos will be replaced by cover images when enabled.
 ### Game Summary
-The game summary, found below the trailer, simply displays the `Synopsis` metadata for the selected title. This must be configured manually in `Game Settings > Advanced > Synopsis`.
+The game summary, found below the trailer, simply displays the `Synopsis` metadata for the selected title. This must be configured manually in `Game Details > Advanced > Synopsis`.
 ### Platform Icons
 Platform icons are displayed on the bottom right of detail panels. Mythos includes a handful of commonly used platform icons, but not all of them. If a specific platform does not have an icon, find a `.png` online, drop it in `Mythos\Icons\Labels`. Name icon files according to the IDs found [here.](https://github.com/JosefNemec/Playnite/blob/master/source/Playnite/Emulation/Platforms.yaml)
 ### Play Button Text
-For those using Playnite to open external launchers or applications, you can replace the default Launch text in `Game Settings > Advanced > Play Button`. To reset to default, delete all text and restart Playnite.
+For those using Playnite to open external launchers or applications, you can replace the default Launch text in `Game Details > Advanced > Play Button`. To reset to default, delete all text and restart Playnite.
 ### Sidebar
 Download [Filter Presets Quick Launcher](https://playnite.link/addons.html#FilterPresetsQuickLauncher_ef9df36c-24c2-418c-8468-eed95a09d950) and navigate to the plugin's settings page to set up sidebar filters. Ensure you have the Sidebar enabled in `Main Menu > View > Sidebar.` The icons used in my screenshots can be found in `Mythos\Icons\Sidebar.`
 ### Steam Links Bar
@@ -82,10 +82,10 @@ The Steam Links Bar displays all Steam client links directly below the game's im
 </details><br>
 
 > [!NOTE]
-> **Features NOT Supported in Mythos:**
+> **Features NOT Fully Supported in Mythos:**
+> - Non-English Localizations - Many locale files still need to be written to support features added by Mythos.
 > - Sidebar Alignment - The sidebar will always display on the left when enabled.
 > - Filter Panel Alignment - Due to the layout of the theme, the Filter Panel will always align left.
-> - Non-English Localizations - Many locale files still need to be written to support features added by Mythos.
 > - Game Version - This field has been repurposed to support [Play Button](https://github.com/bansakai/Mythos#custom-play-button) text.
 > - Notes - This field has been repurposed to support [Synopsis](https://github.com/bansakai/Mythos#game-summary) text.
 > - Draw Separators Between Panels - This feature has been disabled almost entirely.
