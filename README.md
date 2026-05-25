@@ -17,7 +17,7 @@ B. Download the latest packaged `.pthm` theme file from [Releases](https://githu
 <br><br>
 ## Core Functions & Setup
 ### Age Rating Banners
-Mythos will display the ESRB or PEGI rating of the selected game within the details panel. To enable them, go to `Appearance > Details View` and select Age Rating. Once enabled, mirror the following terminology in Library Manager:
+Mythos displays the Age Rating badge of a selected game within it's details panel. To enable them, go to `Appearance > Details View` and select Age Rating. Once enabled, mirror the following terminology in Library Manager:
 
 North America: `ESRB E10` `ESRB E` `ESRB T` `ESRB M` `ESRB AO` `ESRB RP`<br>Pan European: `PEGI 3` `PEGI 7` `PEGI 12` `PEGI 16` `PEGI 18`<BR>Russian: `RARS 0+` `RARS 6+` `RARS 12+` `RARS 16+` `RARS 18+`
 
