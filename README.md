@@ -40,8 +40,8 @@ The Steam Links Bar displays all Steam client links directly below the game's im
 - **Display Videos:** [ExtraMetadataLoader](https://playnite.link/addons.html#ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429) extension.
 <br><br>
 ## Recommended Extensions
-- **Customize Theme:** [ThemeModifier](https://playnite.link/addons.html#playnite-thememodifier-plugin) extension. ![New Badge](https://img.shields.io/badge/2.0-0379ff)
-- **Extra Features:** [ThemeExtras](https://playnite.link/addons.html#felixkmh_Extras_Plugin) extension. ![New Badge](https://img.shields.io/badge/2.0-0379ff)
+- **Customize Theme:** [ThemeModifier](https://playnite.link/addons.html#playnite-thememodifier-plugin) extension. <img src="https://raw.githubusercontent.com/bansakai/Mythos/Master/Resources/twopointo.svg" width="40" /><br>
+- **Extra Features:** [ThemeExtras](https://playnite.link/addons.html#felixkmh_Extras_Plugin) extension. <img src="https://raw.githubusercontent.com/bansakai/Mythos/Master/Resources/twopointo.svg" width="40" /><br>
 - **Achievements:** [SuccessStory](https://playnite.link/addons.html#playnite-successstory-plugin) extension.
 - **HowLongToBeat:** [HowLongToBeat](https://playnite.link/addons.html#playnite-howlongtobeat-plugin) extension.
 - **Convert Links:** [Link Utilities](https://playnite.link/addons.html#LinkUtilties_f692b4bb-238d-4080-ae76-4aaefde6f7a1) extension.
