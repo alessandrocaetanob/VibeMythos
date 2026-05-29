@@ -78,7 +78,7 @@ The Steam Links Bar displays all Steam client links directly below the game's im
 ### Appearance → Layout<br>
 <img src="https://raw.githubusercontent.com/bansakai/Mythos/Master/Screenshots/Settings_Layout.png" width="600" /><br>
 ### Appearance → Top Panel<br>
-<img src="https://raw.githubusercontent.com/bansakai/Mythos/Master/Screenshots/SettingsTopPanel.png" width="600" />
+<img src="https://raw.githubusercontent.com/bansakai/Mythos/Master/Screenshots/Settings_TopPanel.png" width="600" />
 </details><br>
 
 > [!NOTE]
