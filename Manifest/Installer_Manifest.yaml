@@ -170,3 +170,36 @@ Packages:
       - Re-instated Library metadata, no clue what happened there
       - Disabled remnants of "separators between panels" for those using the default settings
       - Additional recommendation, Turn OFF "Draw Grid Item Background" in Grid View settings
+  - Version: 2.0
+    RequiredApiVersion: 2.9.0
+    ReleaseDate: 2026-05-29
+    PackageUrl: https://github.com/bansakai/Mythos/releases/download/2.0/Mythos_9f42c1a7-6d8e-4b3f-b0a2-7e9c5d3f18a4_2_0.pthm
+    Changelog: 
+      - Reimplemented custom video controls in Details View
+      - Added ThemeModifier support with 30+ customizable settings
+      - Added initial ThemeExtras integration
+      - Added rough localizations for 10+ languages
+      - Added 30+ additional Platform images
+      - Added RARS age rating support
+      - Added left and right alignment support for Grid View
+      - Major overhaul of most interactive UI elements
+      - Major improvements to Top Panel layout and elements
+      - Improvements to Grid View details panel
+      - Various improvements to Grid View play button rendering
+      - Improved notification panel pixel snapping
+      - Improved Success Story visibility logic
+      - Improved window management controls
+      - Adjustments to ExtraMetadataLoader logo margins for better pixel snapping
+      - Converted standard borders to overlay borders across many buttons
+      - Reimplemented gesture keys and keyboard shortcut display
+      - Reduced corner rounding and animation scale in Grid View
+      - Significant terminology changes to streamline actions and improve clarity
+      - Fixed video banner expanding to fit non-standard aspect ratios
+      - Fixed video clipping outside corner radius bounds in Details View
+      - Fixed Age Ratings breaking when more than one rating was selected
+      - Fixed HowLongToBeat style key conflicting with Mythos styles
+      - Fixed numeric box values not saving without re-focusing the field
+      - Fixed bottom button focus behavior affecting input fields in settings dialogs
+      - Age Rating icons converted to PNGs with native WPF border backgrounds
+      - Disabled select Playnite settings that conflict with Mythos layout
+      - Removed significant amounts of residual code and unused files
