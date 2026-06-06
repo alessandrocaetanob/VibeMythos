@@ -2,7 +2,7 @@
 # Mythos
 
 #### Credits:
-[sakasakiking](https://github.com/sakasakiking) - Creator of the Dune theme, whose work served as the visual foundation and inspiration for Mythos.<br>
+[sakasakiking](https://github.com/sakasakiking) - Creator of the Dune theme, whose work serves as the visual foundation and inspiration for Mythos.<br>
 [darklinkpower](https://github.com/darklinkpower) - Legend behind the original Mythic theme, without which this project wouldn't exist.<br>
 [holyCherryPerry](https://github.com/holyCherryPerry) - Valued contributor to various fixes and refinements.<br><br>
 ![DownloadCount](https://img.shields.io/github/downloads/bansakai/Mythos/total.svg)<br><br>
