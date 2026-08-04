@@ -1,0 +1,21 @@
+# Text files — normalize line endings in the repo, check out as-is
+* text=auto
+*.xaml text
+*.yaml text
+*.yml text
+*.md text
+*.txt text
+
+# Binary assets
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.ico binary
+*.ttf binary
+*.otf binary
+*.svg text
+*.ai binary
+*.pthm binary
+*.mp3 binary
+*.ogg binary
+*.wav binary
