@@ -58,6 +58,75 @@
         <Setter Property="BorderThickness" Value="{DynamicResource PopupBorderThickness}" />
     </Style>
 
+    <!-- DuplicateHider source-selector styling.
+         DuplicateHider looks these two keys up by name and applies them to the icon stack it
+         injects into any ContentControl named DuplicateHider_SourceSelector. Each icon's
+         DataContext is a ListData: Icon, IsCurrent, SourceName, Game, and the Launch/Select/
+         Install commands. Deliberately no BasedOn — the plugin's own example bases on an
+         implicit ContentControl style, which this theme does not define.
+
+         No opacity animations here: the plugin recycles these elements when the selector's
+         IsVisible flips, so an element animated to Opacity 0 while still Visible can be
+         reused in that state. Static trigger states only. -->
+    <Style x:Key="DuplicateHider_IconContentControlStyle" TargetType="ContentControl">
+        <Setter Property="Width" Value="26" />
+        <Setter Property="Height" Value="26" />
+        <Setter Property="Margin" Value="0,0,4,0" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="ToolTip" Value="{Binding SourceName}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ContentControl">
+                    <Border x:Name="Chip"
+                            Background="{DynamicResource GlassControlBrushDark}"
+                            BorderBrush="{DynamicResource ContentBorderBrushOverlay}"
+                            BorderThickness="1"
+                            CornerRadius="{DynamicResource ControlCornerRadius}"
+                            Padding="4">
+                        <Image Source="{Binding Icon}"
+                               Stretch="Uniform"
+                               RenderOptions.BitmapScalingMode="Fant" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <!-- An uninstalled copy recedes rather than disappears. -->
+                        <DataTrigger Binding="{Binding Game.IsInstalled}" Value="False">
+                            <Setter TargetName="Chip" Property="Opacity" Value="0.45" />
+                        </DataTrigger>
+                        <!-- The copy currently in view carries the accent. -->
+                        <DataTrigger Binding="{Binding IsCurrent}" Value="True">
+                            <Setter TargetName="Chip" Property="BorderBrush" Value="{DynamicResource AccentIdleBrush}" />
+                        </DataTrigger>
+                        <!-- Last, so hover restores full opacity on uninstalled copies too. -->
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Chip" Property="Background" Value="{DynamicResource ContentBrushOverlayTwo}" />
+                            <Setter TargetName="Chip" Property="Opacity" Value="1" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="DuplicateHider_IconStackPanelStyle" TargetType="StackPanel">
+        <Setter Property="Orientation" Value="Horizontal" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+    </Style>
+
+    <!-- Selector 1, used in the Details View library row. The numbered styles are not
+         cosmetic duplication: DuplicateHider only registers DuplicateHider_SourceSelectorN
+         if a matching DuplicateHider_IconContentControlStyleN or IconStackPanelStyleN
+         exists, so omitting these would leave that placement silently empty. A second
+         index also keeps the two placements from sharing one element cache. -->
+    <Style x:Key="DuplicateHider_IconContentControlStyle1" TargetType="ContentControl"
+           BasedOn="{StaticResource DuplicateHider_IconContentControlStyle}">
+        <Setter Property="Width" Value="30" />
+        <Setter Property="Height" Value="30" />
+    </Style>
+
+    <Style x:Key="DuplicateHider_IconStackPanelStyle1" TargetType="StackPanel"
+           BasedOn="{StaticResource DuplicateHider_IconStackPanelStyle}" />
+
     <Style x:Key="DetailViewCardBorder" TargetType="Border">
         <Setter Property="Background" Value="{DynamicResource CardBackgroundBrush}" />
         <Setter Property="BorderBrush" Value="{DynamicResource CardBorderBrush}" />

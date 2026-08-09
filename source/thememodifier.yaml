@@ -27,6 +27,7 @@ Constants:
     - DetailsViewSocialSubHeader: 'Show Social Links Header'
     - DetailsViewSteamLinksBar: 'Show Steam Links Bar'
     - DetailsViewGenreFeature: 'Show Genres and Features'
+    - DetailsViewSourceSelector: 'Source Icons in Library Row (Requires DuplicateHider)'
     - "Grid View"
     - GridViewCoverZoomOnHover: 'Zoom on Hover'
     - GridViewShowFavorites: 'Show Favorites Badge'
@@ -34,7 +35,8 @@ Constants:
     - GridViewDetailsPanel: 'Enable Details Panel'
     - GridViewCloseButton: 'Show Details Panel Close Button'
     - GridViewCoverCloudIcon: 'Cloud Icon for Uninstalled Games'
-    - GridViewCoverPlatformIcon: 'Show Library Source Icons (Beta)'
+    - GridViewCoverSourceSelector: 'Source Icons on Covers (Requires DuplicateHider)'
+    - GridViewCoverPlatformIcon: 'Single Source Icon (Fallback, No Plugin)'
     - GridViewCoverDisplayLibraryBanner: 'Library Banners (Requires ThemeExtras)'
     - GridViewCoverLibraryBannerAlign: 'Banner Alignment (Requires ThemeExtras)'
     - "Terminology"

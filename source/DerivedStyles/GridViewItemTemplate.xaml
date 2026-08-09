@@ -100,15 +100,50 @@
                                            FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets"
                                            FontSize="{DynamicResource FontSizeLarge}" />
                                 </Border>
+                                <!-- DuplicateHider source selector: one clickable icon per copy of
+                                     the game. Click selects a copy, double-click launches it.
+                                     Needs no PluginStatus gate — when the plugin is absent or its
+                                     UI Integration setting is off, Playnite leaves the
+                                     ContentControl empty and the host collapses to nothing.
+                                     Styling comes from DuplicateHider_Icon{ContentControl,
+                                     StackPanel}Style in Common.xaml. -->
+                                <Border x:Name="DhSelectorHost"
+                                        Tag="{DynamicResource GridViewCoverSourceSelector}"
+                                        Background="Transparent"
+                                        Margin="10"
+                                        VerticalAlignment="Bottom"
+                                        HorizontalAlignment="Left"
+                                        Visibility="{Binding Tag, RelativeSource={RelativeSource Self}, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                    <ContentControl x:Name="DuplicateHider_SourceSelector"
+                                                    HorizontalAlignment="Left"
+                                                    VerticalContentAlignment="Center" />
+                                </Border>
+
+                                <!-- Legacy single-source badge, kept for users without the plugin.
+                                     Hidden whenever the selector above is enabled, since both
+                                     occupy the same bottom-left corner. -->
                                 <Border Tag="{DynamicResource GridViewCoverPlatformIcon}"
 					Background="Transparent"
 					Width="22"
 					Height="22"
 					Margin="10"
 					VerticalAlignment="Bottom"
-					HorizontalAlignment="Left"
-					Visibility="{Binding Tag, RelativeSource={RelativeSource Self}, Converter={StaticResource BooleanToVisibilityConverter}}">
-                                    <Image Source="{ThemeFileBinding Game.Source.Name, PathFormat='Icons/Platform Source/{0}.png'}" 
+					HorizontalAlignment="Left">
+                                    <Border.Style>
+                                        <Style TargetType="Border">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                            <Style.Triggers>
+                                                <MultiDataTrigger>
+                                                    <MultiDataTrigger.Conditions>
+                                                        <Condition Binding="{Binding Tag, RelativeSource={RelativeSource Self}}" Value="True"/>
+                                                        <Condition Binding="{Binding Tag, ElementName=DhSelectorHost}" Value="False"/>
+                                                    </MultiDataTrigger.Conditions>
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </MultiDataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Border.Style>
+                                    <Image Source="{ThemeFileBinding Game.Source.Name, PathFormat='Icons/Platform Source/{0}.png'}"
                                         HorizontalAlignment="Left" RenderOptions.BitmapScalingMode="Fant"/>
                                 </Border>
                                 <Border Tag="{DynamicResource GridViewCoverCloudIcon}"

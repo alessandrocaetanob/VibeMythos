@@ -522,7 +522,23 @@
                                                                 <ColumnDefinition Width="*" />
                                                             </Grid.ColumnDefinitions>
                                                             <Label Grid.Column="0" Content="{DynamicResource LOCGameProviderTitle}" VerticalAlignment="Center"/>
-                                                            <Button Grid.Column="1" Name="PART_ButtonLibrary" HorizontalAlignment="Right" Margin="0,0,4,0" />
+                                                            <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
+                                                                <!-- Clickable icons for every copy of this game, sat next to
+                                                                     the library name they qualify. Uses selector index 1 so it
+                                                                     does not share an element cache with the grid-view cover
+                                                                     placement; the matching numbered styles in Common.xaml are
+                                                                     what make DuplicateHider register this one at all. -->
+                                                                <Border x:Name="DhDetailsSelectorHost"
+                                                                        Tag="{DynamicResource DetailsViewSourceSelector}"
+                                                                        Background="Transparent"
+                                                                        Margin="0,0,10,0"
+                                                                        VerticalAlignment="Center"
+                                                                        Visibility="{Binding Tag, RelativeSource={RelativeSource Self}, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                                                    <ContentControl x:Name="DuplicateHider_SourceSelector1"
+                                                                                    VerticalContentAlignment="Center" />
+                                                                </Border>
+                                                                <Button Name="PART_ButtonLibrary" Margin="0,0,4,0" />
+                                                            </StackPanel>
                                                         </Grid>
                                                     </Border>
 
