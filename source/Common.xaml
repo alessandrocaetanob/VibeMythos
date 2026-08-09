@@ -127,6 +127,13 @@
     <Style x:Key="DuplicateHider_IconStackPanelStyle1" TargetType="StackPanel"
            BasedOn="{StaticResource DuplicateHider_IconStackPanelStyle}" />
 
+    <!-- Selector 2, the same library row in the Grid View details panel. -->
+    <Style x:Key="DuplicateHider_IconContentControlStyle2" TargetType="ContentControl"
+           BasedOn="{StaticResource DuplicateHider_IconContentControlStyle1}" />
+
+    <Style x:Key="DuplicateHider_IconStackPanelStyle2" TargetType="StackPanel"
+           BasedOn="{StaticResource DuplicateHider_IconStackPanelStyle}" />
+
     <Style x:Key="DetailViewCardBorder" TargetType="Border">
         <Setter Property="Background" Value="{DynamicResource CardBackgroundBrush}" />
         <Setter Property="BorderBrush" Value="{DynamicResource CardBorderBrush}" />
