@@ -530,7 +530,23 @@
                                                                             <ColumnDefinition Width="*" />
                                                                         </Grid.ColumnDefinitions>
                                                                         <Label Grid.Column="0" Content="{DynamicResource LOCGameProviderTitle}" VerticalAlignment="Center"/>
-                                                                        <Button Grid.Column="1" Name="PART_ButtonLibrary" HorizontalAlignment="Right" Margin="0,0,4,0" />
+                                                                        <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
+                                                                            <!-- Selector index 2: a third placement needs its own
+                                                                                 index and matching numbered styles, or
+                                                                                 DuplicateHider never registers it. Shares the
+                                                                                 DetailsViewSourceSelector toggle, since both are
+                                                                                 the same library row in different views. -->
+                                                                            <Border x:Name="DhGridDetailsSelectorHost"
+                                                                                    Tag="{DynamicResource DetailsViewSourceSelector}"
+                                                                                    Background="Transparent"
+                                                                                    Margin="0,0,10,0"
+                                                                                    VerticalAlignment="Center"
+                                                                                    Visibility="{Binding Tag, RelativeSource={RelativeSource Self}, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                                                                <ContentControl x:Name="DuplicateHider_SourceSelector2"
+                                                                                                VerticalContentAlignment="Center" />
+                                                                            </Border>
+                                                                            <Button Name="PART_ButtonLibrary" Margin="0,0,4,0" />
+                                                                        </StackPanel>
                                                                     </Grid>
                                                                 </Border>
 

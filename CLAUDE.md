@@ -85,22 +85,42 @@ Use the namespace-aware `Get-Keys` above, **not** `grep 'x:Key='` — the grep c
 
 ## Running and packaging
 
-**Playnite is Windows-only and is not currently installed on this machine** (only `%AppData%\Playnite\Extensions` exists, with no `Themes\Desktop`). The theme cannot be launched from here — real testing happens by installing Playnite and deploying:
+**Playnite here is a portable install at `F:\Playnite`** — *not* `%AppData%\Playnite`, which holds only stale remnants. Never infer installed plugins or theme state from `%AppData%`; it will be wrong.
+
+| What | Where |
+|---|---|
+| Install root | `F:\Playnite` (`Toolbox.exe` lives here) |
+| Deployed theme | `F:\Playnite\Themes\Desktop\Mythos_9f42c1a7-6d8e-4b3f-b0a2-7e9c5d3f18a4` |
+| Installed plugins | `F:\Playnite\Extensions` (68 of them) |
 
 ```powershell
-# Deploy: copy source/ into the themes folder under the Id from theme.yaml
-$dest = "$env:APPDATA\Playnite\Themes\Desktop\Mythos_9f42c1a7-6d8e-4b3f-b0a2-7e9c5d3f18a4"
+# Deploy. Copy-Item, never Move-Item — moving empties source/ in the repo.
+$dest = "F:\Playnite\Themes\Desktop\Mythos_9f42c1a7-6d8e-4b3f-b0a2-7e9c5d3f18a4"
 Copy-Item source\* $dest -Recurse -Force
 ```
 
 Restart Playnite and select the theme in Settings → Appearance. **There is no hot reload.**
 
-Packaging, from the Playnite install directory:
+> A deploy once ran as a move and emptied 299 of the 305 files from `source/`. Nothing was lost — `git restore source/` recovered it — but verify `find source -type f | wc -l` still reports 305 after deploying.
+
+Packaging, from `F:\Playnite`:
 
 ```powershell
 .\Toolbox.exe pack <themeDir> <outDir>          # produces the .pthm
 .\Toolbox.exe verify addon Manifest\Addon_Manifest.yaml
 ```
+
+### Plugins actually installed here
+
+Relevant to the integration work — confirmed present in `F:\Playnite\Extensions`:
+
+`felixkmh_DuplicateHider_Plugin`, `felixkmh_Extras_Plugin` (ThemeExtras), `UniPlaySong`,
+`PlayniteAchievements`, `playnite-howlongtobeat-plugin`, `ExtraMetadataLoader_705fdbca-…`.
+
+Two things that contradict the cheat sheet below: **SuccessStory is not installed** — this setup uses
+**PlayniteAchievements** instead, so HYP-157/158 should target that naming scheme first. And the
+ThemeModifier present is `DKGThemeModifier_ee4ed2de-…`, not Lacro59's
+`playnite-thememodifier-plugin`; verify `thememodifier.yaml` is still read as expected.
 
 Don't bump `source/theme.yaml` `Version` / `ThemeApiVersion` casually — `ThemeApiVersion` is gated against Playnite's `DesktopApiVersion` (major mismatch = the theme refuses to load).
 

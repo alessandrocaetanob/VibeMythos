@@ -51,4 +51,26 @@
     <BitmapImage x:Key="DefaultGameIcon" UriSource="{ThemeFile 'Images/icon.png'}" popt:Freeze="True" />
     <BitmapImage x:Key="DefaultGameCover" UriSource="{ThemeFile 'Images/cover.png'}" popt:Freeze="True" />
 
+    <!-- DuplicateHider source icons.
+         Key format is DuplicateHider_<SOURCENAME>_Icon, where SOURCENAME must match the
+         source exactly as it appears in the plugin's Priority List. These only apply when
+         "Enable Theme Icons" is switched on in DuplicateHider's settings — it is off by
+         default. Any source without an entry here falls back to the plugin's own bundled
+         icon set, so partial coverage is safe and no artwork is required for the rest.
+         Filenames mirror source/Icons/Platform Source/, which the pure-theme badge already
+         resolves through {ThemeFileBinding Game.Source.Name}. -->
+    <BitmapImage x:Key="DuplicateHider_Steam_Icon" UriSource="{ThemeFile 'Icons/Platform Source/Steam.png'}" popt:Freeze="True" />
+    <BitmapImage x:Key="DuplicateHider_Epic Games_Icon" UriSource="{ThemeFile 'Icons/Platform Source/Epic Games.png'}" popt:Freeze="True" />
+    <BitmapImage x:Key="DuplicateHider_Battle.net_Icon" UriSource="{ThemeFile 'Icons/Platform Source/Battle.net.png'}" popt:Freeze="True" />
+    <BitmapImage x:Key="DuplicateHider_EA App_Icon" UriSource="{ThemeFile 'Icons/Platform Source/EA App.png'}" popt:Freeze="True" />
+    <BitmapImage x:Key="DuplicateHider_Ubisoft Connect_Icon" UriSource="{ThemeFile 'Icons/Platform Source/Ubisoft Connect.png'}" popt:Freeze="True" />
+    <BitmapImage x:Key="DuplicateHider_PC_Icon" UriSource="{ThemeFile 'Icons/Platform Source/PC.png'}" popt:Freeze="True" />
+    <BitmapImage x:Key="DuplicateHider_PCSX2_Icon" UriSource="{ThemeFile 'Icons/Platform Source/PCSX2.png'}" popt:Freeze="True" />
+    <BitmapImage x:Key="DuplicateHider_RPCS3_Icon" UriSource="{ThemeFile 'Icons/Platform Source/RPCS3.png'}" popt:Freeze="True" />
+    <BitmapImage x:Key="DuplicateHider_Xenia_Icon" UriSource="{ThemeFile 'Icons/Platform Source/Xenia.png'}" popt:Freeze="True" />
+    <BitmapImage x:Key="DuplicateHider_Yuzu_Icon" UriSource="{ThemeFile 'Icons/Platform Source/Yuzu.png'}" popt:Freeze="True" />
+
+    <!-- Shown when a source has neither a theme icon above nor a bundled plugin icon. -->
+    <BitmapImage x:Key="DuplicateHider_Default_Icon" UriSource="{ThemeFile 'Images/icon.png'}" popt:Freeze="True" />
+
 </ResourceDictionary>

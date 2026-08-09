@@ -35,6 +35,10 @@
     <sys:Boolean x:Key="GridViewPlayButtons">True</sys:Boolean>
     <sys:Boolean x:Key="GridViewDetailsPanel">True</sys:Boolean>
     <sys:Boolean x:Key="GridViewCoverPlatformIcon">False</sys:Boolean>
+    <sys:Boolean x:Key="GridViewCoverSourceSelector">True</sys:Boolean>
+    <sys:Boolean x:Key="DetailsViewSourceSelector">True</sys:Boolean>
+    <!-- Read by DuplicateHider. 4 is its own default; below 1 means no limit. -->
+    <sys:Int32 x:Key="DuplicateHider_MaxNumberOfIcons">4</sys:Int32>
     <sys:Boolean x:Key="GridViewCoverCloudIcon">True</sys:Boolean>
     <sys:Boolean x:Key="GridViewCloseButton">True</sys:Boolean>
     <sys:Boolean x:Key="GridViewCoverZoomOnHover">True</sys:Boolean>
