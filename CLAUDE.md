@@ -117,10 +117,15 @@ Relevant to the integration work — confirmed present in `F:\Playnite\Extension
 `felixkmh_DuplicateHider_Plugin`, `felixkmh_Extras_Plugin` (ThemeExtras), `UniPlaySong`,
 `PlayniteAchievements`, `playnite-howlongtobeat-plugin`, `ExtraMetadataLoader_705fdbca-…`.
 
-Two things that contradict the cheat sheet below: **SuccessStory is not installed** — this setup uses
-**PlayniteAchievements** instead, so HYP-157/158 should target that naming scheme first. And the
-ThemeModifier present is `DKGThemeModifier_ee4ed2de-…`, not Lacro59's
-`playnite-thememodifier-plugin`; verify `thememodifier.yaml` is still read as expected.
+One thing that contradicts the cheat sheet below: **SuccessStory is not installed** — this setup uses
+**PlayniteAchievements** instead, so HYP-157/158 should target that naming scheme first.
+
+**Two similarly-named ThemeModifiers are installed, and only one is ours.**
+`playnite-thememodifier-plugin` (Lacro59, 3.0.2) is the plugin that reads `thememodifier.yaml`;
+that is where this theme's settings surface. `DKGThemeModifier_ee4ed2de-…` (David Griggs, 2.8.3) is
+an unrelated plugin that works from its own allowlist of supported themes and rewrites their
+Constants files **directly on disk**. It carries no Mythos entry today, but if that ever changes it
+would edit the deployed `Constants.xaml` underneath a debugging session.
 
 Don't bump `source/theme.yaml` `Version` / `ThemeApiVersion` casually — `ThemeApiVersion` is gated against Playnite's `DesktopApiVersion` (major mismatch = the theme refuses to load).
 
