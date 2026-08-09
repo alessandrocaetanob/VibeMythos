@@ -580,43 +580,71 @@
                                  (and its layout width) when no task is running. -->
                             <Border Grid.Column="2"
                                     HorizontalAlignment="Right" VerticalAlignment="Center"
-                                    Margin="0,0,16,0"
                                     MaxWidth="420"
+                                    Height="45"
+                                    Padding="14,0,6,0"
                                     Background="{DynamicResource GlassControlBrushDark}"
                                     BorderBrush="{DynamicResource ContentBorderBrushOverlay}"
                                     BorderThickness="1"
-                                    Padding="12,0,4,0"
-                                    Height="45"
                                     Tag="{DynamicResource TopPanelSquareStyle}"
                                     Visibility="{Binding ElementName=PART_ProgressGlobal, Path=Visibility}">
+                                <!-- Right margin clears the window caption buttons, which live in
+                                     the same band: 3 x 30px WinSysButton + 2 x 5px gaps + the
+                                     StackPanel's own 12px margin = 112px reserved
+                                     (DerivedStyles/MainWindowStyle.xaml, Simplebutton.xaml). -->
                                 <Border.Style>
                                     <Style TargetType="Border">
+                                        <Setter Property="Margin" Value="0,0,124,0"/>
                                         <Setter Property="CornerRadius" Value="{DynamicResource TopPanelControlCornerRadiusPill}"/>
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding Tag, RelativeSource={RelativeSource Self}}" Value="True">
                                                 <Setter Property="CornerRadius" Value="{DynamicResource TopPanelControlCornerRadiusPillSquare}"/>
                                             </DataTrigger>
+                                            <!-- Fades in when a task starts. Animates its own Opacity
+                                                 by property path, so no TargetName is involved. -->
+                                            <Trigger Property="IsVisible" Value="True">
+                                                <Trigger.EnterActions>
+                                                    <BeginStoryboard>
+                                                        <Storyboard>
+                                                            <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                                                             From="0" To="1" Duration="0:0:0.25">
+                                                                <DoubleAnimation.EasingFunction>
+                                                                    <QuadraticEase EasingMode="EaseOut"/>
+                                                                </DoubleAnimation.EasingFunction>
+                                                            </DoubleAnimation>
+                                                        </Storyboard>
+                                                    </BeginStoryboard>
+                                                </Trigger.EnterActions>
+                                            </Trigger>
                                         </Style.Triggers>
                                     </Style>
                                 </Border.Style>
 
-                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                    <TextBlock x:Name="PART_TextProgressText"
-                                               VerticalAlignment="Center"
-                                               MaxWidth="200"
-                                               TextTrimming="CharacterEllipsis"
-                                               FontFamily="{DynamicResource FontFamily}"
-                                               FontSize="{DynamicResource FontSizeSmall}"
-                                               Foreground="{DynamicResource TextBrush}"
-                                               Margin="0,0,10,0"/>
+                                <Grid VerticalAlignment="Center">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
 
-                                    <ProgressBar x:Name="PART_ProgressGlobal"
-                                                 Width="110" Height="4"
-                                                 VerticalAlignment="Center"
-                                                 BorderThickness="0"
-                                                 Margin="0,0,6,0"/>
+                                    <StackPanel Grid.Column="0" VerticalAlignment="Center" Margin="0,0,8,0">
+                                        <TextBlock x:Name="PART_TextProgressText"
+                                                   TextTrimming="CharacterEllipsis"
+                                                   FontFamily="{DynamicResource FontFamily}"
+                                                   FontSize="{DynamicResource FontSizeSmall}"
+                                                   Foreground="{DynamicResource TextBrush}"
+                                                   HorizontalAlignment="Left"/>
+
+                                        <!-- Full-width track reading as an underline to the status
+                                             line, rather than a separate widget beside it. -->
+                                        <ProgressBar x:Name="PART_ProgressGlobal"
+                                                     Height="3"
+                                                     Margin="0,6,0,0"
+                                                     BorderThickness="0"
+                                                     HorizontalAlignment="Stretch"/>
+                                    </StackPanel>
 
                                     <Button x:Name="PART_ButtonProgressCancel"
+                                            Grid.Column="1"
                                             Width="28" Height="28"
                                             VerticalAlignment="Center"
                                             Cursor="Hand"
@@ -633,8 +661,9 @@
                                                             CornerRadius="{DynamicResource TopPanelControlCornerRadius}"/>
                                                     <TextBlock Text="&#xE711;"
                                                                FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets"
-                                                               FontSize="12"
+                                                               FontSize="11"
                                                                Foreground="{DynamicResource TextBrush}"
+                                                               Opacity="0.7"
                                                                HorizontalAlignment="Center"
                                                                VerticalAlignment="Center"/>
                                                 </Grid>
@@ -647,7 +676,7 @@
                                             </ControlTemplate>
                                         </Button.Template>
                                     </Button>
-                                </StackPanel>
+                                </Grid>
                             </Border>
 
                         </Grid>
