@@ -281,6 +281,105 @@
                                                             </Border>
                                                         </StackPanel>
 
+                                                        <!-- Achievements (Playnite Achievements).
+                                                             Mirrors the Details View row. The Grid
+                                                             View details panel carried HowLongToBeat
+                                                             but no achievements at all, so this is
+                                                             parity rather than a new surface. The
+                                                             theme already duplicates HowLongToBeat
+                                                             between the two views; same pattern. -->
+                                                        <StackPanel Margin="0,0,0,25">
+                                                            <StackPanel.Style>
+                                                                <Style TargetType="StackPanel">
+                                                                    <Setter Property="Visibility" Value="Collapsed" />
+                                                                    <Style.Triggers>
+                                                                        <MultiDataTrigger>
+                                                                            <MultiDataTrigger.Conditions>
+                                                                                <Condition Binding="{PluginStatus Plugin=PlayniteAchievements, Status=Installed}" Value="True" />
+                                                                                <Condition Binding="{PluginSettings Plugin=PlayniteAchievements, Path=HasData, Mode=OneWay, FallbackValue=False}" Value="True" />
+                                                                                <Condition Binding="{PluginStatus Plugin=playnite-successstory-plugin, Status=Installed}" Value="False" />
+                                                                            </MultiDataTrigger.Conditions>
+                                                                            <Setter Property="Visibility" Value="Visible" />
+                                                                        </MultiDataTrigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </StackPanel.Style>
+
+                                                            <StackPanel.Resources>
+                                                                <Style TargetType="Label" x:Key="AchCaptionStyle">
+                                                                    <Setter Property="FontSize" Value="{DynamicResource FontSizeSmaller}"/>
+                                                                    <Setter Property="Foreground" Value="{DynamicResource IdleBrush}"/>
+                                                                    <Setter Property="HorizontalAlignment" Value="Center"/>
+                                                                </Style>
+                                                                <Style TargetType="TextBlock" x:Key="AchValueStyle" BasedOn="{StaticResource BaseTextBlockStyle}">
+                                                                    <Setter Property="Foreground" Value="White"/>
+                                                                    <Setter Property="FontSize" Value="{DynamicResource FontSizeLarge}"/>
+                                                                    <Setter Property="FontWeight" Value="Medium"/>
+                                                                    <Setter Property="HorizontalAlignment" Value="Center"/>
+                                                                    <Setter Property="VerticalAlignment" Value="Center"/>
+                                                                </Style>
+                                                            </StackPanel.Resources>
+
+                                                            <StackPanel Orientation="Horizontal"
+                                                                        HorizontalAlignment="Center"
+                                                                        Margin="0,0,0,2">
+                                                                <TextBlock Text="&#xE735;"
+                                                                           FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets"
+                                                                           FontSize="{DynamicResource FontSizeSmaller}"
+                                                                           Foreground="{DynamicResource PlatinumBrush}"
+                                                                           VerticalAlignment="Center"
+                                                                           Margin="0,0,4,0">
+                                                                    <TextBlock.Style>
+                                                                        <Style TargetType="TextBlock">
+                                                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                                                            <Style.Triggers>
+                                                                                <DataTrigger Binding="{PluginSettings Plugin=PlayniteAchievements, Path=Is100Percent, Mode=OneWay, FallbackValue=False}" Value="True">
+                                                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                                                </DataTrigger>
+                                                                            </Style.Triggers>
+                                                                        </Style>
+                                                                    </TextBlock.Style>
+                                                                </TextBlock>
+                                                                <Label Content="{DynamicResource LOCMythos_AchievementsTitle}"
+                                                                       Style="{DynamicResource AchCaptionStyle}"/>
+                                                            </StackPanel>
+
+                                                            <Grid>
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="*"/>
+                                                                    <ColumnDefinition Width="Auto"/>
+                                                                </Grid.ColumnDefinitions>
+
+                                                                <Grid Grid.Column="0">
+                                                                    <ProgressBar Height="34"
+                                                                                 BorderThickness="0"
+                                                                                 Background="{DynamicResource ControlIdleBackgroundBrush}"
+                                                                                 Value="{PluginSettings Plugin=PlayniteAchievements, Path=Unlocked, Mode=OneWay, FallbackValue=0}"
+                                                                                 Maximum="{PluginSettings Plugin=PlayniteAchievements, Path=Total, Mode=OneWay, FallbackValue=1}">
+                                                                        <ProgressBar.Style>
+                                                                            <Style TargetType="ProgressBar" BasedOn="{StaticResource {x:Type ProgressBar}}">
+                                                                                <Style.Triggers>
+                                                                                    <DataTrigger Binding="{PluginSettings Plugin=PlayniteAchievements, Path=Is100Percent, Mode=OneWay, FallbackValue=False}" Value="True">
+                                                                                        <Setter Property="Foreground" Value="{DynamicResource PlatinumBrush}"/>
+                                                                                    </DataTrigger>
+                                                                                </Style.Triggers>
+                                                                            </Style>
+                                                                        </ProgressBar.Style>
+                                                                    </ProgressBar>
+                                                                    <TextBlock Style="{DynamicResource AchValueStyle}" IsHitTestVisible="False">
+                                                                        <Run Text="{PluginSettings Plugin=PlayniteAchievements, Path=Unlocked, Mode=OneWay, FallbackValue=0}"/>
+                                                                        <Run Text="{DynamicResource LOCMythos_Of}"/>
+                                                                        <Run Text="{PluginSettings Plugin=PlayniteAchievements, Path=Total, Mode=OneWay, FallbackValue=0}"/>
+                                                                    </TextBlock>
+                                                                </Grid>
+
+                                                                <ContentControl Grid.Column="1"
+                                                                                x:Name="PlayniteAchievements_AchievementButton"
+                                                                                VerticalAlignment="Center"
+                                                                                Margin="6,0,0,0"/>
+                                                            </Grid>
+                                                        </StackPanel>
+
                                                         <StackPanel Margin="0,0,0,20">
                                                             <StackPanel.Resources>
                                                                 <Style TargetType="ItemsControl">

@@ -325,9 +325,34 @@
                                                     </Style>
                                                 </StackPanel.Resources>
 
-                                                <Label Margin="0,0,0,2"
-                                                       Content="{DynamicResource LOCMythos_AchievementsTitle}"
-                                                       Style="{DynamicResource AchCaptionStyle}"/>
+                                                <!-- Trophy appears only at 100%. The game title would
+                                                     be the conventional home for a completion badge,
+                                                     but DetailsViewTitle defaults to False in this
+                                                     theme — the logo is shown instead — so a badge
+                                                     there would be invisible for most users. -->
+                                                <StackPanel Orientation="Horizontal"
+                                                            HorizontalAlignment="Center"
+                                                            Margin="0,0,0,2">
+                                                    <TextBlock Text="&#xE735;"
+                                                               FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets"
+                                                               FontSize="{DynamicResource FontSizeSmaller}"
+                                                               Foreground="{DynamicResource PlatinumBrush}"
+                                                               VerticalAlignment="Center"
+                                                               Margin="0,0,4,0">
+                                                        <TextBlock.Style>
+                                                            <Style TargetType="TextBlock">
+                                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{PluginSettings Plugin=PlayniteAchievements, Path=Is100Percent, Mode=OneWay, FallbackValue=False}" Value="True">
+                                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </TextBlock.Style>
+                                                    </TextBlock>
+                                                    <Label Content="{DynamicResource LOCMythos_AchievementsTitle}"
+                                                           Style="{DynamicResource AchCaptionStyle}"/>
+                                                </StackPanel>
 
                                                 <Grid>
                                                     <Grid.ColumnDefinitions>
@@ -340,7 +365,17 @@
                                                                      BorderThickness="0"
                                                                      Background="{DynamicResource ControlIdleBackgroundBrush}"
                                                                      Value="{PluginSettings Plugin=PlayniteAchievements, Path=Unlocked, Mode=OneWay, FallbackValue=0}"
-                                                                     Maximum="{PluginSettings Plugin=PlayniteAchievements, Path=Total, Mode=OneWay, FallbackValue=1}"/>
+                                                                     Maximum="{PluginSettings Plugin=PlayniteAchievements, Path=Total, Mode=OneWay, FallbackValue=1}">
+                                                            <ProgressBar.Style>
+                                                                <Style TargetType="ProgressBar" BasedOn="{StaticResource {x:Type ProgressBar}}">
+                                                                    <Style.Triggers>
+                                                                        <DataTrigger Binding="{PluginSettings Plugin=PlayniteAchievements, Path=Is100Percent, Mode=OneWay, FallbackValue=False}" Value="True">
+                                                                            <Setter Property="Foreground" Value="{DynamicResource PlatinumBrush}"/>
+                                                                        </DataTrigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </ProgressBar.Style>
+                                                        </ProgressBar>
                                                         <TextBlock Style="{DynamicResource AchValueStyle}" IsHitTestVisible="False">
                                                             <Run Text="{PluginSettings Plugin=PlayniteAchievements, Path=Unlocked, Mode=OneWay, FallbackValue=0}"/>
                                                             <Run Text="{DynamicResource LOCMythos_Of}"/>

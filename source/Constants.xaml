@@ -127,6 +127,10 @@
     <!-- Blue Colors -->
 
     <SolidColorBrush x:Key="GreenBrush" Color="{DynamicResource GreenColor}" />
+    <!-- Completion gold, for a fully unlocked achievement set. Distinct from FavBrush's
+         pure Yellow, which reads as harsh against the dark surfaces. -->
+    <Color x:Key="PlatinumColor">#E0B84C</Color>
+    <SolidColorBrush x:Key="PlatinumBrush" Color="{DynamicResource PlatinumColor}" />
 
     <Color x:Key="PopupBackgroundColor">#000000</Color>
     <Color x:Key="PopupBackgroundToneColor">#19191C</Color>
