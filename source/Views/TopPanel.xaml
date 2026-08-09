@@ -635,11 +635,17 @@
                                                    HorizontalAlignment="Left"/>
 
                                         <!-- Full-width track reading as an underline to the status
-                                             line, rather than a separate widget beside it. -->
+                                             line, rather than a separate widget beside it.
+                                             Background is overridden because the implicit
+                                             ProgressBar style uses ControlIdleBackgroundBrush
+                                             (#18181B, opaque near-black) — built for a solid
+                                             surface, invisible on this glass pill. A translucent
+                                             white overlay reads against whatever sits behind. -->
                                         <ProgressBar x:Name="PART_ProgressGlobal"
-                                                     Height="3"
+                                                     Height="4"
                                                      Margin="0,6,0,0"
                                                      BorderThickness="0"
+                                                     Background="{DynamicResource ContentBrushOverlayTwo}"
                                                      HorizontalAlignment="Stretch"/>
                                     </StackPanel>
 
