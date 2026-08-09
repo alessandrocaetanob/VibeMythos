@@ -571,8 +571,99 @@
                                 </Border>
                             </StackPanel>
 
+                            <!-- Global background-task progress.
+                                 Playnite wires these three purely by PART_ name
+                                 (Playnite.DesktopApp/Controls/Views/TopPanel.cs) and binds
+                                 Visibility on each one itself, so none of them may carry a
+                                 local Visibility value. The wrapper instead follows the
+                                 ProgressBar's own Visibility, which collapses the whole pill
+                                 (and its layout width) when no task is running. -->
+                            <Border Grid.Column="2"
+                                    HorizontalAlignment="Right" VerticalAlignment="Center"
+                                    Margin="0,0,16,0"
+                                    MaxWidth="420"
+                                    Background="{DynamicResource GlassControlBrushDark}"
+                                    BorderBrush="{DynamicResource ContentBorderBrushOverlay}"
+                                    BorderThickness="1"
+                                    Padding="12,0,4,0"
+                                    Height="45"
+                                    Tag="{DynamicResource TopPanelSquareStyle}"
+                                    Visibility="{Binding ElementName=PART_ProgressGlobal, Path=Visibility}">
+                                <Border.Style>
+                                    <Style TargetType="Border">
+                                        <Setter Property="CornerRadius" Value="{DynamicResource TopPanelControlCornerRadiusPill}"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Tag, RelativeSource={RelativeSource Self}}" Value="True">
+                                                <Setter Property="CornerRadius" Value="{DynamicResource TopPanelControlCornerRadiusPillSquare}"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Border.Style>
+
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                    <TextBlock x:Name="PART_TextProgressText"
+                                               VerticalAlignment="Center"
+                                               MaxWidth="200"
+                                               TextTrimming="CharacterEllipsis"
+                                               FontFamily="{DynamicResource FontFamily}"
+                                               FontSize="{DynamicResource FontSizeSmall}"
+                                               Foreground="{DynamicResource TextBrush}"
+                                               Margin="0,0,10,0"/>
+
+                                    <ProgressBar x:Name="PART_ProgressGlobal"
+                                                 Width="110" Height="4"
+                                                 VerticalAlignment="Center"
+                                                 BorderThickness="0"
+                                                 Margin="0,0,6,0"/>
+
+                                    <Button x:Name="PART_ButtonProgressCancel"
+                                            Width="28" Height="28"
+                                            VerticalAlignment="Center"
+                                            Cursor="Hand"
+                                            Focusable="False"
+                                            Background="Transparent"
+                                            BorderThickness="0"
+                                            WindowChrome.IsHitTestVisibleInChrome="True"
+                                            ToolTip="{DynamicResource LOCCancelLabel}">
+                                        <Button.Template>
+                                            <ControlTemplate TargetType="Button">
+                                                <Grid>
+                                                    <Border x:Name="CancelBg"
+                                                            Background="Transparent"
+                                                            CornerRadius="{DynamicResource TopPanelControlCornerRadius}"/>
+                                                    <TextBlock Text="&#xE711;"
+                                                               FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets"
+                                                               FontSize="12"
+                                                               Foreground="{DynamicResource TextBrush}"
+                                                               HorizontalAlignment="Center"
+                                                               VerticalAlignment="Center"/>
+                                                </Grid>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter TargetName="CancelBg" Property="Background"
+                                                                Value="{DynamicResource ContentBrushOverlayTwo}"/>
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Button.Template>
+                                    </Button>
+                                </StackPanel>
+                            </Border>
+
                         </Grid>
                     </Border>
+                    <ControlTemplate.Triggers>
+                        <!-- Playnite binds Maximum to ProgressTotal but never sets
+                             IsIndeterminate. Tasks that report no total (a library update,
+                             for instance) would otherwise render as an empty trough, so
+                             switch those to the animated indeterminate state that
+                             DefaultControls/ProgressBar.xaml already provides.
+                             TargetName is legal here — it is only Style storyboards that
+                             forbid it. -->
+                        <DataTrigger Binding="{Binding Maximum, ElementName=PART_ProgressGlobal}" Value="0">
+                            <Setter TargetName="PART_ProgressGlobal" Property="IsIndeterminate" Value="True"/>
+                        </DataTrigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
