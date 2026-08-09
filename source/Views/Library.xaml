@@ -23,51 +23,27 @@
            			Grid.Row="0" Grid.Column="0" Grid.RowSpan="2"
            			HorizontalAlignment="Center" VerticalAlignment="Top"
            			Margin="-85,0,0,0"
-           			RenderTransformOrigin="0.5,0.5"
-           			Tag="{DynamicResource EnableAmbientBackdrop}">
-                        <!-- Ambient backdrop. Blur is applied to Playnite's existing background
-                             layer rather than to a second image stacked behind it, which would
-                             double the artwork and the cost.
+           			RenderTransformOrigin="0.5,0.5">
+    			<FadeImage.RenderTransform>
+        			<ScaleTransform ScaleX="1.03" ScaleY="1.03" />
+    			</FadeImage.RenderTransform>
 
-                             RenderTransform is set through the style, not inline, because a local
-                             value would beat the trigger's setter. The scale rises with the blur:
-                             BlurEffect samples past the element's bounds as transparent, so an
-                             unscaled image shows a soft washed-out rim. The overscan pushes that
-                             falloff outside the visible area.
+                        <!-- Ambient backdrop reach.
+                             Deliberately no blur and no on/off toggle here: Playnite already
+                             owns those. Its own settings drive blur amount, darkening amount and
+                             ShowBackgroundImageOnWindow, and its FadeImage applies them
+                             internally — the stock theme declares this element bare and still
+                             gets a blurred background. Adding a BlurEffect on top only stacks a
+                             second blur over an already-blurred image for no visible gain.
 
-                             RenderingBias=Performance because this covers the whole window and
-                             re-renders on every selection change; on a backdrop this dim the
-                             quality difference is not perceptible. -->
-                        <FadeImage.Style>
-                            <Style TargetType="FadeImage">
-                                <Setter Property="RenderTransform">
-                                    <Setter.Value>
-                                        <ScaleTransform ScaleX="1.03" ScaleY="1.03" />
-                                    </Setter.Value>
-                                </Setter>
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding Tag, RelativeSource={RelativeSource Self}, FallbackValue=False}" Value="True">
-                                        <Setter Property="Effect">
-                                            <Setter.Value>
-                                                <BlurEffect Radius="{DynamicResource AmbientBackdropBlur}"
-                                                            KernelType="Gaussian"
-                                                            RenderingBias="Performance" />
-                                            </Setter.Value>
-                                        </Setter>
-                                        <Setter Property="RenderTransform">
-                                            <Setter.Value>
-                                                <ScaleTransform ScaleX="1.12" ScaleY="1.12" />
-                                            </Setter.Value>
-                                        </Setter>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </FadeImage.Style>
-
+                             What Playnite has no equivalent for is how far the artwork reaches
+                             before it fades out, which is purely a theme decision and was
+                             hardcoded at 0.55. Raising it carries the artwork further down the
+                             window; lowering it keeps it as a thin band behind the top panel. -->
 			<FadeImage.ImageOpacityMask>
     				<LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
         				<GradientStop Color="Black" Offset="0.0" />
-        				<GradientStop Color="Transparent" Offset="0.55" />
+        				<GradientStop Color="Transparent" Offset="{DynamicResource AmbientBackdropExtent}" />
         				<GradientStop Color="Transparent" Offset="1.0" />
     				</LinearGradientBrush>
 			</FadeImage.ImageOpacityMask>
@@ -76,10 +52,13 @@
                     <Rectangle Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Margin="-85,0,0,0" Opacity="1"
                                HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                                IsHitTestVisible="False">
+                        <!-- Left scrim, which keeps the sidebar and game list legible over the
+                             artwork. Its reach was hardcoded at 0.5, which is half the window;
+                             on an ultrawide that is a lot of screen to darken. -->
                         <Rectangle.Fill>
                             <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
                                 <GradientStop Color="#CC000000" Offset="0.0" />
-                                <GradientStop Color="#00000000" Offset="0.5" />
+                                <GradientStop Color="#00000000" Offset="{DynamicResource AmbientBackdropScrimExtent}" />
                                 <GradientStop Color="#00000000" Offset="1.0" />
                             </LinearGradientBrush>
                         </Rectangle.Fill>
