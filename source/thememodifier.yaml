@@ -11,6 +11,9 @@ Constants:
     - UseNavigationButtons: 'Navigation Buttons (Requires ThemeExtras)'
     - UseMythosLogo: 'Use Mythos Icon as Menu Button'
     - HideNotificationBadge: 'Hide Notification Badge'
+    - "Ambient Backdrop"
+    - AmbientBackdropExtent(0.2,1.0): 'Artwork Reach (Vertical)'
+    - AmbientBackdropScrimExtent(0.1,1.0): 'Left Shading Reach'
     - "Music"
     - ShowNowPlayingToast: 'Now Playing Toast (Requires UniPlaySong)'
     - "General"

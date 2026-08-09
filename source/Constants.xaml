@@ -22,6 +22,12 @@
     <sys:Boolean x:Key="UseMythosLogo">False</sys:Boolean>
     <sys:Boolean x:Key="HideNotificationBadge">False</sys:Boolean>
     <sys:Boolean x:Key="ShowNowPlayingToast">True</sys:Boolean>
+    <!-- Ambient backdrop reach. Blur, darkening and on/off all belong to Playnite's own
+         appearance settings; these two cover only what it has no equivalent for.
+         Bound into GradientStop offsets via DynamicResource, the same Freezable pattern
+         the brushes below already rely on. -->
+    <sys:Double x:Key="AmbientBackdropExtent">0.55</sys:Double>
+    <sys:Double x:Key="AmbientBackdropScrimExtent">0.5</sys:Double>
     <sys:Boolean x:Key="AccentColorOverride">False</sys:Boolean>
     <sys:Boolean x:Key="DetailsViewDisableLogos">False</sys:Boolean>
     <sys:Boolean x:Key="DetailsViewShowFavorites">True</sys:Boolean>
