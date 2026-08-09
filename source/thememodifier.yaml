@@ -11,6 +11,8 @@ Constants:
     - UseNavigationButtons: 'Navigation Buttons (Requires ThemeExtras)'
     - UseMythosLogo: 'Use Mythos Icon as Menu Button'
     - HideNotificationBadge: 'Hide Notification Badge'
+    - "Music"
+    - ShowNowPlayingToast: 'Now Playing Toast (Requires UniPlaySong)'
     - "General"
     - UseFloatingSidebar: 'Floating Sidebar'
     - UseFloatingFilterPanel: 'Floating Filter Panel'

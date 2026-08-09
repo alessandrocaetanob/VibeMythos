@@ -53,6 +53,7 @@
     <sys:String x:Key="LOCMythos_Tags">Tags:</sys:String>
 
     <sys:String x:Key="LOCMythos_AchievementsTitle">Achievements</sys:String>
+    <sys:String x:Key="LOCMythos_NowPlaying">NOW PLAYING</sys:String>
     <sys:String x:Key="LOCMythos_ShowAll">View All</sys:String>
     <sys:String x:Key="LOCMythos_Unlocked">You've Unlocked:</sys:String>
     <sys:String x:Key="LOCMythos_Of">of</sys:String>

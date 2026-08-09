@@ -21,6 +21,7 @@
     <sys:Boolean x:Key="UseButtonBorders">True</sys:Boolean>
     <sys:Boolean x:Key="UseMythosLogo">False</sys:Boolean>
     <sys:Boolean x:Key="HideNotificationBadge">False</sys:Boolean>
+    <sys:Boolean x:Key="ShowNowPlayingToast">True</sys:Boolean>
     <sys:Boolean x:Key="AccentColorOverride">False</sys:Boolean>
     <sys:Boolean x:Key="DetailsViewDisableLogos">False</sys:Boolean>
     <sys:Boolean x:Key="DetailsViewShowFavorites">True</sys:Boolean>
