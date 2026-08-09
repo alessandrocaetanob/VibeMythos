@@ -1570,7 +1570,10 @@
                                                                 VerticalAlignment="Center" />
                                             </Grid>
 
-                                            <StackPanel Orientation="Horizontal" Margin="0,0,0,14" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                            <!-- Sits tight to the bar below, which restates the same
+                                                 figure visually; the gap after the bar is the one
+                                                 that separates this group from the icon strip. -->
+                                            <StackPanel Orientation="Horizontal" Margin="0,0,0,10" HorizontalAlignment="Left" VerticalAlignment="Center">
                                                 <TextBlock Text="{DynamicResource LOCMythos_Unlocked}"
                                                            Style="{DynamicResource BaseTextBlockStyle}"
                                                            Foreground="{DynamicResource TextBrushDarker}"
@@ -1598,19 +1601,37 @@
                                                 </TextBlock>
                                             </StackPanel>
 
-                                            <ContentControl x:Name="PlayniteAchievements_AchievementProgressBar"
-                                                            HorizontalAlignment="Stretch"
-                                                            Margin="0,0,0,16" />
+                                            <!-- Theme-drawn progress, not the plugin's
+                                                 AchievementProgressBar. That control renders a
+                                                 full-width saturated slab with the percentage
+                                                 printed inside it: square-cornered where the rest
+                                                 of Mythos is rounded, visually heavier than the
+                                                 Launch button, and a third restatement of a figure
+                                                 already given as "29 of 55" above. A plugin
+                                                 control's internals cannot be restyled from a
+                                                 theme, so this draws its own from the same data.
 
-                                            <Grid>
-                                                <Border Background="{DynamicResource ControlIdleBackgroundBrush}"
-                                                        CornerRadius="{DynamicResource ControlCornerRadiusLarge}"
-                                                        IsHitTestVisible="False" />
+                                                 Bound to Unlocked over Total rather than Percent:
+                                                 both are integers, which sidesteps whether Percent
+                                                 arrives as 53 or "53%". Maximum falls back to 1,
+                                                 never 0, so a missing Total cannot divide the bar
+                                                 by zero. -->
+                                            <ProgressBar Height="6"
+                                                         Margin="0,0,0,18"
+                                                         BorderThickness="0"
+                                                         HorizontalAlignment="Stretch"
+                                                         Background="{DynamicResource ContentBrushOverlayTwo}"
+                                                         Value="{PluginSettings Plugin=PlayniteAchievements, Path=Unlocked, Mode=OneWay, FallbackValue=0}"
+                                                         Maximum="{PluginSettings Plugin=PlayniteAchievements, Path=Total, Mode=OneWay, FallbackValue=1}" />
 
+                                            <Border Background="{DynamicResource ControlIdleBackgroundBrush}"
+                                                    BorderBrush="{DynamicResource ContentBorderBrushOverlay}"
+                                                    BorderThickness="1"
+                                                    CornerRadius="{DynamicResource ControlCornerRadiusLarge}"
+                                                    Padding="10,8">
                                                 <ContentControl x:Name="PlayniteAchievements_AchievementCompactList"
-                                                                MinHeight="80"
-                                                                Margin="0,-6,0,0" />
-                                            </Grid>
+                                                                MinHeight="72" />
+                                            </Border>
                                         </StackPanel>
                                         <!-- End Playnite Achievements-->
 
