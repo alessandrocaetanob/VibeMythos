@@ -22,6 +22,10 @@
     <sys:Boolean x:Key="UseMythosLogo">False</sys:Boolean>
     <sys:Boolean x:Key="HideNotificationBadge">False</sys:Boolean>
     <sys:Boolean x:Key="ShowNowPlayingToast">True</sys:Boolean>
+    <sys:Boolean x:Key="EnableAmbientBackdrop">True</sys:Boolean>
+    <!-- Blur radius for the library backdrop. Bound into a BlurEffect via DynamicResource,
+         the same Freezable pattern the brushes below already rely on. -->
+    <sys:Double x:Key="AmbientBackdropBlur">40</sys:Double>
     <sys:Boolean x:Key="AccentColorOverride">False</sys:Boolean>
     <sys:Boolean x:Key="DetailsViewDisableLogos">False</sys:Boolean>
     <sys:Boolean x:Key="DetailsViewShowFavorites">True</sys:Boolean>

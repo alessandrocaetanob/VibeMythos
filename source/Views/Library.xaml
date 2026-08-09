@@ -19,14 +19,50 @@
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
 
-			<FadeImage x:Name="PART_ImageBackground" 
+			<FadeImage x:Name="PART_ImageBackground"
            			Grid.Row="0" Grid.Column="0" Grid.RowSpan="2"
-           			HorizontalAlignment="Center" VerticalAlignment="Top" 
+           			HorizontalAlignment="Center" VerticalAlignment="Top"
            			Margin="-85,0,0,0"
-           			RenderTransformOrigin="0.5,0.5">
-    			<FadeImage.RenderTransform>
-        			<ScaleTransform ScaleX="1.03" ScaleY="1.03" />
-    			</FadeImage.RenderTransform>
+           			RenderTransformOrigin="0.5,0.5"
+           			Tag="{DynamicResource EnableAmbientBackdrop}">
+                        <!-- Ambient backdrop. Blur is applied to Playnite's existing background
+                             layer rather than to a second image stacked behind it, which would
+                             double the artwork and the cost.
+
+                             RenderTransform is set through the style, not inline, because a local
+                             value would beat the trigger's setter. The scale rises with the blur:
+                             BlurEffect samples past the element's bounds as transparent, so an
+                             unscaled image shows a soft washed-out rim. The overscan pushes that
+                             falloff outside the visible area.
+
+                             RenderingBias=Performance because this covers the whole window and
+                             re-renders on every selection change; on a backdrop this dim the
+                             quality difference is not perceptible. -->
+                        <FadeImage.Style>
+                            <Style TargetType="FadeImage">
+                                <Setter Property="RenderTransform">
+                                    <Setter.Value>
+                                        <ScaleTransform ScaleX="1.03" ScaleY="1.03" />
+                                    </Setter.Value>
+                                </Setter>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Tag, RelativeSource={RelativeSource Self}, FallbackValue=False}" Value="True">
+                                        <Setter Property="Effect">
+                                            <Setter.Value>
+                                                <BlurEffect Radius="{DynamicResource AmbientBackdropBlur}"
+                                                            KernelType="Gaussian"
+                                                            RenderingBias="Performance" />
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Setter Property="RenderTransform">
+                                            <Setter.Value>
+                                                <ScaleTransform ScaleX="1.12" ScaleY="1.12" />
+                                            </Setter.Value>
+                                        </Setter>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </FadeImage.Style>
 
 			<FadeImage.ImageOpacityMask>
     				<LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
