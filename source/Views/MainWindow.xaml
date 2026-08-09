@@ -87,6 +87,107 @@
                                                AnimatedVisibility.Visibility="{Settings NotificationPanelVisible}"
                                                AnimatedVisibility.Visible="{StaticResource VisibilityOn}"
                                                AnimatedVisibility.Collapsed="{StaticResource VisibilityOff}"/>
+
+                            <!-- Now Playing toast (UniPlaySong).
+                                 Driven by IsMusicChanged, which pulses True on every track
+                                 change and returns to False a moment later. No PluginStatus
+                                 gate is needed: {PluginSettings} no-ops when the plugin is
+                                 absent, so the pulse never fires and the toast stays at
+                                 Opacity 0. Margin clears the 60px top panel and its margins;
+                                 the notification panel is centre-aligned, so there is no
+                                 collision. IsHitTestVisible=False keeps it display-only. -->
+                            <Border x:Name="NowPlayingToast"
+                                    Grid.Row="0" Grid.Column="0"
+                                    HorizontalAlignment="Right" VerticalAlignment="Top"
+                                    Margin="0,90,24,0"
+                                    Panel.ZIndex="1000"
+                                    Opacity="0"
+                                    IsHitTestVisible="False"
+                                    MinWidth="260" MaxWidth="380"
+                                    Padding="14,12"
+                                    Background="{DynamicResource GlassControlBrushDark}"
+                                    BorderBrush="{DynamicResource ContentBorderBrushOverlay}"
+                                    BorderThickness="1"
+                                    Tag="{DynamicResource ShowNowPlayingToast}">
+
+                                <!-- Animated by property path, never by TargetName: a Storyboard
+                                     inside a Style may not use Storyboard.TargetName, and doing
+                                     so throws and crashes Playnite. Hence no x:Name here. -->
+                                <Border.RenderTransform>
+                                    <TranslateTransform X="40"/>
+                                </Border.RenderTransform>
+
+                                <Border.Style>
+                                    <Style TargetType="Border">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                        <Setter Property="CornerRadius" Value="{DynamicResource ControlCornerRadiusLarge}"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Tag, RelativeSource={RelativeSource Self}, FallbackValue=False}" Value="True">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{PluginSettings Plugin=UniPlaySong, Path=IsMusicChanged, FallbackValue=False}" Value="True">
+                                                <DataTrigger.EnterActions>
+                                                    <BeginStoryboard>
+                                                        <Storyboard>
+                                                            <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                                                             To="1" Duration="0:0:0.25">
+                                                                <DoubleAnimation.EasingFunction>
+                                                                    <QuadraticEase EasingMode="EaseOut"/>
+                                                                </DoubleAnimation.EasingFunction>
+                                                            </DoubleAnimation>
+                                                            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.X"
+                                                                             To="0" Duration="0:0:0.25">
+                                                                <DoubleAnimation.EasingFunction>
+                                                                    <QuadraticEase EasingMode="EaseOut"/>
+                                                                </DoubleAnimation.EasingFunction>
+                                                            </DoubleAnimation>
+                                                            <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                                                             To="0" BeginTime="0:0:4.5" Duration="0:0:0.5"/>
+                                                            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.X"
+                                                                             To="40" BeginTime="0:0:4.5" Duration="0:0:0.5"/>
+                                                        </Storyboard>
+                                                    </BeginStoryboard>
+                                                </DataTrigger.EnterActions>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Border.Style>
+
+                                <StackPanel Orientation="Horizontal">
+                                    <Border Width="56" Height="56" Margin="0,0,12,0"
+                                            CornerRadius="{DynamicResource ControlCornerRadius}"
+                                            ClipToBounds="True">
+                                        <Image Source="{PluginSettings Plugin=UniPlaySong, Path=NowPlayingAlbumArtPath}"
+                                               Stretch="UniformToFill"
+                                               RenderOptions.BitmapScalingMode="Fant"/>
+                                    </Border>
+                                    <StackPanel VerticalAlignment="Center">
+                                        <TextBlock Text="{DynamicResource LOCMythos_NowPlaying}"
+                                                   FontFamily="{DynamicResource FontFamily}"
+                                                   FontSize="{DynamicResource FontSizeSmaller}"
+                                                   FontWeight="SemiBold"
+                                                   Opacity="0.7"
+                                                   Margin="0,0,0,3"
+                                                   Foreground="{DynamicResource AccentIdleBrush}"/>
+                                        <TextBlock Text="{PluginSettings Plugin=UniPlaySong, Path=NowPlayingTitle}"
+                                                   FontFamily="{DynamicResource TightFont}"
+                                                   FontSize="{DynamicResource FontSizeLarge}"
+                                                   FontWeight="SemiBold"
+                                                   Foreground="{DynamicResource TextBrush}"
+                                                   TextTrimming="CharacterEllipsis"
+                                                   MaxWidth="280"
+                                                   HorizontalAlignment="Left"/>
+                                        <TextBlock Text="{PluginSettings Plugin=UniPlaySong, Path=NowPlayingArtist}"
+                                                   FontFamily="{DynamicResource FontFamily}"
+                                                   FontSize="{DynamicResource FontSize}"
+                                                   Opacity="0.8"
+                                                   Foreground="{DynamicResource TextBrush}"
+                                                   TextTrimming="CharacterEllipsis"
+                                                   MaxWidth="280"
+                                                   HorizontalAlignment="Left"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Border>
                         </Grid>
                     </Border>
                 </ControlTemplate>
