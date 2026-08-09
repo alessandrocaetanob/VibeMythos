@@ -4,7 +4,12 @@
     <Style TargetType="{x:Type TopPanelItem}">
         <Setter Property="Tag" Value="{DynamicResource TopPanelSquareStyle}"/>
         <Setter Property="Height" Value="35"/>
-        <Setter Property="Width" Value="35"/>
+        <!-- MinWidth, not Width: plugin-injected items (now-playing text, spectrum
+             visualizers, progress bars) are not square and must size to content.
+             MaxWidth keeps a long track title from blowing out the centre cluster. -->
+        <Setter Property="MinWidth" Value="35"/>
+        <Setter Property="MaxWidth" Value="240"/>
+        <Setter Property="Padding" Value="8,0"/>
         <Setter Property="Margin" Value="2.5,0,2.5,0"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
@@ -25,8 +30,11 @@
                                         Margin="{TemplateBinding Padding}"
                                         RecognizesAccessKey="True">
                             <ContentPresenter.Resources>
+                                <!-- Plugin-supplied text inherits the theme, not a debug colour. -->
                                 <Style TargetType="TextBlock">
-                                    <Setter Property="Foreground" Value="Red"/>
+                                    <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
+                                    <Setter Property="VerticalAlignment" Value="Center"/>
+                                    <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
                                 </Style>
                             </ContentPresenter.Resources>
                         </ContentPresenter>
@@ -46,15 +54,6 @@
             <Trigger Property="IsToggled" Value="True">
                 <Setter Property="Background" Value="{DynamicResource AccentIdleBrush}"/>
             </Trigger>
-            <MultiTrigger>
-                <MultiTrigger.Conditions>
-                    <Condition Property="Content" Value="{x:Null}"/>
-                    <Condition Property="ContentTemplate" Value="{x:Null}"/>
-                </MultiTrigger.Conditions>
-                <MultiTrigger.Setters>
-                    <Setter Property="Background" Value="OrangeRed"/>
-                </MultiTrigger.Setters>
-            </MultiTrigger>
         </Style.Triggers>
     </Style>
 
