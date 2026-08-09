@@ -1521,6 +1521,99 @@
                                         </StackPanel>
                                         <!-- End SuccessStory-->
 
+                                        <!-- Playnite Achievements.
+                                             SourceName and AddonId are both "PlayniteAchievements"
+                                             (Extensions/PlayniteAchievements/extension.yaml), and the
+                                             data paths deliberately mirror SuccessStory's vocabulary.
+
+                                             Mutually exclusive with the block above: this one stays
+                                             collapsed whenever SuccessStory is installed, so an
+                                             existing SuccessStory user sees no change and this fills
+                                             the gap only when SuccessStory is absent. Both plugins
+                                             reporting data would otherwise stack two achievement
+                                             sections. -->
+                                        <StackPanel Margin="0,0,0,40"
+                                                    HorizontalAlignment="Stretch"
+                                                    VerticalAlignment="Stretch"
+                                                    Background="Transparent">
+                                            <StackPanel.Style>
+                                                <Style TargetType="StackPanel">
+                                                    <Setter Property="Visibility" Value="Collapsed" />
+                                                    <Style.Triggers>
+                                                        <MultiDataTrigger>
+                                                            <MultiDataTrigger.Conditions>
+                                                                <Condition Binding="{PluginStatus Plugin=PlayniteAchievements, Status=Installed}" Value="True" />
+                                                                <Condition Binding="{PluginSettings Plugin=PlayniteAchievements, Path=HasData, Mode=OneWay, FallbackValue=False}" Value="True" />
+                                                                <Condition Binding="{PluginStatus Plugin=playnite-successstory-plugin, Status=Installed}" Value="False" />
+                                                            </MultiDataTrigger.Conditions>
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        </MultiDataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </StackPanel.Style>
+
+                                            <Grid Margin="0,0,0,6">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                </Grid.ColumnDefinitions>
+
+                                                <TextBlock Grid.Column="0"
+                                                           Text="{DynamicResource LOCMythos_AchievementsTitle}"
+                                                           FontWeight="Bold"
+                                                           FontSize="{DynamicResource FontSizeLarger}"
+                                                           Foreground="{DynamicResource TextBrush}"
+                                                           VerticalAlignment="Center" />
+
+                                                <ContentControl Grid.Column="1"
+                                                                x:Name="PlayniteAchievements_AchievementButton"
+                                                                VerticalAlignment="Center" />
+                                            </Grid>
+
+                                            <StackPanel Orientation="Horizontal" Margin="0,0,0,14" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                                <TextBlock Text="{DynamicResource LOCMythos_Unlocked}"
+                                                           Style="{DynamicResource BaseTextBlockStyle}"
+                                                           Foreground="{DynamicResource TextBrushDarker}"
+                                                           Margin="0,0,5,0" />
+                                                <TextBlock Text="{PluginSettings Plugin=PlayniteAchievements, Path=Unlocked, Mode=OneWay, FallbackValue=0}"
+                                                           FontWeight="SemiBold"
+                                                           Margin="0,0,4.5,0"
+                                                           FontSize="{DynamicResource FontSize}"
+                                                           FontFamily="{DynamicResource FontFamily}">
+                                                    <TextBlock.Style>
+                                                        <Style TargetType="TextBlock">
+                                                            <Setter Property="Foreground" Value="{DynamicResource GreenBrush}" />
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{PluginSettings Plugin=PlayniteAchievements, Path=Unlocked, Mode=OneWay, FallbackValue=0}" Value="0">
+                                                                    <Setter Property="Foreground" Value="{DynamicResource TextBrushDarker}" />
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </TextBlock.Style>
+                                                </TextBlock>
+                                                <TextBlock Style="{DynamicResource BaseTextBlockStyle}"
+                                                           Foreground="{DynamicResource TextBrushDarker}">
+                                                    <Run Text="{DynamicResource LOCMythos_Of}" />
+                                                    <Run Text="{PluginSettings Plugin=PlayniteAchievements, Path=Total, Mode=OneWay, FallbackValue=0}" />
+                                                </TextBlock>
+                                            </StackPanel>
+
+                                            <ContentControl x:Name="PlayniteAchievements_AchievementProgressBar"
+                                                            HorizontalAlignment="Stretch"
+                                                            Margin="0,0,0,16" />
+
+                                            <Grid>
+                                                <Border Background="{DynamicResource ControlIdleBackgroundBrush}"
+                                                        CornerRadius="{DynamicResource ControlCornerRadiusLarge}"
+                                                        IsHitTestVisible="False" />
+
+                                                <ContentControl x:Name="PlayniteAchievements_AchievementCompactList"
+                                                                MinHeight="80"
+                                                                Margin="0,-6,0,0" />
+                                            </Grid>
+                                        </StackPanel>
+                                        <!-- End Playnite Achievements-->
+
                                         <StackPanel DockPanel.Dock="Top" HorizontalAlignment="Stretch">
                                             <StackPanel Name="PART_ElemDescription" Tag="{DynamicResource DetailsViewTruncateDescription}">
                                                 <StackPanel.Style>
