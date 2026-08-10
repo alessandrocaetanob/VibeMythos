@@ -1,0 +1,370 @@
+# VibeMythos 3.0 — Premium Desktop Library
+
+Date: 2026-08-10
+Status: proposed plan
+Baseline: Mythos 2.0 fork, Playnite 10.56, `ThemeApiVersion 2.9.0` (verified current — no bump needed)
+
+VibeMythos 3.0 is the release where the fork stops being "Mythos plus fixes" and becomes its
+own theme: a design system instead of inherited constants, a motion language instead of
+ad-hoc storyboards, and a details view that reads like a store page for *your* library.
+
+**The pitch:** Playnite as a premium desktop game library — cinematic, calm, and alive.
+
+- **Cinematic** — artwork is the material. Glass surfaces float over ambient art; every
+  artwork change crossfades; the details view is a hero page, not a form.
+- **Calm** — one type scale, one radius scale, one hover rule, one motion vocabulary.
+  Premium is mostly the absence of inconsistency.
+- **Alive** — music, play sessions, news, screenshots, friends, deals-with-your-time data
+  (HLTB), rendered in *our* visual language by binding raw plugin data, never the plugins'
+  default chrome.
+- **Fast** — smooth scrolling on 1,000+ game libraries. Jank is the opposite of premium.
+
+---
+
+## Where 2.x actually stands (audit, 2026-08-10)
+
+Full inventory was taken from the current tree (79 XAML files, ~11.6k lines). What it found
+shapes every workstream below.
+
+**Strengths to build on**
+
+- A genuinely coherent near-black neutral ramp (`#0B0C0E → #18181B → #242427 → #323236`)
+  plus a systematic glass/overlay layer (`ContentBrushOverlay` family) — the theme's
+  defining material.
+- Rich animation culture: 86 `BeginStoryboard`s, transform-driven, almost no bitmap
+  effects (a single cheap `DropShadowEffect`; blur deliberately delegated to Playnite's
+  own background handling — `Library.xaml:34`).
+- The 2.x integration groundwork is done: global progress bar, Playnite Achievements,
+  DuplicateHider badges, ambient backdrop, top-panel plugin fixes, Now Playing toast.
+
+**Debt that blocks "premium"**
+
+| Debt | Evidence |
+| --- | --- |
+| Fonts are not shipped | `FontFamily` = `Inter`/`Inter Tight`/`Inter Mod` are bare system lookups (`Constants.xaml:5,67,68`); no `source/Fonts/` exists. On any machine without Inter installed the whole theme silently falls back to default WPF fonts. |
+| No radius discipline | 14 radius tokens (two of them duplicates at 22) **plus 35 literal `CornerRadius` values**. Visible seam: `Sidebar.xaml:36` fill at radius 15 under a stroke at 16 (`:107`). |
+| No spacing system | 109 distinct `Margin` values; `Padding="0,11,0,11"` ×34; six `Margin="0,0,0,-1"` nudges compensating for the missing scale. |
+| No motion tokens | 12 distinct durations, 5 easing families for the same hover gesture; all literals. |
+| Hover chaos | 132 `IsMouseOver` triggers resolving to **26 different brushes** — including `HoverBrush` (`#E7E9EA`, a *foreground*) used as a background 10×. |
+| Type scale half-adopted | 31 literal `FontSize` (13/15/19 aren't even in the scale) vs 40 tokenized; `FontSizeLarger`/`FontSizeLargest` are **referenced but never defined** — including on the game title (`DetailsViewGameOverview.xaml:735`). |
+| Silent breakage | `ComboBox.xaml:146` `{DynamicResource subtalBrush}` (case typo → resolves to nothing); `GridViewGameOverview.xaml:105` references undefined `DetailsViewAllowUseOfLogos` (grid logo toggle dead); `themeExtras.yaml` `DefaultBannerPath` points at a nonexistent file. |
+| Dead upstream palette | Pre-fork navy/brown/beige remnants (`MainColor #2C3A67`, `Brown #795548`, `CardBorderBrush #D4D0B8`, yellow `BackgroundToneColor`, three unused radial "tube" gradients) — roughly 30 genuinely dead keys. |
+| Structural duplication | The ~250-line metadata-row block (16 rows + HLTB + achievements styles) exists **byte-for-byte twice**: `DetailsViewGameOverview.xaml:421-670` and `GridViewGameOverview.xaml:411-660`, hardcoded HLTB hexes included. |
+| Zero render caching / virtualization tuning | `CacheMode`: 0 uses despite 38 scale animations; `Fant` (most expensive scaler) on every grid cover; no `VirtualizationMode=Recycling` anywhere. |
+| Identity | `theme.yaml` still says `Name: Mythos, Author: bansakai, Version: 2.0` with all links pointing upstream. |
+
+---
+
+## Workstream A — Foundations: the VibeMythos design system
+
+The invisible release. Everything in C–E gets cheaper and more consistent once this lands.
+All of it lives in `source/Constants.xaml` + mechanical migration across the four style
+directories.
+
+### A1. Color: consolidate, name, purge
+
+- Keep the neutral ramp and glass system exactly as they look today — codify, don't
+  redesign.
+- **One elevation/hover rule:** interactive surfaces use the overlay ramp
+  (rest → `ContentBrushOverlay` `#1AFFFFFF` → hover `ContentBrushOverlayHover` `#33FFFFFF`
+  → pressed/selected). Migrate the 26 hover brushes down to ~4 sanctioned ones; retire
+  `HoverBrush`-as-background.
+- Tokenize the strays: HLTB tri-color (`#008272/#0078d4/#2ea855`, duplicated in both
+  overview files), destructive hover (`Simplebutton.xaml:444` `#c0392b` →
+  `DestructiveColor`), scrim gradients, `Menu.xaml:10`, the `ToggleButton.xaml` animation
+  target colors.
+- Purge the dead navy/brown/beige/radial keys. **Keep** the inverted `WhiteColor`/
+  `BlackColor` hack (it forces Playnite-core lookups dark — load-bearing) but document it
+  with a comment block, and alias the misspellings (`SubtalBrush` → `TextSubtleBrush`,
+  `ActuallyWhiteBrushBrush` → `TrueWhiteBrush`) keeping old keys as deprecated aliases so
+  nothing breaks.
+
+### A2. Shape and space
+
+- **Radius scale, 5 tiers:** `Radius/Control` 6 · `Radius/Inner` 10 · `Radius/Card` 16 ·
+  `Radius/Panel` 22 · `Radius/Pill` (half-height). Migrate the 35 literals and collapse the
+  14 tokens onto these; fix the sidebar 15/16 seam.
+- **Spacing scale on a 4px grid:** `Space/1`=4 … `Space/8`=32 as `Thickness`/`sys:Double`
+  tokens. New work must use them; migrate high-traffic surfaces (top panel, details view,
+  grid drawer) opportunistically rather than big-bang.
+- Opacity tokens: `Opacity/Disabled` 0.4, `Opacity/Secondary` 0.6 (today hardcoded in
+  `Common.xaml:14,25`).
+
+### A3. Typography: ship the fonts, finish the scale
+
+- **Ship Inter, Inter Tight, and the existing Inter Mod** (all OFL-licensed) in
+  `source/Fonts/`, referenced with theme-relative composite `FontFamily` URIs with a
+  system-font fallback stack (`Inter, Segoe UI Variable Text, Segoe UI`). The Lacro59
+  theme-dev wiki documents the bundled-`Fonts/`-folder pattern; **first task is a 30-minute
+  on-device spike** to pin the exact URI form that works from a deployed theme directory.
+  This is the single highest-leverage premium fix in the whole plan — today the theme
+  renders in Segoe on most machines.
+- Define the missing `FontSizeLarger`/`FontSizeLargest`; migrate the 31 literal sizes onto
+  the scale (13→14, 15→16, 19→20); add weight tokens (`Font/Display` = Inter Tight
+  SemiBold, `Font/Body` = Inter Regular, `Font/Label` = Inter Medium).
+- Numeric UI (playtime, sizes, scores, achievement counts) gets tabular figures for
+  stable alignment.
+- Centralize the 30+ hardcoded `"Segoe Fluent Icons, Segoe MDL2 Assets"` declarations
+  onto the existing `IconFontStyle` (`Common.xaml:42`) / a single `IconFontFamily` token.
+
+### A4. Motion vocabulary
+
+Three duration tokens + two easings, as keyed resources next to the existing `FlyOutEase`
+(`Constants.xaml:396`):
+
+| Token | Value | Use |
+| --- | --- | --- |
+| `Motion/Fast` | 120ms | hover/pressed feedback |
+| `Motion/Base` | 220ms | reveals, crossfades, drawers |
+| `Motion/Slow` | 400ms | page-level entrances, hero transitions |
+| `Ease/Standard` | CubicEase Out | everything by default |
+| `Ease/Emphasized` | BackEase Out (amp 0.3) | playful accents: play button, favorites |
+
+Migrate the 86 storyboards onto these (mechanical, high-volume, easily reviewed).
+Note: `Duration` cannot be templated everywhere via `DynamicResource` in triggers —
+where WPF forces literals, the tokens still serve as the documented source of truth.
+
+### A5. Repair and dedupe
+
+- Fix the three silent breaks (`subtalBrush` casing, `DetailsViewAllowUseOfLogos` →
+  `GridViewAllowUseOfLogos`, missing `Images/Banners/UnknownLibrary.png`).
+- Hoist the duplicated 250-line metadata block into shared styles/`DataTemplate`s in
+  `Common.xaml` (new files are forbidden; `Common.xaml` is the sanctioned shared home).
+  One source of truth for the 16 metadata rows, HLTB row, and achievements row, consumed
+  by both overview views.
+
+---
+
+## Workstream B — Identity: actually become VibeMythos
+
+- `source/theme.yaml`: `Name: VibeMythos`, `Version: 3.0`, author `alessandrocaetanob
+  (based on Mythos by bansakai)`, links → this fork. **Keep the `Id`
+  (`Mythos_9f42c1a7-…`) unchanged** — changing it orphans every existing install's update
+  path and the deployed-folder mapping. Keep `ThemeApiVersion: 2.9.0`.
+- `Manifest/Addon_Manifest.yaml` + `Installer_Manifest.yaml`: new identity + 3.0 release
+  entry.
+- README rewrite: new hero banner, feature tour with fresh screenshots, credits chain
+  preserved (sakasakiking → darklinkpower → bansakai), plugin pairing guide (which
+  plugins light up which surfaces).
+- Retire `UseMythosLogo` wording in `thememodifier.yaml` ("Use VibeMythos Icon…").
+- Update the stale CLAUDE.md claims (progress-bar parts now exist; Constants count).
+
+---
+
+## Workstream C — Cinematic surfaces (the visible release)
+
+Design direction for every surface: **full-bleed art, glass sheet on top, content in
+cards, motion on entry.** Use the `frontend-design` skill when executing each of these.
+
+### C1. Artwork crossfades (HYP-162)
+
+The Aniki A/B pattern, pure XAML: two stacked `Image` layers, flip a bool on selection
+change, `DataTrigger` storyboard crossfades opacity over `Motion/Base`. Apply to: ambient
+backdrop, details cover/logo, grid-drawer art, Now Playing album art. Kills the single
+most un-premium behavior in the theme — the hard cut on every selection change.
+
+### C2. Details view as hero page
+
+`DetailsViewGameOverview.xaml` (1,916 lines) is the flagship and the biggest refactor
+target. Recomposition, keeping all existing toggles working:
+
+- **Hero band:** full-bleed backdrop (existing ambient system) + logo lockup
+  (EML logo, else `Inter Tight` display title), primary action row (Play + achievements
+  ring + HLTB chip), floating on glass.
+- **Content sheet:** description, links, and new plugin shelves (C4/D) in cards on a
+  glass sheet that begins below the hero.
+- **Staggered entrance:** title → hero art → action row → metadata rows cascade in with
+  ~40ms offsets, opacity+8px translate, `Motion/Slow` once per game change. One
+  storyboard, huge perceived-quality gain.
+- Metadata right rail consumes the shared block from A5.
+- Remove the `Margin="0,-9999,0,0"` off-screen video-loader hack in favor of a proper
+  collapsed state.
+
+### C3. Grid view as gallery
+
+- Cover hover: lift (scale 1.03 + stronger shadow) with `CacheMode=BitmapCache` on the
+  animated element; selection ring in accent with animated reveal.
+- **The details drawer currently pops with zero transition** (0 storyboards in
+  `GridViewGameOverview.xaml`) — slide+fade it over `Motion/Base`, respecting
+  `GridViewDetailsPosition`.
+- Empty-state styling for filtered-to-nothing libraries.
+
+### C4. Panels, search, chrome
+
+- Filter panel / notification panel / search view: entrance transitions (today static),
+  spacing-scale pass, consistent glass treatment with the sidebar's floating mode.
+- Replace the notification panel's `ThicknessAnimation` (layout-thrashing,
+  `MainWindow.xaml:23-55`) with a `TranslateTransform` slide.
+- Finish plugin-window polish (HYP-193) so Settings/plugin dialogs stop looking
+  un-themed: tab affordance, control contrast in `DefaultControls/`.
+- Finish the UniPlaySong top-panel story (HYP-159): themed transport styling via
+  `TopPanelItem` containers + the Now Playing toast already shipped.
+
+---
+
+## Workstream D — Living library: plugin integrations
+
+Research verdicts (2026-08-10, from source-level survey of `AddCustomElementSupport`
+across the ecosystem). Guiding rule stays: **bind raw data, render in our language, and
+every block must self-collapse when its plugin is absent** (`PluginStatus` gate + bind
+wrapper visibility to the injected control's own `Visibility`).
+
+### Tier 1 — biggest payoff
+
+| Plugin | What we build |
+| --- | --- |
+| **ThemeOptions** (ashpynov) | The preset engine — see Workstream E. Also the only sanctioned way to load extra XAML. |
+| **BackgroundChanger** (Lacro59) | Upgrade the ambient backdrop: `BackgroundChanger_PluginBackgroundImage` for per-game rotating/video backdrops; branch layout on `BackgroundIsVideo`. ImageRotater ships a BackgroundChanger-compatible shim, so we support both with one integration. |
+| **GameActivity** (Lacro59) | A "Recent Session" row from pre-formatted strings (`LastPlaytimeSession`, `RecentActivity`, `AvgFpsAllSession`) — skip its LiveCharts chrome entirely. |
+| **Game Relations** (darklinkpower) | "More like this" shelf on the details page: `SimilarGamesControl` / `SameSeriesControl` etc., four self-collapsing controls, near-zero risk. |
+
+### Tier 2 — details-view depth
+
+- **News Viewer**: news shelf + live Steam player count in the details header.
+- **Review Viewer**: Steam review summary — *Steam-gated; only render for games with a
+  Steam link.*
+- **Steam Screenshots**: store screenshot gallery via `Content.ScreenshotsBitmapImages`
+  laid out in our own strip (raw `BitmapImage`s, no plugin chrome). Complementary to
+  **ScreenshotsVisualizer** (user's own captures via `ListScreenshots` → `Thumbnail`).
+- **CheckDlc**: owned/unowned DLC section (`CheckDlc_PluginListDlcAll` or custom from
+  `ListDlcs`).
+- **CheckLocalizations**: language flag row (`PluginFlags`) now; full UI/audio/subtitle
+  matrix from `ListNativeSupport` later.
+- **LibraryManagement**: feature icon row (controller/cloud-save icons) — its controls
+  **require an explicit `Height`** per the wiki.
+
+### Tier 3 — differentiators to prototype
+
+- **Web Explorer**: embedded store page tab with our own chrome via `BrowserCommands`
+  (needs explicit `Height` + `UseLayoutRounding` on the parent, per wiki).
+- **Friends Achievement Feed** (justin-delano, same author as our achievements plugin):
+  `GameFeedTab` friend-activity feed.
+- **MetadataUtilities** (HerrKnarz): structured tag/genre sections via
+  `*PrefixItemControl` elements.
+- **PlayState + BackToGame**: a "game is running" state — suspend/resume pill + jump-back
+  button.
+
+### Ruled out (verified no theme surface)
+
+IsThereAnyDeal (no `AddCustomElementSupport` at all — it's a standalone window), Splash
+Screen, JAST USA Library, Filter Presets Quick Launcher (rides our existing
+`TopPanelItem`/`SidebarItem` styles — nothing to wire, just don't break it).
+
+### Cross-cutting cautions
+
+- The two plugin families use **incompatible `PluginStatus` identifier conventions**
+  (Lacro59: bare GUID or SourceName; darklinkpower: `Name_GUID`). Maintain the id table
+  in CLAUDE.md as integrations land — this is the #1 silent-failure source.
+- **Key ownership:** ThemeOptions loads *after* ThemeModifier. Decide per key which
+  plugin owns it, or settings will silently not stick (same failure mode as the old DKG
+  Theme Modifier incident). Proposal: ThemeModifier keeps simple toggles/colors
+  (existing 41 settings), ThemeOptions owns presets and anything new that needs sliders
+  with steps, two-way state, or extra files.
+
+---
+
+## Workstream E — Visual Packs: presets via ThemeOptions
+
+ThemeOptions gives radio-select **presets** with preview images, typed constants without
+files, extra merged XAML, and live two-way variables. Hard rule (from its docs, and ours):
+**the theme must remain fully functional with ThemeOptions absent** — `Constants.xaml`
+keeps every default.
+
+Ship 3.0 with constants-only presets (cheap, safe), holding extra-XAML packs for 3.1:
+
+- **Appearance packs:** `Slate` (today's look, default) · `Noir` (true-black surfaces,
+  heavier scrim — OLED-friendly) · `Vibrant` (stronger accent presence, brighter glass).
+- **Accent packs:** Azure (default) · Violet · Emerald · Amber · Crimson — one
+  `SolidColorBrush` cluster each over the existing accent token family (the tokens
+  already exist: `AccentIdleBrush`/`Darker`/`Highlight`).
+- **Density packs:** `Comfortable` (default) · `Compact` (tighter spacing tokens, smaller
+  grid gaps) — this is exactly what the A2 spacing tokens make possible.
+- Preview images shipped per preset; presets marked `NeedRestart` only where
+  `StaticResource` consumption forces it.
+
+---
+
+## Workstream F — Performance: fast is premium
+
+Ordered by expected impact; each verified on the real `F:\Playnite` install with a full
+library before/after.
+
+1. **Grid cover scaling:** `Fant` → `HighQuality` (linear) for covers in
+   `GridViewItemTemplate.xaml:30,33`; keep `Fant` only for large, static hero art. Fant
+   on every cover is the likeliest frame-time cost at scroll speed.
+2. **`CacheMode="BitmapCache"`** on every scale-animated element (cover hover-zoom, play
+   button, sidebar items) — 38 scale animations currently re-rasterize per frame.
+3. **Virtualization spike:** `VirtualizingPanel.VirtualizationMode="Recycling"` +
+   `ScrollUnit` on the games list. ⚠️ Recycling interacts with plugin-injected controls
+   (the DuplicateHider recycling comment at `Common.xaml:116-120` exists for a reason) —
+   this is a measured experiment, not a default-on change. Also fix
+   `DataGrid.xaml:80` disabling `CanContentScroll` in one branch.
+4. Replace the notification panel's margin animation with a transform (C4).
+5. Hygiene: delete the two unfrozen, unused `ImageBrush`es (`Constants.xaml:261-271`);
+   `UseLayoutRounding`/`SnapsToDevicePixels` once at the window root instead of 12
+   scattered declarations; freeze anything freezable that remains.
+
+---
+
+## Workstream G — Quality and release infrastructure
+
+- **CI (HYP-168), upgraded for 3.0:** XAML well-formedness, localization parity,
+  `thememodifier.yaml` key resolution, **plus new lints the design system makes
+  possible:** no raw hex outside `Constants.xaml` (allowlist for the benign
+  `OpacityMask` cases), no literal `CornerRadius`/`FontSize` outside token files, no
+  `StaticResource` on ThemeModifier-exposed keys.
+- **Localization (HYP-166):** stop overriding the 16 Playnite-global `LOC*` keys, add the
+  2 missing keys to all 10 locales, drop `de_DE`'s 9 stale keys, full pt-BR pass. New 3.0
+  strings are `LOCMythos_`-prefixed from day one.
+- SonarQube quality gate green on every PR (`sonar analyze -p alessandrocaetanob_VibeMythos`).
+- Release checklist: deploy → visual pass → `Toolbox.exe pack` → `Toolbox.exe verify addon`
+  → screenshots → `Installer_Manifest.yaml` entry.
+
+---
+
+## Sequencing
+
+Four phases, each shippable; existing Linear issues slot in where noted.
+
+| Phase | Contents | Existing issues |
+| --- | --- | --- |
+| **3.0-alpha "Foundation"** | A1–A5 (tokens, fonts, repairs, dedupe) · B (identity) · F1/F2/F5 (safe perf) | HYP-166 (loc hygiene) |
+| **3.0-beta "Cinema"** | C1–C4 (crossfades, hero details, grid gallery, panels) · finish HYP-159, HYP-193 | HYP-162, HYP-156 |
+| **3.0 "Alive"** | D Tier 1 (ThemeOptions, BackgroundChanger, GameActivity, GameRelations) · E (constants presets) · G (CI, release) | HYP-164, HYP-161, HYP-165, HYP-167, HYP-168 |
+| **3.1+ "Beyond"** | D Tier 2 & 3 shelves · extra-XAML visual packs · F3 virtualization experiment | — |
+
+Proposed new Linear issues (one per work session, per workflow): design-token overhaul ·
+font shipping spike+rollout · motion tokens+migration · metadata block dedupe · silent-break
+repairs · identity/manifest rename · details hero recomposition · grid drawer transition ·
+staggered entrance · BackgroundChanger backdrop · GameActivity session row · GameRelations
+shelf · ThemeOptions preset engine · accent/density packs · perf pass (scaling+caching) ·
+CI lint upgrades · README/screenshot refresh.
+
+---
+
+## Risks and constraints
+
+- **No new XAML files** without ThemeOptions installed — shared code goes to
+  `Common.xaml`; every ThemeOptions-dependent feature needs a no-plugin default.
+- **Font shipping mechanism** needs the on-device spike before committing; if the
+  composite URI fails from a theme directory, fall back to the system stack and ship an
+  optional font installer note (never a registry-hack requirement).
+- **Recycling vs injected controls** (F3) can corrupt plugin UI — experiment behind
+  measurement, keep revert path.
+- **ThemeModifier vs ThemeOptions key ownership** must be decided before E lands.
+- **Upstream sync:** Mythos ships all default-theme files; any Playnite release touching
+  theme files needs a diff pass (watch Playnite releases; 10.56 is the verified baseline).
+- Every metric/claim in this plan's audit is from the 2026-08-10 tree — re-verify line
+  numbers before executing individual items.
+
+## Verification (per phase)
+
+1. Static: XAML well-formedness + localization parity + thememodifier resolution
+   (CLAUDE.md commands), SonarQube gate.
+2. Deploy to `F:\Playnite\Themes\Desktop\Mythos_9f42c1a7-…` via `Copy-Item` (never move),
+   restart Playnite, run the visual checklist per touched surface — **with the plugin
+   matrix both ways** (each integrated plugin installed and uninstalled; nothing may leave
+   an empty husk).
+3. Perf: scroll the full library in Grid view before/after F changes; hover-zoom a row of
+   covers; watch for dropped frames at 60Hz.
+4. Package: `Toolbox.exe pack` + `verify addon` clean.
