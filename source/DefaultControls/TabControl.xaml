@@ -110,11 +110,28 @@
                                               HorizontalAlignment="Center" Margin="0" VerticalAlignment="Center" />
                             </TextBlock>
                         </Border>
+
+                        <!-- Accent underline for the selected tab. Selection previously rested
+                             entirely on a ControlHoverBackgroundBrush (#242427) fill against a
+                             near-black window: barely a lift, and close enough to the hover fill
+                             (#121214) that selected and hovered read alike. The fill stays as
+                             secondary reinforcement; this carries the state. Inset matches the
+                             13px horizontal padding above so it tracks the label. -->
+                        <Border x:Name="SelectedIndicator"
+                                Height="3"
+                                Margin="13,0,13,0"
+                                VerticalAlignment="Bottom"
+                                HorizontalAlignment="Stretch"
+                                CornerRadius="1.5"
+                                Background="{DynamicResource AccentIdleBrush}"
+                                Visibility="Collapsed"
+                                IsHitTestVisible="False"/>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsSelected" Value="True">
                             <Setter Property="Foreground" Value="{DynamicResource TextBrush}" TargetName="TextContent"/>
                             <Setter Property="Background" Value="{DynamicResource ControlHoverBackgroundBrush}" TargetName="HoverBg"/>
+                            <Setter Property="Visibility" Value="Visible" TargetName="SelectedIndicator"/>
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter Property="Foreground" Value="{DynamicResource HoverBrush}" TargetName="TextContent" />
@@ -152,11 +169,25 @@
                                               HorizontalAlignment="Center" Margin="0" VerticalAlignment="Center" />
                             </TextBlock>
                         </Border>
+
+                        <!-- Same accent underline as the default TabItem. This style is currently
+                             unused anywhere in the theme; kept in step so the two do not diverge
+                             if it is ever adopted. No inset here, since HoverBg has no padding. -->
+                        <Border x:Name="SelectedIndicator"
+                                Height="3"
+                                Margin="0,0,0,-4"
+                                VerticalAlignment="Bottom"
+                                HorizontalAlignment="Stretch"
+                                CornerRadius="1.5"
+                                Background="{DynamicResource AccentIdleBrush}"
+                                Visibility="Collapsed"
+                                IsHitTestVisible="False"/>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsSelected" Value="True">
                             <Setter Property="Foreground" Value="{DynamicResource SelectedBrush}" TargetName="TextContent"/>
                             <Setter Property="Background" Value="{DynamicResource ControlHoverBackgroundBrush}" TargetName="HoverBg"/>
+                            <Setter Property="Visibility" Value="Visible" TargetName="SelectedIndicator"/>
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter Property="Foreground" Value="{DynamicResource HoverBrush}" TargetName="TextContent" />
