@@ -225,10 +225,47 @@
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
 
-                            <StackPanel Grid.Column="0" x:Name="Col0Stack" Orientation="Horizontal"
-                                        Tag="{DynamicResource UseMythosLogo}">
-                                <StackPanel.Style>
-                                    <Style TargetType="StackPanel">
+                            <!-- Left cluster. A Grid, not a horizontal StackPanel (HYP-237).
+
+                                 The outer three columns are "* / Auto / *", so this cluster gets
+                                 (WindowWidth - centreItems) / 2. Its content used to be fixed at
+                                 ~304px (a 53px menu pill plus a 251px search pill), and a
+                                 StackPanel neither clips nor shrinks — so below roughly 760px the
+                                 cluster spilled right and the centred plugin items painted over
+                                 it. Grid children in different columns are free to overlap, so
+                                 nothing caught it.
+
+                                 The search box is the one elastic element, and it sits directly in
+                                 this Grid's star column rather than inside the glass pill. That
+                                 placement is the whole mechanism and is easy to undo by accident:
+
+                                   - A star column takes the space it is *given*, so it does not
+                                     need an intrinsic width. MaxWidth then caps it at
+                                     SearchBoxWidth. Putting the box inside a content-sized (Auto or
+                                     Left-aligned) parent instead makes MaxWidth useless — MaxWidth
+                                     caps a desired size, it never supplies one, so the box would
+                                     collapse to MinWidth at every window size.
+                                   - A horizontal StackPanel measures children with infinite width,
+                                     so any StackPanel reintroduced on this path restores the bug.
+
+                                 The glass pill is therefore a backdrop spanning columns 2-6 rather
+                                 than a container, and the pill's 1px border + 5px horizontal
+                                 padding are expressed as the 6px spacer columns either side. That
+                                 keeps the star column's MaxWidth equal to SearchBoxWidth with no
+                                 fudge factor, so the ThemeModifier setting still means exactly
+                                 "search box width" — measured at 185/251 (box/pill) above 760px,
+                                 identical to the previous fixed layout, and honoured exactly at
+                                 both ends of its 125-200 range.
+
+                                 ClipToBounds is a backstop, not the mechanism. It only engages
+                                 below the shrink floor, which needs the optional ThemeExtras
+                                 navigation pill shown *and* a window under ~700px; there, clipping
+                                 the cluster at its column edge still reads better than overlapping. -->
+                            <Grid Grid.Column="0" x:Name="Col0Stack"
+                                  Tag="{DynamicResource UseMythosLogo}"
+                                  ClipToBounds="True">
+                                <Grid.Style>
+                                    <Style TargetType="Grid">
                                         <Setter Property="Margin" Value="0"/>
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Settings ShowSidebar}" Value="False">
@@ -236,10 +273,23 @@
                                             </DataTrigger>
                                         </Style.Triggers>
                                     </Style>
-                                </StackPanel.Style>
+                                </Grid.Style>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>   <!-- menu pill / logo -->
+                                    <ColumnDefinition Width="Auto"/>   <!-- navigation pill (collapsed by default) -->
+                                    <ColumnDefinition Width="6"/>      <!-- pill inset: 1px border + 5px padding -->
+                                    <!-- The elastic one. MinWidth leaves the magnifier glyph and its
+                                         margins legible once the prompt text has been squeezed out. -->
+                                    <ColumnDefinition Width="*"
+                                                      MaxWidth="{DynamicResource SearchBoxWidth}"
+                                                      MinWidth="44"/>
+                                    <ColumnDefinition Width="4"/>      <!-- gap between box and filter toggle -->
+                                    <ColumnDefinition Width="Auto"/>   <!-- filter toggle -->
+                                    <ColumnDefinition Width="6"/>      <!-- pill inset -->
+                                </Grid.ColumnDefinitions>
 
                                 <!-- Main menu logo/pill -->
-                                <Border x:Name="PART_ElemMainMenu" Cursor="Hand" VerticalAlignment="Center"
+                                <Border Grid.Column="0" x:Name="PART_ElemMainMenu" Cursor="Hand" VerticalAlignment="Center"
                                         WindowChrome.IsHitTestVisibleInChrome="True">
                                     <Border.Style>
                                         <Style TargetType="Border">
@@ -317,7 +367,8 @@
                                 </Border>
 
                                 <!-- Navigation buttons pill -->
-                                <Border Background="{DynamicResource GlassControlBrushDark}"
+                                <Border Grid.Column="1"
+                                        Background="{DynamicResource GlassControlBrushDark}"
                                         BorderBrush="{DynamicResource ContentBorderBrushOverlay}"
                                         BorderThickness="1"
                                         Padding="5"
@@ -440,11 +491,16 @@
                                     </StackPanel>
                                 </Border>
 
-                                <!-- Search and filter pill -->
-                                <Border Background="{DynamicResource GlassControlBrushDark}"
+                                <!-- Search and filter pill: a backdrop spanning the box, the gap, the
+                                     toggle and both inset columns — not a container. Horizontal
+                                     padding comes from the 6px spacer columns; only the vertical
+                                     padding stays here, so the pill keeps its 47px height
+                                     (35px content + 2x5 padding + 2x1 border). -->
+                                <Border Grid.Column="2" Grid.ColumnSpan="5"
+                                        Background="{DynamicResource GlassControlBrushDark}"
                                         BorderBrush="{DynamicResource ContentBorderBrushOverlay}"
                                         BorderThickness="1"
-                                        Padding="5"
+                                        Padding="0,5,0,5"
                                         Margin="0"
                                         VerticalAlignment="Center">
                                     <Border.Style>
@@ -457,17 +513,18 @@
                                             </Style.Triggers>
                                         </Style>
                                     </Border.Style>
-                                    <StackPanel Orientation="Horizontal">
-                                        <SearchBox x:Name="PART_TextMainSearch" Margin="0,0,4,0"
-                                                Style="{DynamicResource TopPanelSearchBox}"
-                                                VerticalAlignment="Center"
-                                                WindowChrome.IsHitTestVisibleInChrome="True"/>
-                                        <CheckBox x:Name="PART_ToggleFilter" ToolTip="{DynamicResource LOCFilters}"
-                                                Style="{DynamicResource TopPanelFilterToggle}"/>
-                                    </StackPanel>
                                 </Border>
 
-                            </StackPanel>
+                                <!-- Box and toggle are siblings of the pill, placed in the cluster's
+                                     own columns so the star column can size the box. -->
+                                <SearchBox Grid.Column="3" x:Name="PART_TextMainSearch"
+                                        Style="{DynamicResource TopPanelSearchBox}"
+                                        VerticalAlignment="Center"
+                                        WindowChrome.IsHitTestVisibleInChrome="True"/>
+                                <CheckBox Grid.Column="5" x:Name="PART_ToggleFilter" ToolTip="{DynamicResource LOCFilters}"
+                                        Style="{DynamicResource TopPanelFilterToggle}"/>
+
+                            </Grid>
 
                             <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <Border Background="{DynamicResource GlassControlBrushDark}"
