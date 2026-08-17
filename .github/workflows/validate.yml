@@ -1,0 +1,140 @@
+name: Validate theme
+
+# There is no compiler for a Playnite theme and no test suite, so these static checks are
+# the entire automated safety net. They matter more than usual: ThemeManager.ApplyTheme
+# pre-flights every file and breaks on the first throw, so ONE malformed XAML file drops
+# the user all the way back to Playnite's default theme. There is no partial degradation.
+#
+# Everything here is read-only, needs no Playnite install and no secrets.
+
+on:
+  push:
+    branches: [Master]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: validate-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: Static theme checks
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+
+      # tools/validate_theme.py imports only argparse/re/sys/xml.etree/pathlib, so there is
+      # nothing to install and this step cannot fail on a network hiccup. Keep it first for
+      # that reason. It resolves --source relative to the working directory, which here is
+      # the repo root, so run it from the root and nowhere else.
+      - name: Theme static checks
+        run: python tools/validate_theme.py
+
+      # Hard rules 7 and 9. The theme Id keys the deployed folder name, and Constants.xaml
+      # embeds that folder name in three font chains; the same Id is repeated in three more
+      # manifests. Every failure mode here is silent at runtime - fonts quietly degrade to
+      # Arial, or Playnite resolves the addon to somebody else's entry and recursively wipes
+      # the theme directory on update. validate_theme.py does not cover any of it.
+      # stdlib only, deliberately.
+      - name: Theme Id consistent across manifests and font chains
+        run: |
+          python - <<'PY'
+          import re
+          from pathlib import Path
+
+          def read(path):
+              return Path(path).read_text(encoding="utf-8-sig")
+
+          def scalar(path, key):
+              match = re.search(rf"^{key}:[ \t]*(\S+)[ \t]*$", read(path), re.M)
+              if not match:
+                  raise SystemExit(f"FAIL  {path}: no top-level '{key}:' entry")
+              return match.group(1)
+
+          theme_id = scalar("source/theme.yaml", "Id")
+          problems = []
+
+          for path, key in (
+              ("source/themeExtras.yaml", "ThemeId"),
+              ("Manifest/Addon_Manifest.yaml", "AddonId"),
+              ("Manifest/Installer_Manifest.yaml", "AddonId"),
+          ):
+              found = scalar(path, key)
+              if found != theme_id:
+                  problems.append(f"{path}: {key} is {found!r}, theme.yaml Id is {theme_id!r}")
+
+          chains = re.findall(r"Themes/Desktop/([^/]+)/Typefaces", read("source/Constants.xaml"))
+          if not chains:
+              problems.append("source/Constants.xaml: no 'Themes/Desktop/<Id>/Typefaces' font chain")
+          for chain_id in chains:
+              if chain_id != theme_id:
+                  problems.append(
+                      f"source/Constants.xaml: font chain says {chain_id!r}, "
+                      f"theme.yaml Id is {theme_id!r}"
+                  )
+
+          if not re.search(r"^ThemeApiVersion:[ \t]*\d+\.\d+", read("source/theme.yaml"), re.M):
+              problems.append("source/theme.yaml: ThemeApiVersion missing or not x.y")
+
+          if problems:
+              print(f"FAIL  theme Id / font chain coupling ({len(problems)})")
+              for problem in problems:
+                  print(f"        {problem}")
+              raise SystemExit(1)
+          print(f"ok    theme Id {theme_id} consistent across 4 manifests and {len(chains)} font chains")
+          PY
+
+      # Playnite reads these with YamlDotNet; a syntax error means the theme or the addon
+      # entry silently does not load. This is a PARSE check, not a style lint - yamllint's
+      # default profile reports 45 errors on this tree (line length, missing "---"), and
+      # even `yamllint -d relaxed` is red because thememodifier.yaml has no trailing
+      # newline. Neither has anything to do with whether Playnite can read the file.
+      - name: Manifests parse as YAML
+        run: |
+          python -m pip install --quiet --disable-pip-version-check 'pyyaml>=6,<7'
+          python - <<'PY'
+          import yaml
+          from pathlib import Path
+
+          REQUIRED = {
+              "source/theme.yaml": ("Id", "Name", "Version", "ThemeApiVersion"),
+              "source/themeExtras.yaml": ("ThemeId",),
+              "source/thememodifier.yaml": ("Constants",),
+              "Manifest/Addon_Manifest.yaml": ("AddonId", "Type", "InstallerManifestUrl"),
+              "Manifest/Installer_Manifest.yaml": ("AddonId", "Packages"),
+          }
+
+          problems = []
+          for path, keys in REQUIRED.items():
+              try:
+                  doc = yaml.safe_load(Path(path).read_text(encoding="utf-8-sig"))
+              except yaml.YAMLError as exc:
+                  problems.append(f"{path}: {exc}")
+                  continue
+              if not isinstance(doc, dict):
+                  problems.append(f"{path}: top level is {type(doc).__name__}, expected a mapping")
+                  continue
+              for key in keys:
+                  if key not in doc:
+                      problems.append(f"{path}: missing required key {key!r}")
+
+          if problems:
+              print(f"FAIL  manifest YAML ({len(problems)})")
+              for problem in problems:
+                  print(f"        {problem}")
+              raise SystemExit(1)
+          print(f"ok    {len(REQUIRED)} manifests parse and carry their required keys")
+          PY

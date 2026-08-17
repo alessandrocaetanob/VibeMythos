@@ -149,7 +149,15 @@ def check_resources(files: list[Path], keys: set[str]) -> list[str]:
 
 
 def locale_keys(path: Path) -> set[str]:
-    tree = ET.parse(path)
+    # Swallow the parse error the way defined_keys does. check_well_formed already owns
+    # reporting malformed XAML; without this guard a malformed locale file makes
+    # check_localization raise, and the traceback lands *after* the FAIL list and is the
+    # first thing a reader sees. The exit code is non-zero either way — this is about the
+    # CI log reading like the validator's own report rather than a stack trace.
+    try:
+        tree = ET.parse(path)
+    except ET.ParseError:
+        return set()
     return {el.get(KEY_ATTR) for el in tree.iter() if el.get(KEY_ATTR)}
 
 
@@ -174,7 +182,22 @@ def check_localization(source: Path) -> list[str]:
     return problems
 
 
-THEMEMODIFIER_ENTRY_RE = re.compile(r"^\s{2,}([A-Za-z0-9_]+)(?:\([^)]*\))?\s*:")
+# thememodifier.yaml holds YAML *sequence* items, not a mapping:
+#
+#     Constants:
+#         - "Accent Colors"                     <- bare string, renders as a section header
+#         - AccentIdleBrush: 'Primary Accent'   <- a real entry
+#         - SearchBoxWidth(125,200): 'Search Box Width'
+#
+# This pattern must therefore consume the "- " bullet. The original `^\s{2,}([A-Za-z0-9_]+)`
+# could not: after the indent the next character is "-", which is outside the class, and no
+# amount of backtracking helps because every shorter prefix of the indent is followed by more
+# whitespace. It matched 0 of 51 lines, so check_thememodifier returned [] unconditionally and
+# printed "ok" without ever looking anything up.
+#
+# The optional (?:\([^)]*\))? group carries the numeric-range form. Section headers still
+# correctly fail to match, because a double quote is not in [A-Za-z0-9_].
+THEMEMODIFIER_ENTRY_RE = re.compile(r"^\s*-\s+([A-Za-z0-9_]+)(?:\([^)]*\))?\s*:")
 
 
 def check_thememodifier(source: Path, constants_keys: set[str], loc_keys: set[str]) -> list[str]:
