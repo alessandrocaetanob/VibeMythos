@@ -2,8 +2,9 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:sys="clr-namespace:System;assembly=mscorlib">
 
-    <!-- Type families. See the block above FontFamily below for why these look like this. -->
-    <FontFamily x:Key="TightFont">Themes/Desktop/Mythos_9f42c1a7-6d8e-4b3f-b0a2-7e9c5d3f18a4/Typefaces/#Inter Tight, Inter Tight, Inter, Segoe UI Variable Display, Segoe UI</FontFamily>
+    <!-- Type families. See the comment block above the FontFamily key later in this file
+         for why these carry a path, and for the rules on adding a new one. -->
+    <FontFamily x:Key="TightFont">Themes/Desktop/Mythos_9f42c1a7-6d8e-4b3f-b0a2-7e9c5d3f18a4/Typefaces/#Inter Tight, Inter Tight, Segoe UI Variable Display, Segoe UI</FontFamily>
 
     <Visibility x:Key="GridViewCoverCompStatusSubtitleVisibility">Collapsed</Visibility>
     <sys:Boolean x:Key="GridViewAllowUseOfLogos">True</sys:Boolean>
@@ -82,9 +83,13 @@
          property's TypeConverter (right shape for FontFamily) but File.Exists-checks the
          relative path first, and the "#Family" fragment WPF requires makes that check fail.
 
+         The path segment "Mythos_9f42c1a7-..." is theme.yaml's Id - Playnite derives the
+         deployed folder name from it. Change the Id and all three chains below silently
+         stop resolving entry 1. CLAUDE.md carries a validator for this.
+
          So each entry below is a comma-separated fallback chain, most specific first:
-           1. install-root-relative path to our bundled file  (works for themes under
-              <PlayniteInstall>\Themes\Desktop\; misses if installed to %AppData%)
+           1. install-root-relative path to our bundled file  (portable installs under
+              <PlayniteInstall>\Themes\Desktop\; misses under %AppData%\Playnite\Themes\)
            2. the bare family name                            (works if the user has it installed)
            3. a system face                                   (always resolves)
          A chain entry that fails resolution is skipped, so the worst case is exactly the
@@ -93,11 +98,27 @@
          Note step 2 is weaker than it looks: WPF family matching is fuzzy, so a bare
          "Inter Tight" or "Inter Mod" silently resolves to plain "Inter" when only Inter is
          installed. That is the bug this workstream exists to fix, and it is why a fallback
-         chain alone was never sufficient - the files have to ship. -->
+         chain alone was never sufficient - the files have to ship. It also means a bare
+         "Inter" entry placed AFTER "Inter Tight"/"Inter Mod" is dead weight, and anything
+         after that is unreachable on a machine with Inter present - so the chains below
+         list only entries that can actually be selected.
+
+         Do NOT bind any of these to HtmlTextView.HtmlFontFamily. That control stringifies
+         FontFamily.ToString() into a *quoted* CSS font-family (Playnite/Controls/
+         HtmlTextView.cs), so the whole chain would be read as one family name and match
+         nothing. Use HtmlDescriptionFontFamily below. -->
     <FontFamily x:Key="FontFamily">Themes/Desktop/Mythos_9f42c1a7-6d8e-4b3f-b0a2-7e9c5d3f18a4/Typefaces/#Inter, Inter, Segoe UI Variable Text, Segoe UI</FontFamily>
-    <FontFamily x:Key="MonospaceFontFamily">Themes/Desktop/Mythos_9f42c1a7-6d8e-4b3f-b0a2-7e9c5d3f18a4/Typefaces/#Inter Mod, Inter Mod, Inter, Consolas</FontFamily>
+    <!-- Misnomer kept for compatibility: "Inter Mod" is a modified Inter, not a monospace,
+         and both consumers are prose (the Notes box and the HTML description). Terminal
+         entries are therefore a prose stack, not Consolas. -->
+    <FontFamily x:Key="MonospaceFontFamily">Themes/Desktop/Mythos_9f42c1a7-6d8e-4b3f-b0a2-7e9c5d3f18a4/Typefaces/#Inter Mod, Inter Mod, Segoe UI Variable Text, Segoe UI</FontFamily>
+    <!-- HtmlTextView renders through HtmlRenderer, which only sees system-installed fonts -
+         the bundled files are unreachable there - and it injects this value into a quoted
+         CSS declaration. It must stay a SINGLE family name: no path, no commas. -->
+    <FontFamily x:Key="HtmlDescriptionFontFamily">Inter</FontFamily>
     <!-- Segoe Fluent Icons is Win11; Segoe MDL2 Assets is the Win10 fallback. Centralized
-         here so the 50+ glyph sites don't each carry the pair as a literal. -->
+         here so the 63 glyph sites don't each carry the pair as a literal. Unlike the
+         chains above this is a genuine CSS-style pair of system faces, not a path. -->
     <FontFamily x:Key="IconFontFamily">Segoe Fluent Icons, Segoe MDL2 Assets</FontFamily>
 
     <sys:Double x:Key="EllipseBorderThickness">1</sys:Double>

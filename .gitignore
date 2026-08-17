@@ -1,0 +1,5 @@
+# SonarQube CLI scratch directories
+.sonar/
+
+# Serena project config — auto-generated per working copy, machine-specific
+.serena/

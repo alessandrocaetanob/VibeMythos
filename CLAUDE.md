@@ -33,34 +33,50 @@ These are the constraints that are not discoverable from the code, and violating
    `ParserContext`**, and `Themes.cs` assigns `ResourceDictionary.Source` only *afterwards* —
    too late to re-base objects already constructed during parsing. Consequences:
    - Use `{ThemeFile 'Images/x.png'}` for images. A bare `UriSource="Images/x.png"` silently
-     resolves nowhere (the two `ImageBrush`es at `Constants.xaml:261-271` are dead for this reason).
+     resolves nowhere — the `WindowImageBackgroundBrush` and `WindowImageBackgroundBrush1`
+     `ImageBrush`es in `Constants.xaml` are dead for this reason.
    - `{ThemeFile}` **cannot** carry a font: it `File.Exists`-checks the relative path, and a
      `FontFamily` needs a `#Family Name` fragment that breaks the check. The fragment is
      mandatory — a path to a `.ttf` with no fragment silently yields Arial.
-   - For fonts, use an **install-root-relative** path — verified working on device:
-     `Themes/Desktop/Mythos_9f42c1a7-6d8e-4b3f-b0a2-7e9c5d3f18a4/Typefaces/#Inter`. Always append
-     fallbacks (`…/Typefaces/#Inter, Inter, Segoe UI`) so an install under `%AppData%\Playnite\Themes\`
-     degrades instead of breaking.
+   - For fonts, use an **install-root-relative** path — verified on device, on a **portable**
+     install: `Themes/Desktop/Mythos_9f42c1a7-6d8e-4b3f-b0a2-7e9c5d3f18a4/Typefaces/#Inter`.
+     ⚠️ This resolves against the *application base directory*. On a standard install, themes
+     fetched from the addon browser land in `%AppData%\Playnite\Themes\Desktop\` while the app
+     base stays in the install dir, so the path misses and the chain degrades to system fonts.
+     Always append fallbacks (`…/Typefaces/#Inter, Inter, Segoe UI`).
+   - **WPF family matching is fuzzy**: a missing `Inter Tight` or `Inter Mod` silently resolves to
+     an installed `Inter` rather than falling through the chain. Missing fonts never fail loudly,
+     so verify by removing the bare-name entry and watching for an unmistakable fallback. A
+     corollary: a bare `Inter` placed *after* `Inter Tight`/`Inter Mod` is dead weight, and every
+     entry after it is unreachable on any machine with Inter installed.
+   - Variable fonts **do** work — WPF exposes all named weight instances. Choose per family by the
+     *reported* family name: `InterTight[wght].ttf` reports `Inter Tight`, but `InterVariable.ttf`
+     reports `Inter Variable Text`, so Inter ships as statics. Note `[wght]` is both a PowerShell
+     wildcard and an illegal URI character — `Copy-Item -LiteralPath` and rename.
+   - **Never bind a path-bearing font token to `HtmlTextView.HtmlFontFamily`.** That control
+     stringifies `FontFamily.ToString()` into a *quoted* CSS `font-family`
+     (`Playnite/Controls/HtmlTextView.cs`), so the whole chain is read as one family name and
+     matches nothing. It also renders via HtmlRenderer, which only sees system-installed fonts —
+     bundled files are unreachable there. Use a single-name token (`HtmlDescriptionFontFamily`).
 8. **Never name a theme asset directory `Fonts/`** — `Toolbox.exe pack` blacklists `^Fonts\\`
-   (`Playnite.Toolbox/Themes.cs`, `PackageFileBlackListRegex`, alongside `bin\`, `obj\`, `.vs\`,
-   `backup_`, `.sln`, `.csproj`). Playnite's scaffolder copies its *own* common fonts into a
-   theme's `Fonts/`, so the packer skips that folder wholesale. Anything you put there works
-   when deployed by hand and **silently vanishes from the `.pthm`** — this theme uses
-   `source/Typefaces/` for exactly that reason. The blacklist is anchored at the start of the
-   relative path, so any other name is safe. Always verify a release by listing the packed
-   archive, not just by deploying:
+   (`Playnite.Toolbox/Themes.cs`, `PackageFileBlackListRegex`, alongside `.sln`, `.csproj`,
+   `.csproj.user`, `.vs\`, `bin\`, `obj\`, `backup_`). Anything you put there works when deployed
+   by hand and **silently vanishes from the `.pthm`** — this theme uses `source/Typefaces/` for
+   exactly that reason. The blacklist is anchored at the start of the relative path, so any other
+   name is safe. Confirm the list straight from the shipped binary:
+
+   ```powershell
+   $b=[IO.File]::ReadAllBytes('F:\Playnite\Toolbox.exe')
+   [regex]::Matches([Text.Encoding]::Unicode.GetString($b),'\^[\w\\]+\\\\') | ForEach-Object Value
+   ```
+
+   Always verify a release by listing the packed archive, not just by deploying — a successful
+   `pack` is **not** evidence that a file shipped:
 
    ```powershell
    Add-Type -AssemblyName System.IO.Compression.FileSystem
    $z=[IO.Compression.ZipFile]::OpenRead($pthm); $z.Entries.Count; $z.Dispose()
    ```
-   - **WPF family matching is fuzzy**: a missing `Inter Tight` or `Inter Mod` silently resolves to
-     an installed `Inter` rather than falling through the chain. Missing fonts never fail loudly,
-     so verify by removing the bare-name entry and watching for an unmistakable fallback.
-   - Variable fonts **do** work — WPF exposes all named weight instances. Choose per family by the
-     *reported* family name: `InterTight[wght].ttf` reports `Inter Tight`, but `InterVariable.ttf`
-     reports `Inter Variable Text`, so Inter ships as statics. Note `[wght]` is both a PowerShell
-     wildcard and an illegal URI character — `Copy-Item -LiteralPath` and rename.
 
 ## Repository layout
 
@@ -113,6 +129,16 @@ Get-ChildItem source/Localization -Filter *.xaml | Where-Object Name -ne 'en_US.
 ```
 
 Use the namespace-aware `Get-Keys` above, **not** `grep 'x:Key='` — the grep count is inflated by commented-out blocks (46 lines vs 37 real keys in `en_US.xaml`).
+
+**Font chain / theme Id coupling** — the font tokens in `Constants.xaml` embed the deployed folder name, which Playnite derives from `theme.yaml`'s `Id`. Change the `Id` without updating the chains and the bundled fonts silently stop loading (see hard rule 7):
+
+```powershell
+$id = (Select-String source/theme.yaml -Pattern '^Id:\s*(.+)$').Matches[0].Groups[1].Value.Trim()
+Select-String source/Constants.xaml -Pattern 'Themes/Desktop/([^/]+)/Typefaces' -AllMatches |
+  ForEach-Object { $_.Matches } | ForEach-Object {
+    if ($_.Groups[1].Value -ne $id) { "MISMATCH: chain says '$($_.Groups[1].Value)', theme.yaml Id is '$id'" }
+  }
+```
 
 **ThemeModifier key resolution** — every `thememodifier.yaml` entry must resolve to a key in `Constants.xaml` **or** `Localization/en_US.xaml`. The `Terminology` block deliberately targets localization strings (`LOCPlayGame`, `LOCMythos_More`, `LOCMythos_Edit`, `LOCMythos_SocialLinks`, `LOCMythos_AchievementsTitle`), so a validator that only checks `Constants.xaml` reports five false positives. Entries with no match anywhere render as section headers rather than controls — which is how the `"Accent Colors"`-style bare strings in that file work.
 

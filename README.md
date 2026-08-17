@@ -49,19 +49,27 @@ The Steam Links Bar displays all Steam client links directly below the game's im
 - **Sidebar Icons:** [Filter Presets Quick Launcher](https://playnite.link/addons.html#FilterPresetsQuickLauncher_ef9df36c-24c2-418c-8468-eed95a09d950) extension.
 <br><br>
 ## Fonts
-The theme now **ships its own fonts** in `Typefaces/`, so there is nothing to install — Inter Tight
-for titles, Inter for body text, and the Mythos-modified Inter for tabular/monospace text all
-render out of the box.
+The theme **ships its own text fonts** in `Typefaces/` — Inter Tight for titles, Inter for body
+text, and the Mythos-modified Inter for the description and notes. The icon font is the one
+exception and still comes from the system:
 
 - **Icon Font:** [Microsoft's Fluent Icons](https://aka.ms/SegoeFluentIcons). `Required for Windows 10`
-  — this is the one font still resolved from the system, with `Segoe MDL2 Assets` as the Windows 10 fallback.
+  — with `Segoe MDL2 Assets` as the Windows 10 fallback.
 
-> [!NOTE]
-> Each family is declared as a fallback chain: the bundled file first, then the system-installed
-> family, then a Segoe face. If you install the theme somewhere other than
-> `<Playnite>\Themes\Desktop\`, the bundled files may not resolve and the theme falls back to
-> whatever is installed — installing [Inter](https://fonts.google.com/specimen/Inter) and
-> [Inter Tight](https://fonts.google.com/specimen/Inter+Tight) yourself covers that case.
+> [!IMPORTANT]
+> **The bundled fonts only load on a portable Playnite install** — one where the theme sits in
+> `<PlayniteInstall>\Themes\Desktop\`. Font paths resolve against Playnite's own program
+> directory, so if you installed the theme through the addon browser on a standard install it
+> most likely lives in `%AppData%\Playnite\Themes\Desktop\`, where the bundled files are out of
+> reach. Nothing breaks — each family falls back to the system-installed face — but you get plain
+> Inter everywhere instead of three distinct faces.
+>
+> **How to tell:** if game titles and body text look like the same font, the bundled files did not
+> resolve. To get the intended look on a standard install, install the fonts yourself:
+> [Inter](https://fonts.google.com/specimen/Inter),
+> [Inter Tight](https://fonts.google.com/specimen/Inter+Tight), and
+> [Inter Mod](https://raw.githubusercontent.com/alessandrocaetanob/VibeMythos/Master/source/Typefaces/Inter-Mod-Regular.ttf)
+> (the Mythos-modified Inter, not available from Google Fonts).
 
 **Font licensing:** the bundled fonts are **not** covered by this repository's MIT `LICENSE`.
 Inter and Inter Tight are licensed under the SIL Open Font License 1.1 — see
