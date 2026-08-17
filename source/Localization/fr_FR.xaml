@@ -4,8 +4,8 @@
 
     <sys:String x:Key="LOCVersionLabel">Bouton Jouer</sys:String>
     <sys:String x:Key="LOCNotesLabel">Synopsis</sys:String>
-    <sys:String x:Key="LOCExitAppLabel">Quitter Mythos</sys:String>
-    <sys:String x:Key="LOCOpenPlaynite">Ouvrir Mythos</sys:String>
+    <sys:String x:Key="LOCExitAppLabel">Quitter VibeMythos</sys:String>
+    <sys:String x:Key="LOCOpenPlaynite">Ouvrir VibeMythos</sys:String>
 
     <sys:String x:Key="LOCPlayGame">Lancer</sys:String>
 

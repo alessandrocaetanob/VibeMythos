@@ -1,8 +1,17 @@
 ThemeApiVersion: 2.9.0
-# Id must never change: Playnite derives the deployed folder name from it, so changing it
-# orphans every existing install's update path AND silently breaks the font tokens in
-# Constants.xaml, which embed it as a path segment. See CLAUDE.md hard rule 7.
-Id: Mythos_9f42c1a7-6d8e-4b3f-b0a2-7e9c5d3f18a4
+# This Id is VibeMythos's own, deliberately NOT upstream Mythos's.
+#
+# Playnite identifies an addon by Id alone - never by Name or Author. While this fork carried
+# upstream's Id it resolved to bansakai's entry in Playnite's addon database, and the update
+# check (package.Version > currentVersion in Addons.cs) meant his next release above our
+# Version would appear as a pre-checked "Mythos" update, download his package, and recursively
+# wipe this theme's directory before extracting. Silently - Playnite never compares Name or
+# Author. Splitting the Id is the only thing that stops that.
+#
+# NOW that a release exists, treat this Id as frozen: it keys the deployed folder name, the
+# update path, ThemeExtras/ThemeModifier settings buckets, and the font token paths in
+# Constants.xaml. Changing it again orphans all of them. See CLAUDE.md hard rules 7 and 9.
+Id: VibeMythos_fb4d738f-62bd-4e08-afd9-52e8cb45f6ca
 Name: VibeMythos
 Author: alessandrocaetanob (based on Mythos by bansakai)
 Version: 2.1

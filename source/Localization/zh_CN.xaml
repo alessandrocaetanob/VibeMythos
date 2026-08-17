@@ -4,8 +4,8 @@
 
     <sys:String x:Key="LOCVersionLabel">游戏按钮</sys:String>
     <sys:String x:Key="LOCNotesLabel">简介</sys:String>
-    <sys:String x:Key="LOCExitAppLabel">退出 Mythos</sys:String>
-    <sys:String x:Key="LOCOpenPlaynite">打开 Mythos</sys:String>
+    <sys:String x:Key="LOCExitAppLabel">退出 VibeMythos</sys:String>
+    <sys:String x:Key="LOCOpenPlaynite">打开 VibeMythos</sys:String>
 
     <sys:String x:Key="LOCPlayGame">启动</sys:String>
 

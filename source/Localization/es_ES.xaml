@@ -4,8 +4,8 @@
 
     <sys:String x:Key="LOCVersionLabel">Botón de juego</sys:String>
     <sys:String x:Key="LOCNotesLabel">Sinopsis</sys:String>
-    <sys:String x:Key="LOCExitAppLabel">Salir de Mythos</sys:String>
-    <sys:String x:Key="LOCOpenPlaynite">Abrir Mythos</sys:String>
+    <sys:String x:Key="LOCExitAppLabel">Salir de VibeMythos</sys:String>
+    <sys:String x:Key="LOCOpenPlaynite">Abrir VibeMythos</sys:String>
 
     <sys:String x:Key="LOCPlayGame">Iniciar</sys:String>
 

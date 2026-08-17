@@ -10,8 +10,8 @@
     <sys:String x:Key="LOCVersionLabel">Play Button</sys:String>
     <sys:String x:Key="LOCNotesLabel">Synopsis</sys:String>
 
-    <sys:String x:Key="LOCExitAppLabel">Exit Mythos</sys:String>
-    <sys:String x:Key="LOCOpenPlaynite">Open Mythos</sys:String>
+    <sys:String x:Key="LOCExitAppLabel">Exit VibeMythos</sys:String>
+    <sys:String x:Key="LOCOpenPlaynite">Open VibeMythos</sys:String>
 
     <sys:String x:Key="LOCPlayGame">Launch</sys:String>
 

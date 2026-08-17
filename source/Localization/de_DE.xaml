@@ -4,8 +4,8 @@
 
     <sys:String x:Key="LOCVersionLabel">Play-Schaltfläche</sys:String>
     <sys:String x:Key="LOCNotesLabel">Zusammenfassung</sys:String>
-    <sys:String x:Key="LOCExitAppLabel">Mythos beenden</sys:String>
-    <sys:String x:Key="LOCOpenPlaynite">Mythos öffnen</sys:String>
+    <sys:String x:Key="LOCExitAppLabel">VibeMythos beenden</sys:String>
+    <sys:String x:Key="LOCOpenPlaynite">VibeMythos öffnen</sys:String>
 
     <sys:String x:Key="LOCPlayGame">Starten</sys:String>
     <sys:String x:Key="LOCMenuDownloadMetadata">Metadaten herunterladen</sys:String>

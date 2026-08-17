@@ -4,8 +4,8 @@
 
     <sys:String x:Key="LOCVersionLabel">플레이 버튼</sys:String>
     <sys:String x:Key="LOCNotesLabel">시놉시스</sys:String>
-    <sys:String x:Key="LOCExitAppLabel">Mythos 종료</sys:String>
-    <sys:String x:Key="LOCOpenPlaynite">Mythos 열기</sys:String>
+    <sys:String x:Key="LOCExitAppLabel">VibeMythos 종료</sys:String>
+    <sys:String x:Key="LOCOpenPlaynite">VibeMythos 열기</sys:String>
 
     <sys:String x:Key="LOCPlayGame">실행</sys:String>
 

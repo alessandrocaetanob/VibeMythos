@@ -31,7 +31,7 @@ shapes every workstream below.
 - A genuinely coherent near-black neutral ramp (`#0B0C0E → #18181B → #242427 → #323236`)
   plus a systematic glass/overlay layer (`ContentBrushOverlay` family) — the theme's
   defining material.
-- Rich animation culture: 86 `BeginStoryboard`s, transform-driven, almost no bitmap
+- Rich animation culture: 41 `BeginStoryboard`s, transform-driven, almost no bitmap
   effects (a single cheap `DropShadowEffect`; blur deliberately delegated to Playnite's
   own background handling — `Library.xaml:34`).
 - The 2.x integration groundwork is done: global progress bar, Playnite Achievements,
@@ -42,15 +42,15 @@ shapes every workstream below.
 | Debt | Evidence |
 | --- | --- |
 | ~~Fonts are not shipped~~ **(fixed — HYP-194)** | `FontFamily`/`TightFont`/`MonospaceFontFamily` were bare system lookups and no font directory existed. Worse than a clean fallback: WPF family matching is fuzzy, so on the dev machine (where `Inter` is installed but `Inter Tight` and `Inter Mod` are not) **both silently resolved to `Inter`**. Measured: `FontFamily("Inter Mod, Consolas").FamilyNames` → `'Inter'`. Now shipped in `source/Typefaces/`. |
-| No radius discipline | 14 radius tokens (two of them duplicates at 22) **plus 48 literal `CornerRadius` values**. Visible seam: `Sidebar.xaml:36` fill at radius 15 under a stroke at 16 (`:107`). |
-| No spacing system | 109 distinct `Margin` values; `Padding="0,11,0,11"` ×34; six `Margin="0,0,0,-1"` nudges compensating for the missing scale. |
-| No motion tokens | 12 distinct durations, 5 easing families for the same hover gesture; all literals. |
-| Hover chaos | 132 `IsMouseOver` triggers resolving to **26 different brushes** — including `HoverBrush` (`#E7E9EA`, a *foreground*) used as a background 10×. |
-| Type scale half-adopted | 31 literal `FontSize` (13/15/19 aren't even in the scale) vs 40 tokenized. `FontSizeLarger`/`FontSizeLargest` are used but not defined *by this theme* — they resolve only because Playnite's default theme defines them (20/29) and merges first. Not a break, but the theme doesn't own its own display size, including on the game title (`DetailsViewGameOverview.xaml:735`). |
+| No radius discipline | 17 radius tokens (two of them duplicates at 22: `ControlCornerRadiusLarger`, `GridCornerDetailsPanel`) **plus 48 literal `CornerRadius` values** in attribute form (72 counting `Setter`-form). Visible seam: `Sidebar.xaml:36` fill at radius 15 under a stroke at 16 (`:107`). |
+| No spacing system | 110 distinct literal `Margin` values in attribute form (135 counting `Setter`-form); `Padding="0,11,0,11"` ×34; six `Margin="0,0,0,-1"` nudges compensating for the missing scale. |
+| No motion tokens | Hover gesture alone: 7 distinct durations and 4 explicit easing types, with 36 of 58 hover animations carrying no explicit easing at all (implicit Linear). Theme-wide: 12 durations, 6 easing types. All literals. |
+| Hover chaos | ~133 `Setter`s inside `IsMouseOver` triggers, resolving to **27 distinct brush tokens** (33 counting hardcoded literal colours). `HoverBrush` (`#E7E9EA`, a *foreground*) is used as a background exactly once, in `Menu.xaml` — a one-off fix, not the pattern this row originally implied. |
+| Type scale half-adopted | 31 literal `FontSize` (13/15/19 aren't even in the scale) vs 39 tokenized. `FontSizeLarger`/`FontSizeLargest` are used but not defined *by this theme* — they resolve only because Playnite's default theme defines them (20/29) and merges first. Not a break, but the theme doesn't own its own display size, including on the game title (`DetailsViewGameOverview.xaml:735`). |
 | Silent breakage | Two real ones: `ComboBox.xaml:146` `{DynamicResource subtalBrush}` (case typo → resolves to nothing); `GridViewGameOverview.xaml:105` references undefined `DetailsViewAllowUseOfLogos` (should be `GridViewAllowUseOfLogos` — grid logo toggle dead). Adjacent: `themeExtras.yaml` `BannersBySourceNamePath` points at an `Images/Banners/SourceName` directory that doesn't exist, and the `DetailsListSelectedGradient` key in `Constants.xaml` is defined-but-unused with two `GradientStop`s bound to an undefined `AccentIdleColor`. |
-| Dead upstream palette | Pre-fork navy/brown/beige remnants (`MainColor #2C3A67`, `Brown #795548`, `CardBorderBrush #D4D0B8`, yellow `BackgroundToneColor`, three unused radial "tube" gradients) — roughly 30 genuinely dead keys. |
-| Structural duplication | The ~250-line metadata-row block (16 rows + HLTB + achievements styles) exists **byte-for-byte twice**: `DetailsViewGameOverview.xaml:421-670` and `GridViewGameOverview.xaml:411-660`, hardcoded HLTB hexes included. |
-| Zero render caching / virtualization tuning | `CacheMode`: 0 uses despite 38 scale animations; `Fant` (most expensive scaler) on every grid cover; no `VirtualizationMode=Recycling` anywhere. |
+| Dead upstream palette | Pre-fork navy/brown/beige remnants (`MainColor #2C3A67`, `Brown #795548`, `CardBorderBrush #D4D0B8`, yellow `BackgroundToneColor`, three unused radial "tube" gradients, plus `ExpanderBackgroundBrush`, which hardcodes `MainColor`'s hex directly) — roughly **60 genuinely dead Color/Brush keys**, of 80 dead keys of any type. ⚠️ Not all are safe to delete: 19 are Playnite-global and `DuplicateHider_MaxNumberOfIcons` is read by its plugin — see HYP-195. |
+| Structural duplication | The metadata-row block is duplicated across `DetailsViewGameOverview.xaml` and `GridViewGameOverview.xaml`. The full duplicated span is closer to **490 lines**, not 250 — the 16 metadata rows sit in one range while the HLTB and achievements blocks live ~230 lines earlier in each file. It is **not** byte-identical: the DuplicateHider host names genuinely differ (`DhDetailsSelectorHost`/`_SourceSelector1` vs `DhGridDetailsSelectorHost`/`_SourceSelector2`). Hardcoded HLTB hexes included. |
+| Zero render caching / virtualization tuning | `CacheMode`: 0 uses despite 46 scale-targeting animation elements across 7 files; `Fant` (most expensive scaler) on every grid cover; no `VirtualizationMode=Recycling` anywhere. |
 | Identity | `theme.yaml` still says `Name: Mythos, Author: bansakai, Version: 2.0` with all links pointing upstream. |
 
 ---
@@ -154,7 +154,7 @@ Three duration tokens + two easings, as keyed resources next to the existing `Fl
 | `Ease/Standard` | CubicEase Out | everything by default |
 | `Ease/Emphasized` | BackEase Out (amp 0.3) | playful accents: play button, favorites |
 
-Migrate the 86 storyboards onto these (mechanical, high-volume, easily reviewed).
+Migrate the 41 storyboards onto these (mechanical and easily reviewed — note the original "86" double-counted opening and closing tags and included a commented-out block).
 Note: `Duration` cannot be templated everywhere via `DynamicResource` in triggers —
 where WPF forces literals, the tokens still serve as the documented source of truth.
 
@@ -338,7 +338,7 @@ library before/after.
    `GridViewItemTemplate.xaml:30,33`; keep `Fant` only for large, static hero art. Fant
    on every cover is the likeliest frame-time cost at scroll speed.
 2. **`CacheMode="BitmapCache"`** on every scale-animated element (cover hover-zoom, play
-   button, sidebar items) — 38 scale animations currently re-rasterize per frame.
+   button, sidebar items) — 46 scale-targeting animation elements currently re-rasterize per frame.
 3. **Virtualization spike:** `VirtualizingPanel.VirtualizationMode="Recycling"` +
    `ScrollUnit` on the games list. ⚠️ Recycling interacts with plugin-injected controls
    (the DuplicateHider recycling comment at `Common.xaml:116-120` exists for a reason) —

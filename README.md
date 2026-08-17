@@ -15,15 +15,29 @@ A fork of [Mythos](https://github.com/bansakai/Mythos) by [bansakai](https://git
 
 ## Installation
 
-Download the latest packaged `.pthm` theme file from [Releases](https://github.com/alessandrocaetanob/VibeMythos/releases/latest) and open it.
+> [!WARNING]
+> **No packaged release exists yet.** Until one is published, install from source: copy the
+> contents of `source/` into a folder under your Playnite themes directory named
+> `VibeMythos_fb4d738f-62bd-4e08-afd9-52e8cb45f6ca`, then pick VibeMythos in
+> `Settings → Appearance`.
+>
+> ```powershell
+> $dest = "<PlayniteInstall>\Themes\Desktop\VibeMythos_fb4d738f-62bd-4e08-afd9-52e8cb45f6ca"
+> New-Item -ItemType Directory -Force $dest
+> Copy-Item source\* $dest -Recurse -Force
+> ```
+
+Once releases exist, the packaged `.pthm` from
+[Releases](https://github.com/alessandrocaetanob/VibeMythos/releases/latest) can be opened directly.
 
 > [!NOTE]
-> VibeMythos is **not** in Playnite's addon browser. Installing "Mythos" from there gets you
-> bansakai's upstream theme, not this fork — they share a theme `Id`, so Playnite treats them as
-> the same addon and only one can be installed at a time.
+> VibeMythos is **not** in Playnite's addon browser, and it uses its own theme `Id` — separate
+> from upstream Mythos. That means the two can be installed side by side, and Playnite will never
+> offer an upstream Mythos release as an "update" to this fork.
 >
-> Installing by hand also puts the theme in `<PlayniteInstall>\Themes\Desktop\`, which is where
-> the [bundled fonts](#fonts) resolve from.
+> **Anything you add inside the theme folder is deleted whenever the theme is installed or
+> updated** — Playnite wipes the directory before extracting. Keep custom platform icons, sidebar
+> icons and theme audio backed up somewhere outside it.
 <br><br>
 ## Core Functions & Setup
 ### Age Rating Banners
@@ -36,7 +50,7 @@ By default, cover art isn't visible in Details View. Open [ThemeModifier](https:
 ### Game Summary
 The game summary, found below the trailer, simply displays the `Synopsis` metadata for the selected title. This must be configured manually in `Game Details > Advanced > Synopsis`.
 ### Platform Icons
-Platform icons are displayed on the bottom right of detail panels. VibeMythos includes a handful of commonly used platform icons, but not all of them. If a specific platform does not have an icon, find a `.png` online, drop it in `<PlayniteInstall>\Themes\Desktop\Mythos_9f42c1a7-6d8e-4b3f-b0a2-7e9c5d3f18a4\Icons\Labels`. Name icon files according to the IDs found [here.](https://github.com/JosefNemec/Playnite/blob/master/source/Playnite/Emulation/Platforms.yaml)
+Platform icons are displayed on the bottom right of detail panels. VibeMythos includes a handful of commonly used platform icons, but not all of them. If a specific platform does not have an icon, find a `.png` online, drop it in `<PlayniteInstall>\Themes\Desktop\VibeMythos_fb4d738f-62bd-4e08-afd9-52e8cb45f6ca\Icons\Labels`. Name icon files according to the IDs found [here.](https://github.com/JosefNemec/Playnite/blob/master/source/Playnite/Emulation/Platforms.yaml)
 ### Play Button Text
 For those using Playnite to open external launchers or applications, you can replace the default Launch text in `Game Details > Advanced > Play Button`.
 ### Sidebar
@@ -52,15 +66,16 @@ own when its plugin is absent, so the theme never leaves an empty husk behind.
 
 | Plugin | Lights up |
 | --- | --- |
-| **[ExtraMetadataLoader](https://playnite.link/addons.html#ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429)** `required` | Game logos and video banners in Details View and the Grid View drawer. Without it the hero area falls back to the title text. |
-| **[ThemeModifier](https://playnite.link/addons.html#playnite-thememodifier-plugin)** | 40+ theme settings — accent colours, floating sidebar, Steam Links Bar, ambient backdrop reach, Grid View toggles. This is how you customise the theme. |
-| **[ThemeExtras](https://playnite.link/addons.html#felixkmh_Extras_Plugin)** | Navigation buttons in the top panel, library banners, settable ratings and completion status. |
-| **[Playnite Achievements](https://github.com/justin-delano/PlayniteAchievements)** or **[SuccessStory](https://playnite.link/addons.html#playnite-successstory-plugin)** | The achievements row in Details View, the Grid View progress readout, and the gold completion state at 100%. Both naming schemes are supported. |
+| **[ExtraMetadataLoader](https://playnite.link/addons.html#ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429)** `required` | Game logos in Details View and Grid View, and the video banner in Details View. Without it, the logo slot falls back to the game icon. |
+| **[ThemeModifier](https://playnite.link/addons.html#playnite-thememodifier-plugin)** | 41 theme settings — accent colours, floating sidebar, Steam Links Bar, ambient backdrop reach, Grid View toggles. This is how you customise the theme. |
+| **[ThemeExtras](https://playnite.link/addons.html#felixkmh_Extras_Plugin)** | Navigation buttons in the top panel, and library banners on grid covers. |
+| **[Playnite Achievements](https://github.com/justin-delano/PlayniteAchievements)** | The achievements row in Details View, the Grid View progress readout, and the gold completion state at 100%. |
+| **[SuccessStory](https://playnite.link/addons.html#playnite-successstory-plugin)** | The achievements row in Details View only. The two plugins are mutually exclusive by design — with SuccessStory installed the Playnite Achievements blocks self-collapse, so the Grid View readout and gold 100% state are Playnite Achievements only. |
 | **[HowLongToBeat](https://playnite.link/addons.html#playnite-howlongtobeat-plugin)** | The Main Story / Main + Extra / Completionist estimate row above the metadata panel. |
-| **[DuplicateHider](https://playnite.link/addons.html#felixkmh_DuplicateHider_Plugin)** | Library source badges (Steam, GOG, Epic, Xbox…) on covers, in the Details header and in the Grid panel. |
-| **[UniPlaySong](https://github.com/aHuddini/UniPlaySong)** | Top-panel music transport and the Now Playing toast. |
-| **[Filter Presets Quick Launcher](https://playnite.link/addons.html#FilterPresetsQuickLauncher_ef9df36c-24c2-418c-8468-eed95a09d950)** | Sidebar filter icons. |
+| **[DuplicateHider](https://playnite.link/addons.html#felixkmh_DuplicateHider_Plugin)** | Library source badges (Steam, GOG, Epic, Xbox…) on grid covers, in the Details View **Library row**, and in the Grid View details panel. |
+| **[UniPlaySong](https://github.com/aHuddini/UniPlaySong)** | The Now Playing toast. (A themed top-panel transport is designed but not yet shipped.) |
 | **[Link Utilities](https://playnite.link/addons.html#LinkUtilties_f692b4bb-238d-4080-ae76-4aaefde6f7a1)** | Converts Steam web links to client links so the Steam Links Bar opens in-app. |
+| **[Filter Presets Quick Launcher](https://playnite.link/addons.html#FilterPresetsQuickLauncher_ef9df36c-24c2-418c-8468-eed95a09d950)** | Sidebar filter entries. No dedicated wiring — it inherits the theme's generic `SidebarItem` styling like any sidebar plugin. |
 <br>
 ## Fonts
 The theme **ships its own text fonts** in `Typefaces/` — Inter Tight for titles, Inter for body
@@ -71,12 +86,13 @@ exception and still comes from the system:
   — with `Segoe MDL2 Assets` as the Windows 10 fallback.
 
 > [!IMPORTANT]
-> **The bundled fonts only load on a portable Playnite install** — one where the theme sits in
-> `<PlayniteInstall>\Themes\Desktop\`. Font paths resolve against Playnite's own program
-> directory, so if you installed the theme through the addon browser on a standard install it
-> most likely lives in `%AppData%\Playnite\Themes\Desktop\`, where the bundled files are out of
-> reach. Nothing breaks — each family falls back to the system-installed face — but you get plain
-> Inter everywhere instead of three distinct faces.
+> **The bundled fonts only load on a portable Playnite install.** Font paths resolve against
+> Playnite's own program directory. A portable install keeps themes there; a standard install
+> puts them in `%AppData%\Playnite\Themes\Desktop\`, where the bundled files are out of reach.
+> This is decided purely by which kind of Playnite you run — **the install method makes no
+> difference**, since Playnite routes both the addon browser and a double-clicked `.pthm` to the
+> same location. Nothing breaks — each family falls back to the system-installed face — but you
+> get plain Inter everywhere instead of three distinct faces.
 >
 > **How to tell:** if game titles and body text look like the same font, the bundled files did not
 > resolve. To get the intended look on a standard install, install the fonts yourself:

@@ -4,8 +4,8 @@
 
     <sys:String x:Key="LOCVersionLabel">Кнопка игры</sys:String>
     <sys:String x:Key="LOCNotesLabel">Синопсис</sys:String>
-    <sys:String x:Key="LOCExitAppLabel">Выйти из Mythos</sys:String>
-    <sys:String x:Key="LOCOpenPlaynite">Открыть Mythos</sys:String>
+    <sys:String x:Key="LOCExitAppLabel">Выйти из VibeMythos</sys:String>
+    <sys:String x:Key="LOCOpenPlaynite">Открыть VibeMythos</sys:String>
 
     <sys:String x:Key="LOCPlayGame">Запустить</sys:String>
 

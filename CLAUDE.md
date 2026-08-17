@@ -39,7 +39,7 @@ These are the constraints that are not discoverable from the code, and violating
      `FontFamily` needs a `#Family Name` fragment that breaks the check. The fragment is
      mandatory — a path to a `.ttf` with no fragment silently yields Arial.
    - For fonts, use an **install-root-relative** path — verified on device, on a **portable**
-     install: `Themes/Desktop/Mythos_9f42c1a7-6d8e-4b3f-b0a2-7e9c5d3f18a4/Typefaces/#Inter`.
+     install: `Themes/Desktop/VibeMythos_fb4d738f-62bd-4e08-afd9-52e8cb45f6ca/Typefaces/#Inter`.
      ⚠️ This resolves against the *application base directory*. On a standard install, themes
      fetched from the addon browser land in `%AppData%\Playnite\Themes\Desktop\` while the app
      base stays in the install dir, so the path misses and the chain degrades to system fonts.
@@ -77,6 +77,22 @@ These are the constraints that are not discoverable from the code, and violating
    Add-Type -AssemblyName System.IO.Compression.FileSystem
    $z=[IO.Compression.ZipFile]::OpenRead($pthm); $z.Entries.Count; $z.Dispose()
    ```
+9. **Playnite identifies an addon by `Id` alone** — never by `Name` or `Author`. `Addons.cs` does
+   `serviceClient.GetAddon(manifest.Id)` and updates on `package.Version > currentVersion`, with the
+   update row rendering the *server's* name and no author. `ExtensionInstaller.InstallPackedFile`
+   then calls `FileSystem.CreateDirectory(installDir, true)` — a **recursive wipe** — before
+   extracting. Consequences:
+   - This fork therefore carries **its own `Id`** (`VibeMythos_fb4d738f-…`), split from upstream in
+     HYP-200. While it shared upstream's Id, bansakai's next release above our `Version` would have
+     silently replaced the fork with upstream Mythos on the user's next update check.
+   - The `Id` must stay in sync across four files: `source/theme.yaml`, `source/themeExtras.yaml`,
+     `Manifest/Addon_Manifest.yaml`, `Manifest/Installer_Manifest.yaml` — plus the three font chains
+     in `Constants.xaml`, which embed it as a path segment (rule 7).
+   - It also keys ThemeModifier and ThemeExtras settings buckets, and Playnite's own
+     `config.json` theme selection. Changing it again orphans all of them.
+   - **The recursive wipe means anything a user drops inside the theme folder is destroyed on every
+     install/update** — custom platform icons, sidebar icons, theme audio. The README warns about it;
+     keep that warning if you touch those instructions.
 
 ## Repository layout
 
@@ -149,12 +165,12 @@ Select-String source/Constants.xaml -Pattern 'Themes/Desktop/([^/]+)/Typefaces' 
 | What | Where |
 |---|---|
 | Install root | `F:\Playnite` (`Toolbox.exe` lives here) |
-| Deployed theme | `F:\Playnite\Themes\Desktop\Mythos_9f42c1a7-6d8e-4b3f-b0a2-7e9c5d3f18a4` |
+| Deployed theme | `F:\Playnite\Themes\Desktop\VibeMythos_fb4d738f-62bd-4e08-afd9-52e8cb45f6ca` |
 | Installed plugins | `F:\Playnite\Extensions` (68 of them) |
 
 ```powershell
 # Deploy. Copy-Item, never Move-Item — moving empties source/ in the repo.
-$dest = "F:\Playnite\Themes\Desktop\Mythos_9f42c1a7-6d8e-4b3f-b0a2-7e9c5d3f18a4"
+$dest = "F:\Playnite\Themes\Desktop\VibeMythos_fb4d738f-62bd-4e08-afd9-52e8cb45f6ca"
 Copy-Item source\* $dest -Recurse -Force
 ```
 
@@ -227,8 +243,8 @@ Scope note: there is no compiled language here, so Sonar's value is the **XML an
 Verified against the current tree — useful context before touching these areas:
 
 - ~~**Global task progress is missing.**~~ **Shipped (HYP-155).** `PART_ProgressGlobal`, `PART_TextProgressText` and `PART_ButtonProgressCancel` now live in `Views/TopPanel.xaml`. Still open: the per-plugin indicator in Sidebar items, which uses `PART_ProgressStatus` (`CustomControls/SidebarItem.xaml`) → HYP-156.
-- **16 Playnite-global `LOC*` keys are overridden** in `Localization/en_US.xaml` (of 37 total keys), leaking theme terminology outside the theme. Additionally, every locale is missing 2 keys present in `en_US` (`LOCAddonChangesRestart`, `LOCSettingsRestartNotification`), and `de_DE.xaml` carries 9 stale keys that no longer exist in `en_US`. → HYP-166.
-- **Plugin wiring is broadening but still shallow.** Ten plugin-injected controls are declared: `ExtraMetadataLoader_LogoLoaderControl(Grid)` ×2 each, `ExtraMetadataLoader_VideoLoaderControl`, `ThemeExtras_Banner`, `SuccessStory_Plugin{List,CompactList}`, `PlayniteAchievements_AchievementButton` ×2, `DuplicateHider_SourceSelector{,1,2}`. `PluginStatus`/`PluginSettings` usage sits in `Views/DetailsViewGameOverview.xaml` (23), `Views/GridViewGameOverview.xaml` (17), `Views/MainWindow.xaml` (6), `Views/TopPanel.xaml` (3) and `DerivedStyles/GridViewItemTemplate.xaml` (1). Achievements (HYP-157/158), source badges (HYP-160) and the ambient backdrop (HYP-163) have shipped; → HYP-159, HYP-161, HYP-165, HYP-167 remain, plus the Tier 1–3 plugins in the 3.0 plan.
+- **7 Playnite-global `LOC*` keys are overridden** in `Localization/en_US.xaml` (of 38 total keys), leaking theme terminology outside the theme: `LOCAddonChangesRestart`, `LOCExitAppLabel`, `LOCNotesLabel`, `LOCOpenPlaynite`, `LOCPlayGame`, `LOCSettingsRestartNotification`, `LOCVersionLabel`. The other 31 are theme-owned `LOCMythos_*`. Additionally, every locale is missing **3** keys present in `en_US` (`LOCAddonChangesRestart`, `LOCSettingsRestartNotification`, `LOCMythos_NowPlaying` — the last never back-filled after the toast shipped in `b86b04e`, so the Now Playing string is untranslated in all 10 locales), and `de_DE.xaml` carries 9 stale keys that no longer exist in `en_US`. → HYP-166.
+- **Plugin wiring is broadening but still shallow.** Ten plugin-injected controls are declared: `ExtraMetadataLoader_LogoLoaderControl(Grid)` ×2 each, `ExtraMetadataLoader_VideoLoaderControl`, `ThemeExtras_Banner`, `SuccessStory_Plugin{List,CompactList}`, `PlayniteAchievements_AchievementButton` ×2, `DuplicateHider_SourceSelector{,1,2}`. Real `PluginStatus`/`PluginSettings` markup-extension usage — **excluding matches inside XML comments**, which is a trap this file has fallen into twice — sits in `Views/DetailsViewGameOverview.xaml` (23), `Views/GridViewGameOverview.xaml` (17), `Views/MainWindow.xaml` (4), `Views/TopPanel.xaml` (3) and `DerivedStyles/GridViewItemTemplate.xaml` (**0** — it wires `DuplicateHider_SourceSelector` purely via the `ContentControl x:Name` convention; its only match is the word inside a comment). Achievements (HYP-157/158), source badges (HYP-160) and the ambient backdrop (HYP-163) have shipped; → HYP-159, HYP-161, HYP-165, HYP-167 remain, plus the Tier 1–3 plugins in the 3.0 plan.
 - **No CI yet** — validation is manual via the commands above. → HYP-168.
 
 ## Plugin integration cheat sheet

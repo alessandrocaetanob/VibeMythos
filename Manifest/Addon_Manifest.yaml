@@ -1,4 +1,10 @@
-AddonId: Mythos_9f42c1a7-6d8e-4b3f-b0a2-7e9c5d3f18a4
+# Submission manifest for Playnite's addon database. NOT yet submitted, and nothing here is
+# read at runtime: when InstallerManifestUrl starts with http, Playnite ignores this file and
+# queries its own backend by AddonId instead (see AddonManifests.cs). This exists so the entry
+# is ready to PR to JosefNemec/PlayniteAddonDatabase once releases exist.
+#
+# AddonId must stay in sync with source/theme.yaml's Id and Installer_Manifest.yaml's AddonId.
+AddonId: VibeMythos_fb4d738f-62bd-4e08-afd9-52e8cb45f6ca
 Type: ThemeDesktop
 InstallerManifestUrl: https://raw.githubusercontent.com/alessandrocaetanob/VibeMythos/Master/Manifest/Installer_Manifest.yaml
 Name: VibeMythos
