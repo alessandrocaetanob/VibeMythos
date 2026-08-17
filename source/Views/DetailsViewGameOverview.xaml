@@ -1348,7 +1348,7 @@
                                                 <TextBox x:Name="PART_TextNotes"
                                                         IsHitTestVisible="False"
                                                         IsReadOnly="True"
-                                                        Foreground="{DynamicResource ButtonTextBrush}"
+                                                        Foreground="{DynamicResource TextBrush}"
                                                         AcceptsReturn="True"
                                                         BorderThickness="0"
                                                         TextWrapping="Wrap"
@@ -1523,7 +1523,7 @@
                                                                                     <Setter Property="Cursor" Value="Hand"/>
                                                                                 </Trigger>
                                                                                 <Trigger Property="IsEnabled" Value="False">
-                                                                                    <Setter TargetName="HoverBg" Property="Background" Value="{DynamicResource DisabledBackgroundBrush}"/>
+                                                                                    <Setter TargetName="HoverBg" Property="Background" Value="{DynamicResource DisabledBrush}"/>
                                                                                     <Setter Property="Foreground" Value="{DynamicResource IdleBrush}"/>
                                                                                 </Trigger>
                                                                                 <DataTrigger Binding="{Binding Tag, RelativeSource={RelativeSource Self}}" Value="True">

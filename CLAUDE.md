@@ -146,6 +146,34 @@ Get-ChildItem source/Localization -Filter *.xaml | Where-Object Name -ne 'en_US.
 
 Use the namespace-aware `Get-Keys` above, **not** `grep 'x:Key='` — the grep count is inflated by commented-out blocks (46 lines vs 37 real keys in `en_US.xaml`).
 
+**Resource reference resolution** — the highest-value check in the repo. An unresolved `DynamicResource` never throws; WPF just leaves the property at its inherited value, so a typo'd or deleted key is invisible until someone notices the wrong colour months later. This found all six broken references fixed in HYP-195. It must resolve against **four** sources, or it reports false positives: the theme, Playnite's default theme, Playnite's localization, and Playnite's global template resources (which supply `False`, `ObjectToStringConverter`, `BooleanToVisibilityConverter` and ~1,100 others).
+
+```powershell
+$nsX='http://schemas.microsoft.com/winfx/2006/xaml'
+function Get-Keys($p){ try { $x=[xml](Get-Content $p -Raw); $nm=New-Object System.Xml.XmlNamespaceManager($x.NameTable); $nm.AddNamespace('x',$nsX); $x.SelectNodes('//*[@x:Key]',$nm) | ForEach-Object { $_.GetAttribute('Key',$nsX) } } catch { @() } }
+$defined=@{}
+foreach ($r in @('source','F:\Playnite\Themes\Desktop\Default','F:\Playnite\Localization','F:\Playnite\Templates\Themes')) {
+  Get-ChildItem $r -Recurse -Filter *.xaml -ErrorAction SilentlyContinue | ForEach-Object { Get-Keys $_.FullName | ForEach-Object { $defined[$_]=$true } }
+}
+Get-ChildItem source -Recurse -Filter *.xaml | ForEach-Object {
+  $f=$_; $t=[regex]::Replace((Get-Content $f.FullName -Raw),'(?s)<!--.*?-->','')   # comments are NOT usages
+  foreach ($m in [regex]::Matches($t,'\{(?:Dynamic|Static)Resource\s+([A-Za-z0-9_%\.]+)\s*[},]')) {
+    if (-not $defined.ContainsKey($m.Groups[1].Value)) { "UNRESOLVED $($f.Name): $($m.Groups[1].Value)" }
+  }
+}
+```
+
+**Before deleting any key from `Constants.xaml`**, check it is not Playnite-global. A key the theme never references may still be read by Playnite core for its own chrome — `WhiteColor`/`BlackColor` are the load-bearing example, and `MainColor` and `TooltipBackgroundBrush` are others the 3.0 plan wrongly listed as dead:
+
+```powershell
+# any key also defined by the default theme is Playnite-global - retint, never delete
+$mine = Get-Keys 'source/Constants.xaml'
+$core = @{}; Get-ChildItem 'F:\Playnite\Themes\Desktop\Default' -Recurse -Filter *.xaml | ForEach-Object { Get-Keys $_.FullName | ForEach-Object { $core[$_]=$true } }
+$mine | Where-Object { $core.ContainsKey($_) } | Sort-Object
+```
+
+Plugins also read theme keys they never appear to reference — `DuplicateHider_MaxNumberOfIcons` is one. Treat any `<Plugin>_*` key as an external API.
+
 **Font chain / theme Id coupling** — the font tokens in `Constants.xaml` embed the deployed folder name, which Playnite derives from `theme.yaml`'s `Id`. Change the `Id` without updating the chains and the bundled fonts silently stop loading (see hard rule 7):
 
 ```powershell

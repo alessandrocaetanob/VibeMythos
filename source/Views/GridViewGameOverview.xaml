@@ -102,7 +102,7 @@
                                                             <Border x:Name="ExtraMetadataLoader_LogoLoaderControlGrid"
                                                                     VerticalAlignment="Center"
                                                                     HorizontalAlignment="Center"
-                                                                    Tag="{DynamicResource DetailsViewAllowUseOfLogos}">
+                                                                    Tag="{DynamicResource GridViewAllowUseOfLogos}">
                                                                 <Border.Style>
                                                                     <Style TargetType="Border">
                                                                         <Setter Property="Visibility" Value="Visible" />
