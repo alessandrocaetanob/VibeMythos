@@ -8,9 +8,14 @@ ThemeApiVersion: 2.9.0
 # wipe this theme's directory before extracting. Silently - Playnite never compares Name or
 # Author. Splitting the Id is the only thing that stops that.
 #
-# NOW that a release exists, treat this Id as frozen: it keys the deployed folder name, the
-# update path, ThemeExtras/ThemeModifier settings buckets, and the font token paths in
-# Constants.xaml. Changing it again orphans all of them. See CLAUDE.md hard rules 7 and 9.
+# Treat this Id as frozen from here on: it keys the deployed folder name, the update path,
+# ThemeExtras/ThemeModifier settings buckets, and the font token paths in Constants.xaml.
+# Changing it again orphans all of them. See CLAUDE.md hard rules 7 and 9.
+#
+# NOTE: no release exists yet - there is no tag, no GitHub release, and Installer_Manifest.yaml
+# still reads `Packages: []`. The install base is therefore ~0, which is exactly why HYP-210 cuts
+# a throwaway 2.1 test release now: it proves the wipe-and-extract update path while getting it
+# wrong is still free. Delete this note once that release is published.
 Id: VibeMythos_fb4d738f-62bd-4e08-afd9-52e8cb45f6ca
 Name: VibeMythos
 Author: alessandrocaetanob (based on Mythos by bansakai)
