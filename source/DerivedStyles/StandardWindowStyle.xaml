@@ -32,6 +32,15 @@
                                 <ContentPresenter Margin="0"/>
                                 <DockPanel DockPanel.Dock="Top" LastChildFill="False" Margin="0,-20,0,0">
                                     <DockPanel DockPanel.Dock="Top" LastChildFill="False">
+                                        <!-- Playnite binds the window title by this name. Without it every
+                                             non-main window - Settings, Add Game, metadata dialogs and every
+                                             plugin's config window - rendered three system buttons over a
+                                             blank caption strip. MainWindowStyle.xaml already declares this
+                                             correctly; StandardWindowStyle simply omitted it. -->
+                                        <TextBlock Text="{TemplateBinding Title}" DockPanel.Dock="Left"
+                                                   Margin="10,0,0,0" VerticalAlignment="Center"
+                                                   Opacity="0.75" Style="{DynamicResource BaseTextBlockStyle}"
+                                                   x:Name="PART_TextTitle" />
                                         <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" Margin="5" >
                                             <Button Style="{DynamicResource WinSysButton}"
                                                     Content="{StaticResource WinSysMinIconGeometry}"
@@ -53,6 +62,29 @@
                             </Grid>
                         </Border>
                     </AdornerDecorator>
+                    <!-- Also dropped when this template was forked, and restored here to match
+                         MainWindowStyle.xaml, which carries both:
+
+                         - Maximized adds border padding so the window does not bleed past the
+                           work area. Note MainWindowStyle deliberately does NOT swap the maximise
+                           glyph the way Playnite's default does: the default sets Content="2", a
+                           character in its icon font, whereas this theme's WinSys buttons take a
+                           Geometry and no restore geometry exists. Matching that omission rather
+                           than inventing a glyph keeps the two window styles consistent.
+
+                         - HasChildWindow dims the parent to 0.4 while a modal child is open.
+                           That is a real affordance, not decoration - without it a dialog opened
+                           on top of a settings window gives no visual cue about which one is
+                           live, and both render on the same near-black surface. -->
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="WindowState" Value="Maximized">
+                            <Setter Property="Padding" Value="8" TargetName="WindowBorder"/>
+                        </Trigger>
+                        <DataTrigger Binding="{Binding HasChildWindow, Mode=OneWay, RelativeSource={RelativeSource Self}, TargetNullValue=False}" Value="True">
+                            <Setter Property="BorderBrush" Value="{DynamicResource NormalBorderBrush}" TargetName="WindowBorder"/>
+                            <Setter Property="Opacity" Value="0.4" />
+                        </DataTrigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
