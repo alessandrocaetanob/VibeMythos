@@ -28,6 +28,39 @@ These are the constraints that are not discoverable from the code, and violating
    - Consume with `DynamicResource` (dictionaries merge after theme XAML).
    - Prefix theme-owned keys with `LOCMythos_`. Avoid overriding Playnite-global `LOC*` keys — they leak outside the theme.
 6. **Template part names matter**: controls bind by `PART_*` name. Omitting a part silently drops that functionality — see *Known state* below.
+7. **Relative URIs in theme XAML resolve against the Playnite install root, not the theme folder.**
+   `Playnite/Common/Xaml.cs` loads theme files with `XamlReader.Load(stream)` and **no
+   `ParserContext`**, and `Themes.cs` assigns `ResourceDictionary.Source` only *afterwards* —
+   too late to re-base objects already constructed during parsing. Consequences:
+   - Use `{ThemeFile 'Images/x.png'}` for images. A bare `UriSource="Images/x.png"` silently
+     resolves nowhere (the two `ImageBrush`es at `Constants.xaml:261-271` are dead for this reason).
+   - `{ThemeFile}` **cannot** carry a font: it `File.Exists`-checks the relative path, and a
+     `FontFamily` needs a `#Family Name` fragment that breaks the check. The fragment is
+     mandatory — a path to a `.ttf` with no fragment silently yields Arial.
+   - For fonts, use an **install-root-relative** path — verified working on device:
+     `Themes/Desktop/Mythos_9f42c1a7-6d8e-4b3f-b0a2-7e9c5d3f18a4/Typefaces/#Inter`. Always append
+     fallbacks (`…/Typefaces/#Inter, Inter, Segoe UI`) so an install under `%AppData%\Playnite\Themes\`
+     degrades instead of breaking.
+8. **Never name a theme asset directory `Fonts/`** — `Toolbox.exe pack` blacklists `^Fonts\\`
+   (`Playnite.Toolbox/Themes.cs`, `PackageFileBlackListRegex`, alongside `bin\`, `obj\`, `.vs\`,
+   `backup_`, `.sln`, `.csproj`). Playnite's scaffolder copies its *own* common fonts into a
+   theme's `Fonts/`, so the packer skips that folder wholesale. Anything you put there works
+   when deployed by hand and **silently vanishes from the `.pthm`** — this theme uses
+   `source/Typefaces/` for exactly that reason. The blacklist is anchored at the start of the
+   relative path, so any other name is safe. Always verify a release by listing the packed
+   archive, not just by deploying:
+
+   ```powershell
+   Add-Type -AssemblyName System.IO.Compression.FileSystem
+   $z=[IO.Compression.ZipFile]::OpenRead($pthm); $z.Entries.Count; $z.Dispose()
+   ```
+   - **WPF family matching is fuzzy**: a missing `Inter Tight` or `Inter Mod` silently resolves to
+     an installed `Inter` rather than falling through the chain. Missing fonts never fail loudly,
+     so verify by removing the bare-name entry and watching for an unmistakable fallback.
+   - Variable fonts **do** work — WPF exposes all named weight instances. Choose per family by the
+     *reported* family name: `InterTight[wght].ttf` reports `Inter Tight`, but `InterVariable.ttf`
+     reports `Inter Variable Text`, so Inter ships as statics. Note `[wght]` is both a PowerShell
+     wildcard and an illegal URI character — `Copy-Item -LiteralPath` and rename.
 
 ## Repository layout
 

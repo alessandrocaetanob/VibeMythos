@@ -61,7 +61,7 @@
         <Setter Property="Padding" Value="8" />
         <Setter Property="Foreground" Value="{DynamicResource HoverBrush}" />
         <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="FontFamily" Value="Segoe Fluent Icons, Segoe MDL2 Assets"/>
+        <Setter Property="FontFamily" Value="{DynamicResource IconFontFamily}"/>
         <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="Template">
             <Setter.Value>
@@ -97,7 +97,7 @@
         <Setter Property="Background" Value="{DynamicResource GlassControlBrushDark}"/>
         <Setter Property="BorderBrush" Value="{DynamicResource ControlIdleBorderBrush}"/>
         <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="FontFamily" Value="Segoe Fluent Icons, Segoe MDL2 Assets"/>
+        <Setter Property="FontFamily" Value="{DynamicResource IconFontFamily}"/>
         <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="Template">
             <Setter.Value>
@@ -151,7 +151,7 @@
         <Setter Property="Margin" Value="0,0,0,0" />
         <Setter Property="Background" Value="White"/>
         <Setter Property="Foreground" Value="Black" />
-        <Setter Property="FontFamily" Value="Segoe Fluent Icons, Segoe MDL2 Assets"/>
+        <Setter Property="FontFamily" Value="{DynamicResource IconFontFamily}"/>
         <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="Template">
             <Setter.Value>
@@ -451,7 +451,7 @@
         <Setter Property="Padding" Value="9" />
         <Setter Property="Foreground" Value="{DynamicResource HoverBrush}" />
         <Setter Property="Background" Value="{DynamicResource ContentBrushOverlay}"/>
-        <Setter Property="FontFamily" Value="Segoe Fluent Icons, Segoe MDL2 Assets"/>
+        <Setter Property="FontFamily" Value="{DynamicResource IconFontFamily}"/>
         <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="Template">
             <Setter.Value>

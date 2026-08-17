@@ -207,7 +207,7 @@
                         <DockPanel>
                             <Popup x:Name="PART_Popup" StaysOpen="False" AllowsTransparency="True" Placement="Bottom"
                                    PlacementTarget="{Binding ElementName=Border}" />
-                            <ToggleButton x:Name="PART_Button" DockPanel.Dock="Right" Content="&#xe163;" FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets"
+                            <ToggleButton x:Name="PART_Button" DockPanel.Dock="Right" Content="&#xe163;" FontFamily="{DynamicResource IconFontFamily}"
                                           BorderThickness="0" Padding="0,0,0,0" Background="Transparent"
                                           IsChecked="{Binding Path=IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"/>
                             <DatePickerTextBox x:Name="PART_TextBox" DockPanel.Dock="Left" VerticalAlignment="Center"

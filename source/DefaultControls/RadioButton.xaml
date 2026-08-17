@@ -25,7 +25,7 @@
                                     <Viewbox x:Name="CheckIcon" Visibility="Collapsed" Margin="5">
                                         <TextBlock Text="&#xECCC;" Foreground="{DynamicResource TextBrush}"
                                                 HorizontalAlignment="Center" VerticalAlignment="Center"
-                                                FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets"/>
+                                                FontFamily="{DynamicResource IconFontFamily}"/>
                                     </Viewbox>
                                 </Grid>
                             </Border>

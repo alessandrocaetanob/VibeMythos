@@ -2,7 +2,8 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:sys="clr-namespace:System;assembly=mscorlib">
 
-    <FontFamily x:Key="TightFont">Inter Tight</FontFamily>
+    <!-- Type families. See the block above FontFamily below for why these look like this. -->
+    <FontFamily x:Key="TightFont">Themes/Desktop/Mythos_9f42c1a7-6d8e-4b3f-b0a2-7e9c5d3f18a4/Typefaces/#Inter Tight, Inter Tight, Inter, Segoe UI Variable Display, Segoe UI</FontFamily>
 
     <Visibility x:Key="GridViewCoverCompStatusSubtitleVisibility">Collapsed</Visibility>
     <sys:Boolean x:Key="GridViewAllowUseOfLogos">True</sys:Boolean>
@@ -64,8 +65,40 @@
     <sys:Double x:Key="FontSizeLarge32">32</sys:Double>
     <sys:Double x:Key="FontSizeLarge40">40</sys:Double>
     <sys:Double x:Key="FontSizeLarge48">48</sys:Double>
-    <FontFamily x:Key="FontFamily">Inter</FontFamily>
-    <FontFamily x:Key="MonospaceFontFamily">Inter Mod</FontFamily>
+    <!-- The theme ships its own fonts in Typefaces/, but reaching them is awkward.
+
+         The directory is NOT called Fonts/ on purpose. Toolbox's packer blacklists
+         "^Fonts\\" (Playnite.Toolbox/Themes.cs, PackageFileBlackListRegex) because its
+         scaffolder copies Playnite's own common fonts there, so anything a theme puts in
+         Fonts/ is silently dropped from the .pthm - it works when deployed by hand and
+         vanishes the moment the theme is packaged. Renaming the folder is the whole fix;
+         the blacklist is anchored at the start of the relative path.
+
+         Playnite parses theme XAML with Xaml.FromFile -> XamlReader.Load(stream) with no
+         ParserContext, and only assigns ResourceDictionary.Source afterwards. By then the
+         FontFamily objects already exist with a null BaseUri, so a theme-relative path
+         ("Typefaces/#Inter") has nothing to resolve against and lands on the Playnite
+         install root instead. {ThemeFile} can't rescue it either: it runs the target
+         property's TypeConverter (right shape for FontFamily) but File.Exists-checks the
+         relative path first, and the "#Family" fragment WPF requires makes that check fail.
+
+         So each entry below is a comma-separated fallback chain, most specific first:
+           1. install-root-relative path to our bundled file  (works for themes under
+              <PlayniteInstall>\Themes\Desktop\; misses if installed to %AppData%)
+           2. the bare family name                            (works if the user has it installed)
+           3. a system face                                   (always resolves)
+         A chain entry that fails resolution is skipped, so the worst case is exactly the
+         behaviour we had before shipping any fonts - never a hard fall to Arial.
+
+         Note step 2 is weaker than it looks: WPF family matching is fuzzy, so a bare
+         "Inter Tight" or "Inter Mod" silently resolves to plain "Inter" when only Inter is
+         installed. That is the bug this workstream exists to fix, and it is why a fallback
+         chain alone was never sufficient - the files have to ship. -->
+    <FontFamily x:Key="FontFamily">Themes/Desktop/Mythos_9f42c1a7-6d8e-4b3f-b0a2-7e9c5d3f18a4/Typefaces/#Inter, Inter, Segoe UI Variable Text, Segoe UI</FontFamily>
+    <FontFamily x:Key="MonospaceFontFamily">Themes/Desktop/Mythos_9f42c1a7-6d8e-4b3f-b0a2-7e9c5d3f18a4/Typefaces/#Inter Mod, Inter Mod, Inter, Consolas</FontFamily>
+    <!-- Segoe Fluent Icons is Win11; Segoe MDL2 Assets is the Win10 fallback. Centralized
+         here so the 50+ glyph sites don't each carry the pair as a literal. -->
+    <FontFamily x:Key="IconFontFamily">Segoe Fluent Icons, Segoe MDL2 Assets</FontFamily>
 
     <sys:Double x:Key="EllipseBorderThickness">1</sys:Double>
     <CornerRadius x:Key="ControlCornerRadius">6</CornerRadius>

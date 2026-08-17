@@ -14,7 +14,7 @@
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="Foreground" Value="{DynamicResource IdleBrush}"/>
         <Setter Property="FontSize" Value="{DynamicResource FontSizeSmall}"/>
-        <Setter Property="FontFamily" Value="Segoe Fluent Icons, Segoe MDL2 Assets"/>
+        <Setter Property="FontFamily" Value="{DynamicResource IconFontFamily}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type RepeatButton}">

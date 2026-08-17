@@ -48,11 +48,25 @@ The Steam Links Bar displays all Steam client links directly below the game's im
 - **Convert Links:** [Link Utilities](https://playnite.link/addons.html#LinkUtilties_f692b4bb-238d-4080-ae76-4aaefde6f7a1) extension.
 - **Sidebar Icons:** [Filter Presets Quick Launcher](https://playnite.link/addons.html#FilterPresetsQuickLauncher_ef9df36c-24c2-418c-8468-eed95a09d950) extension.
 <br><br>
-## Recommended Fonts
+## Fonts
+The theme now **ships its own fonts** in `Typefaces/`, so there is nothing to install — Inter Tight
+for titles, Inter for body text, and the Mythos-modified Inter for tabular/monospace text all
+render out of the box.
+
 - **Icon Font:** [Microsoft's Fluent Icons](https://aka.ms/SegoeFluentIcons). `Required for Windows 10`
-- **Title Font:** [Inter Tight by Google](https://fonts.google.com/specimen/Inter+Tight). `Hardcoded`
-- **Body Font:** [Inter by Google](https://fonts.google.com/specimen/Inter).
-- **Monospace Font:** [Inter with Modifications for Mythos](https://raw.githubusercontent.com/bansakai/Mythos/Master/Resources/Inter-Mod-Regular.ttf).
+  — this is the one font still resolved from the system, with `Segoe MDL2 Assets` as the Windows 10 fallback.
+
+> [!NOTE]
+> Each family is declared as a fallback chain: the bundled file first, then the system-installed
+> family, then a Segoe face. If you install the theme somewhere other than
+> `<Playnite>\Themes\Desktop\`, the bundled files may not resolve and the theme falls back to
+> whatever is installed — installing [Inter](https://fonts.google.com/specimen/Inter) and
+> [Inter Tight](https://fonts.google.com/specimen/Inter+Tight) yourself covers that case.
+
+**Font licensing:** the bundled fonts are **not** covered by this repository's MIT `LICENSE`.
+Inter and Inter Tight are licensed under the SIL Open Font License 1.1 — see
+`Typefaces/OFL-Inter.txt` and `Typefaces/OFL-InterTight.txt`. `Inter-Mod-Regular.ttf` is a
+modification of Inter and is covered by the same OFL terms.
 <br><br>
 ## Additional Resources
 - **Download:** [Playnite Logo Concept](https://raw.githubusercontent.com/bansakai/Mythos/Master/Resources/PlayniteLogo.svg) used in Mythos 1.X.
