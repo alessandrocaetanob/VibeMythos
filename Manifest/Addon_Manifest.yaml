@@ -6,23 +6,23 @@
 # AddonId must stay in sync with source/theme.yaml's Id and Installer_Manifest.yaml's AddonId.
 AddonId: VibeMythos_fb4d738f-62bd-4e08-afd9-52e8cb45f6ca
 Type: ThemeDesktop
-InstallerManifestUrl: https://raw.githubusercontent.com/alessandrocaetanob/VibeMythos/Master/Manifest/Installer_Manifest.yaml
+InstallerManifestUrl: https://raw.githubusercontent.com/alessandrocaetanob/VibeMythos/master/Manifest/Installer_Manifest.yaml
 Name: VibeMythos
 Author: alessandrocaetanob (based on Mythos by bansakai)
 SourceUrl: https://github.com/alessandrocaetanob/VibeMythos
 ShortDescription: VibeMythos is a Fluent UI inspired theme for Playnite Desktop Mode.
 Description: A fork of Mythos by bansakai. VibeMythos blends Fluent UI with subtle design principles from the Epic Games Launcher to deliver a clean, visually balanced library experience, and builds on it with bundled typography, deeper plugin integrations and a cinematic Details View.
 Tags: ["Theme", "Clean"]
-IconUrl: https://raw.githubusercontent.com/alessandrocaetanob/VibeMythos/Master/Resources/applogo.png
+IconUrl: https://raw.githubusercontent.com/alessandrocaetanob/VibeMythos/master/Resources/applogo.png
 Links:
     GitHub: https://github.com/alessandrocaetanob/VibeMythos
     Issues Tracker: https://github.com/alessandrocaetanob/VibeMythos/issues
 Screenshots:
-    - Thumbnail: https://raw.githubusercontent.com/alessandrocaetanob/VibeMythos/Master/Screenshots/Thumb_01.png
-      Image: https://raw.githubusercontent.com/alessandrocaetanob/VibeMythos/Master/Screenshots/4.png
-    - Thumbnail: https://raw.githubusercontent.com/alessandrocaetanob/VibeMythos/Master/Screenshots/Thumb_02.png
-      Image: https://raw.githubusercontent.com/alessandrocaetanob/VibeMythos/Master/Screenshots/5.png
-    - Thumbnail: https://raw.githubusercontent.com/alessandrocaetanob/VibeMythos/Master/Screenshots/Thumb_03.png
-      Image: https://raw.githubusercontent.com/alessandrocaetanob/VibeMythos/Master/Screenshots/6.png
-    - Thumbnail: https://raw.githubusercontent.com/alessandrocaetanob/VibeMythos/Master/Screenshots/Thumb_04.png
-      Image: https://raw.githubusercontent.com/alessandrocaetanob/VibeMythos/Master/Screenshots/2.png
+    - Thumbnail: https://raw.githubusercontent.com/alessandrocaetanob/VibeMythos/master/Screenshots/Thumb_01.png
+      Image: https://raw.githubusercontent.com/alessandrocaetanob/VibeMythos/master/Screenshots/4.png
+    - Thumbnail: https://raw.githubusercontent.com/alessandrocaetanob/VibeMythos/master/Screenshots/Thumb_02.png
+      Image: https://raw.githubusercontent.com/alessandrocaetanob/VibeMythos/master/Screenshots/5.png
+    - Thumbnail: https://raw.githubusercontent.com/alessandrocaetanob/VibeMythos/master/Screenshots/Thumb_03.png
+      Image: https://raw.githubusercontent.com/alessandrocaetanob/VibeMythos/master/Screenshots/6.png
+    - Thumbnail: https://raw.githubusercontent.com/alessandrocaetanob/VibeMythos/master/Screenshots/Thumb_04.png
+      Image: https://raw.githubusercontent.com/alessandrocaetanob/VibeMythos/master/Screenshots/2.png

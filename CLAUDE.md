@@ -397,7 +397,7 @@ Analysis runs against **SonarQube Cloud**, org `alessandrocaetanob`, project key
 ```powershell
 sonar auth status                                        # verify the token / org
 sonar analyze                                            # analyze the git change set
-sonar analyze --base Master                              # analyze everything changed vs Master
+sonar analyze --base master                              # analyze everything changed vs master
 sonar analyze --file source/Views/TopPanel.xaml          # analyze one file
 sonar list issues -p alessandrocaetanob_VibeMythos
 ```
@@ -408,7 +408,9 @@ Scope note: there is no compiled language here, so Sonar's value is the **XML an
 
 ## Workflow
 
-**Linear** — project [VibeMythos](https://linear.app/hyperius/project/vibemythos-d8f8db975f6c), team **Hyperius** (`HYP`). One issue per work session; keep it updated as you go. Linear supplies the branch name per issue (`alessandrocaetanob/hyp-<n>-<slug>`) — use it, and push with `git push -u origin <branch>`. Default branch is `Master` (capital M).
+**Linear** — project [VibeMythos](https://linear.app/hyperius/project/vibemythos-d8f8db975f6c), team **Hyperius** (`HYP`). One issue per work session; keep it updated as you go. Linear supplies the branch name per issue (`alessandrocaetanob/hyp-<n>-<slug>`) — use it, and push with `git push -u origin <branch>`. Default branch is **`master`**, lowercase — renamed from `Master` in HYP-239 on 2026-08-17.
+
+> ⚠️ If you ever need to rename it back, or rename any branch by case alone: `git branch -m Master master` **fails on NTFS** with "a branch named 'master' already exists", because the loose ref file collides case-insensitively. Go through a temp name (`git branch -m Master tmp && git branch -m tmp master`). The GitHub API read is also cached — `gh api repos/... --jq .default_branch` can report the *old* name right after a successful rename, so confirm with `--cache 0` or `git ls-remote --heads origin`.
 
 **Upstream sync** — Mythos ships *all* default-theme style files, so any Playnite release that changes theme files may require a diff pass (track via [Playnite#1259](https://github.com/JosefNemec/Playnite/issues/1259)).
 

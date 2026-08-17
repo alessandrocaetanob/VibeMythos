@@ -9,7 +9,7 @@ name: Validate theme
 
 on:
   push:
-    branches: [Master]
+    branches: [master]
   pull_request:
   workflow_dispatch:
 
