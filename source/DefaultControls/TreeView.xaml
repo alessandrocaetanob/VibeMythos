@@ -8,19 +8,37 @@
 
     <Style TargetType="{x:Type TreeView}" BasedOn="{StaticResource BaseStyle}">
         <Setter Property="SnapsToDevicePixels" Value="True"/>
-        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Hidden"/>
-        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Hidden"/>
+        <!-- Auto, not Hidden. Hidden meant a TreeView taller than its slot could not scroll,
+             so it simply overflowed - which, combined with the negative margins below, is why
+             this control painted over its neighbours. -->
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="BorderBrush" Value="{DynamicResource PanelSeparatorBrush}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TreeView}">
-                    <Border BorderThickness="1"
+                    <!-- Inherited from Mythos 2.0 and never touched since the import (10817cc),
+                         this Border carried Margin="5,-21,5,-45" and the ScrollViewer a
+                         MinWidth="200". Negative margins make the border render 21px above and
+                         45px below its own layout slot, so the control deliberately spilled
+                         outside its bounds and painted over whatever sat next to it.
+
+                         That was presumably tuned to make one specific TreeView line up. It
+                         cannot have been one of ours: neither this theme nor Playnite's default
+                         theme instantiates a TreeView anywhere. The style exists purely for
+                         Playnite core and plugins - 13 installed binaries reference the control,
+                         ThemeModifier, DuplicateHider, ThemeOptions, BackgroundChanger, CheckDlc,
+                         GameActivity, HowLongToBeat and SystemChecker among them - so the hack
+                         helped nothing here and broke the control everywhere else.
+
+                         Removed. The theme's own look (rounded corners, glass fill, accent
+                         selection, chevron expander) is unchanged; only the layout escape is. -->
+                    <Border BorderThickness="{TemplateBinding BorderThickness}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             Background="{DynamicResource SubtlePopUpBackgroundBrush}"
-                            CornerRadius="{DynamicResource ControlCornerRadiusLarge}"
-                            Margin="5,-21,5,-45">
-                        <ScrollViewer Focusable="False" Padding="8,7,8,6" MinWidth="200" Margin="0"
+                            CornerRadius="{DynamicResource ControlCornerRadiusLarge}">
+                        <ScrollViewer Focusable="False" Padding="8,7,8,6" Margin="0"
                                     HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
                                     VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}">
                             <ItemsPresenter/>
