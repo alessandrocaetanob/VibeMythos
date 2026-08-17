@@ -1,14 +1,17 @@
 ThemeApiVersion: 2.9.0
+# Id must never change: Playnite derives the deployed folder name from it, so changing it
+# orphans every existing install's update path AND silently breaks the font tokens in
+# Constants.xaml, which embed it as a path segment. See CLAUDE.md hard rule 7.
 Id: Mythos_9f42c1a7-6d8e-4b3f-b0a2-7e9c5d3f18a4
-Name: Mythos
-Author: bansakai
-Version: 2.0
+Name: VibeMythos
+Author: alessandrocaetanob (based on Mythos by bansakai)
+Version: 2.1
 Links:
 - Name: GitHub
-  Url: https://github.com/bansakai/Mythos
+  Url: https://github.com/alessandrocaetanob/VibeMythos
 - Name: Issues Tracker
-  Url: https://github.com/bansakai/Mythos/issues
+  Url: https://github.com/alessandrocaetanob/VibeMythos/issues
 - Name: Recommended Settings
-  Url: https://github.com/bansakai/Mythos#playnite-settings
+  Url: https://github.com/alessandrocaetanob/VibeMythos#playnite-settings
 - Name: Credits
-  Url: https://github.com/bansakai/Mythos#credits
+  Url: https://github.com/alessandrocaetanob/VibeMythos#credits

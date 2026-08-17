@@ -84,7 +84,7 @@ These are the constraints that are not discoverable from the code, and violating
 |---|---|
 | `source/` | The theme itself (extracted from the upstream 2.0 `.pthm`, which is just a zip). This is what gets edited and packaged. |
 | `source/theme.yaml` | Manifest: `Id`, `Version`, `ThemeApiVersion` (2.9.0 — must match Playnite's `DesktopApiVersion`; a major bump breaks loading). |
-| `source/Constants.xaml` | Colors, brushes, sizes, and all ThemeModifier-editable toggles. 237 keyed resources. |
+| `source/Constants.xaml` | Colors, brushes, sizes, and all ThemeModifier-editable toggles. 247 keyed resources. |
 | `source/Common.xaml`, `source/Media.xaml` | Base styles / icon and image specs. |
 | `source/Views/` | Library views and panels (`MainWindow`, `TopPanel`, `DetailsViewGameOverview`, `GridViewGameOverview`, `Sidebar`, …). |
 | `source/DefaultControls/` | Restyles of built-in WPF controls. |
@@ -226,9 +226,9 @@ Scope note: there is no compiled language here, so Sonar's value is the **XML an
 
 Verified against the current tree — useful context before touching these areas:
 
-- **Global task progress is missing.** `PART_ProgressGlobal`, `PART_TextProgressText`, and `PART_ButtonProgressCancel` do not exist anywhere in `source/`, which is why users see no task progress bar. Only `PART_ProgressStatus` (in `CustomControls/SidebarItem.xaml`) is present. → HYP-155, HYP-156.
+- ~~**Global task progress is missing.**~~ **Shipped (HYP-155).** `PART_ProgressGlobal`, `PART_TextProgressText` and `PART_ButtonProgressCancel` now live in `Views/TopPanel.xaml`. Still open: the per-plugin indicator in Sidebar items, which uses `PART_ProgressStatus` (`CustomControls/SidebarItem.xaml`) → HYP-156.
 - **16 Playnite-global `LOC*` keys are overridden** in `Localization/en_US.xaml` (of 37 total keys), leaking theme terminology outside the theme. Additionally, every locale is missing 2 keys present in `en_US` (`LOCAddonChangesRestart`, `LOCSettingsRestartNotification`), and `de_DE.xaml` carries 9 stale keys that no longer exist in `en_US`. → HYP-166.
-- **Plugin wiring is shallow.** Only six plugin-injected controls are currently declared: `ExtraMetadataLoader_LogoLoaderControl(Grid)` ×2 each, `ExtraMetadataLoader_VideoLoaderControl`, `ThemeExtras_Banner`, `SuccessStory_PluginList`, `SuccessStory_PluginCompactList`. `PluginStatus`/`PluginSettings` usage is concentrated in `Views/DetailsViewGameOverview.xaml` (14), `Views/GridViewGameOverview.xaml` (8), and `Views/TopPanel.xaml` (3). → HYP-157 through HYP-161.
+- **Plugin wiring is broadening but still shallow.** Ten plugin-injected controls are declared: `ExtraMetadataLoader_LogoLoaderControl(Grid)` ×2 each, `ExtraMetadataLoader_VideoLoaderControl`, `ThemeExtras_Banner`, `SuccessStory_Plugin{List,CompactList}`, `PlayniteAchievements_AchievementButton` ×2, `DuplicateHider_SourceSelector{,1,2}`. `PluginStatus`/`PluginSettings` usage sits in `Views/DetailsViewGameOverview.xaml` (23), `Views/GridViewGameOverview.xaml` (17), `Views/MainWindow.xaml` (6), `Views/TopPanel.xaml` (3) and `DerivedStyles/GridViewItemTemplate.xaml` (1). Achievements (HYP-157/158), source badges (HYP-160) and the ambient backdrop (HYP-163) have shipped; → HYP-159, HYP-161, HYP-165, HYP-167 remain, plus the Tier 1–3 plugins in the 3.0 plan.
 - **No CI yet** — validation is manual via the commands above. → HYP-168.
 
 ## Plugin integration cheat sheet
