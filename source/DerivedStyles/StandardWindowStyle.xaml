@@ -77,8 +77,19 @@
                            on top of a settings window gives no visual cue about which one is
                            live, and both render on the same near-black surface. -->
                     <ControlTemplate.Triggers>
+                        <!-- 13,33,13,13 rather than the uniform 8 MainWindowStyle uses, because the
+                             two templates start from different baselines. MainWindowStyle's border
+                             has NO padding, so 8 is a pure addition. This border starts at
+                             5,25,5,5, where the 25 top is what reserves the caption strip - and a
+                             Setter REPLACES the value rather than adding to it.
+
+                             Setting a uniform 8 here collapsed that reserve, and since the caption
+                             DockPanel below carries Margin="0,-20,0,0" it landed at 8-20 = -12px:
+                             the window title and the min/max/close buttons rendered off the top
+                             edge of every maximised dialog. Same +8 delta, applied to the real
+                             baseline. -->
                         <Trigger Property="WindowState" Value="Maximized">
-                            <Setter Property="Padding" Value="8" TargetName="WindowBorder"/>
+                            <Setter Property="Padding" Value="13,33,13,13" TargetName="WindowBorder"/>
                         </Trigger>
                         <DataTrigger Binding="{Binding HasChildWindow, Mode=OneWay, RelativeSource={RelativeSource Self}, TargetNullValue=False}" Value="True">
                             <Setter Property="BorderBrush" Value="{DynamicResource NormalBorderBrush}" TargetName="WindowBorder"/>
