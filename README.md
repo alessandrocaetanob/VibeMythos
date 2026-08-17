@@ -1,4 +1,4 @@
-<img src="https://raw.githubusercontent.com/alessandrocaetanob/VibeMythos/Master/Resources/Mythos2.png" width="90" /><br>
+<img src="https://raw.githubusercontent.com/alessandrocaetanob/VibeMythos/master/Resources/Mythos2.png" width="90" /><br>
 # VibeMythos
 
 A fork of [Mythos](https://github.com/bansakai/Mythos) by [bansakai](https://github.com/bansakai) — a Fluent UI–inspired desktop theme for [Playnite](https://playnite.link). VibeMythos builds on Mythos 2.0 with bundled typography, deeper plugin integrations, and an ongoing push toward a more cinematic library. See [the 3.0 plan](docs/vibemythos-3.0-plan.md) for where it's headed.
@@ -9,7 +9,7 @@ A fork of [Mythos](https://github.com/bansakai/Mythos) by [bansakai](https://git
 [darklinkpower](https://github.com/darklinkpower) - Legend behind the original Mythic theme, without which this project wouldn't exist.<br>
 [holyCherryPerry](https://github.com/holyCherryPerry) - Valued contributor to various fixes and refinements.<br>
 [yabo-san](https://github.com/yabo-san) - GPU-accelerated Grid View scrolling.<br><br>
-[![Screenshot](https://raw.githubusercontent.com/alessandrocaetanob/VibeMythos/Master/Resources/Version%202/Mythos2banner.png)](https://github.com/alessandrocaetanob/VibeMythos)
+[![Screenshot](https://raw.githubusercontent.com/alessandrocaetanob/VibeMythos/master/Resources/Version%202/Mythos2banner.png)](https://github.com/alessandrocaetanob/VibeMythos)
 <br>
 <br>
 
@@ -60,7 +60,7 @@ For those using Playnite to open external launchers or applications, you can rep
 ### Sidebar
 Download [Filter Presets Quick Launcher](https://playnite.link/addons.html#FilterPresetsQuickLauncher_ef9df36c-24c2-418c-8468-eed95a09d950) and navigate to the plugin's settings page to set up sidebar filters. Ensure you have the Sidebar enabled in `Main Menu > View > Sidebar.` The icons used in my screenshots can be found in the theme's `Icons\Sidebar` folder.
 ### Steam Links Bar
-![Steam Links Bar](https://github.com/alessandrocaetanob/VibeMythos/blob/Master/Screenshots/steam_link_bar.png)<br><br>
+![Steam Links Bar](https://github.com/alessandrocaetanob/VibeMythos/blob/master/Screenshots/steam_link_bar.png)<br><br>
 The Steam Links Bar displays all Steam client links directly below the game's image or video banner. To use this feature, download [ThemeModifier](https://playnite.link/addons.html#playnite-thememodifier-plugin) and check `Show Steam Links Bar`.<br><br>It's recommended to use the `Official Store` metadata option to import these seamlessly. VibeMythos will auto-detect a valid Steam Store Page link within the first `10` links, and display the remaining links dynamically.<br><br>Additionally, you can convert all Steam web links to client links using [Link Utilities.](https://playnite.link/addons.html#LinkUtilties_f692b4bb-238d-4080-ae76-4aaefde6f7a1) <br><br>
 
 ## Plugin Pairing Guide
@@ -107,7 +107,7 @@ exception and still comes from the system:
 > To get the intended look on a standard install, install the fonts yourself:
 > [Inter](https://fonts.google.com/specimen/Inter),
 > [Inter Tight](https://fonts.google.com/specimen/Inter+Tight), and
-> [Inter Mod](https://raw.githubusercontent.com/alessandrocaetanob/VibeMythos/Master/source/Typefaces/Inter-Mod-Regular.ttf)
+> [Inter Mod](https://raw.githubusercontent.com/alessandrocaetanob/VibeMythos/master/source/Typefaces/Inter-Mod-Regular.ttf)
 > (the Mythos-modified Inter, not available from Google Fonts).
 
 **Font licensing:** the bundled fonts are **not** covered by this repository's MIT `LICENSE`.
@@ -116,11 +116,11 @@ Inter and Inter Tight are licensed under the SIL Open Font License 1.1 — see
 modification of Inter and is covered by the same OFL terms.
 <br><br>
 ## Additional Resources
-- **Download:** [Playnite Logo Concept](https://raw.githubusercontent.com/alessandrocaetanob/VibeMythos/Master/Resources/PlayniteLogo.svg) used in Mythos 1.X.
-- **Download:** [Mythos MacOS Icon](https://raw.githubusercontent.com/alessandrocaetanob/VibeMythos/Master/Resources/Mythos.png) for MyDockFinder users.
-- **Download:** [Playnite MacOS Icon](https://raw.githubusercontent.com/alessandrocaetanob/VibeMythos/Master/Resources/Playnite.png) for MyDockFinder users.
-- **Download:** [Playnite Fullscreen MacOS Icon](https://raw.githubusercontent.com/alessandrocaetanob/VibeMythos/Master/Resources/Playnite%20FS.png) for MyDockFinder users.
-- **Download:** [Age Rating Template](https://raw.githubusercontent.com/alessandrocaetanob/VibeMythos/Master/Resources/Age%20Rating%20Template.ai) to create your own rating images.
+- **Download:** [Playnite Logo Concept](https://raw.githubusercontent.com/alessandrocaetanob/VibeMythos/master/Resources/PlayniteLogo.svg) used in Mythos 1.X.
+- **Download:** [Mythos MacOS Icon](https://raw.githubusercontent.com/alessandrocaetanob/VibeMythos/master/Resources/Mythos.png) for MyDockFinder users.
+- **Download:** [Playnite MacOS Icon](https://raw.githubusercontent.com/alessandrocaetanob/VibeMythos/master/Resources/Playnite.png) for MyDockFinder users.
+- **Download:** [Playnite Fullscreen MacOS Icon](https://raw.githubusercontent.com/alessandrocaetanob/VibeMythos/master/Resources/Playnite%20FS.png) for MyDockFinder users.
+- **Download:** [Age Rating Template](https://raw.githubusercontent.com/alessandrocaetanob/VibeMythos/master/Resources/Age%20Rating%20Template.ai) to create your own rating images.
 <br><br>
 ## Playnite Settings
 ![Static Badge](https://img.shields.io/badge/Highly%20Recommended-red?style=flat)<br>
@@ -130,17 +130,17 @@ modification of Inter and is covered by the same OFL terms.
 <br>
    
 ### Appearance → General<br>
-<img src="https://raw.githubusercontent.com/alessandrocaetanob/VibeMythos/Master/Screenshots/Settings_General.png" width="600" /><br>
+<img src="https://raw.githubusercontent.com/alessandrocaetanob/VibeMythos/master/Screenshots/Settings_General.png" width="600" /><br>
 ### Appearance → Advanced<br>
-<img src="https://raw.githubusercontent.com/alessandrocaetanob/VibeMythos/Master/Screenshots/Settings_Advanced.png" width="600" /><br>
+<img src="https://raw.githubusercontent.com/alessandrocaetanob/VibeMythos/master/Screenshots/Settings_Advanced.png" width="600" /><br>
 ### Appearance → Details View<br>
-<img src="https://raw.githubusercontent.com/alessandrocaetanob/VibeMythos/Master/Screenshots/Settings_Details.png" width="600" /><br>
+<img src="https://raw.githubusercontent.com/alessandrocaetanob/VibeMythos/master/Screenshots/Settings_Details.png" width="600" /><br>
 ### Appearance → Grid View<br>
-<img src="https://raw.githubusercontent.com/alessandrocaetanob/VibeMythos/Master/Screenshots/Settings_Grid.png" width="600" /><br>
+<img src="https://raw.githubusercontent.com/alessandrocaetanob/VibeMythos/master/Screenshots/Settings_Grid.png" width="600" /><br>
 ### Appearance → Layout<br>
-<img src="https://raw.githubusercontent.com/alessandrocaetanob/VibeMythos/Master/Screenshots/Settings_Layout.png" width="600" /><br>
+<img src="https://raw.githubusercontent.com/alessandrocaetanob/VibeMythos/master/Screenshots/Settings_Layout.png" width="600" /><br>
 ### Appearance → Top Panel<br>
-<img src="https://raw.githubusercontent.com/alessandrocaetanob/VibeMythos/Master/Screenshots/Settings_TopPanel.png" width="600" />
+<img src="https://raw.githubusercontent.com/alessandrocaetanob/VibeMythos/master/Screenshots/Settings_TopPanel.png" width="600" />
 </details><br>
 
 > [!NOTE]
@@ -154,11 +154,11 @@ modification of Inter and is covered by the same OFL terms.
 
 
 ## Showcase
-![Screenshot](https://raw.githubusercontent.com/alessandrocaetanob/VibeMythos/Master/Screenshots/5.png)
+![Screenshot](https://raw.githubusercontent.com/alessandrocaetanob/VibeMythos/master/Screenshots/5.png)
 
-![Screenshot](https://raw.githubusercontent.com/alessandrocaetanob/VibeMythos/Master/Screenshots/6.png)
+![Screenshot](https://raw.githubusercontent.com/alessandrocaetanob/VibeMythos/master/Screenshots/6.png)
 
-![Screenshot](https://raw.githubusercontent.com/alessandrocaetanob/VibeMythos/Master/Screenshots/2.png)
+![Screenshot](https://raw.githubusercontent.com/alessandrocaetanob/VibeMythos/master/Screenshots/2.png)
 
-![Screenshot](https://raw.githubusercontent.com/alessandrocaetanob/VibeMythos/Master/Screenshots/1.png)
+![Screenshot](https://raw.githubusercontent.com/alessandrocaetanob/VibeMythos/master/Screenshots/1.png)
 
