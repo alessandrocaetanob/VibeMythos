@@ -196,8 +196,12 @@ def check_localization(source: Path) -> list[str]:
 # printed "ok" without ever looking anything up.
 #
 # The optional (?:\([^)]*\))? group carries the numeric-range form. Section headers still
-# correctly fail to match, because a double quote is not in [A-Za-z0-9_].
-THEMEMODIFIER_ENTRY_RE = re.compile(r"^\s*-\s+([A-Za-z0-9_]+)(?:\([^)]*\))?\s*:")
+# correctly fail to match, because a double quote is not a word character.
+#
+# \w rather than [A-Za-z0-9_]: identical for the ASCII keys this file actually holds, and
+# on a non-ASCII key it matches rather than skips — so such a key gets *checked* instead of
+# silently ignored, which is the safer direction for a validator.
+THEMEMODIFIER_ENTRY_RE = re.compile(r"^\s*-\s+(\w+)(?:\([^)]*\))?\s*:")
 
 
 def check_thememodifier(source: Path, constants_keys: set[str], loc_keys: set[str]) -> list[str]:
