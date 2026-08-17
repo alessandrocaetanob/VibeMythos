@@ -137,6 +137,20 @@
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
                             <DockPanel Grid.Row="0" Margin="8" Name="PART_ElemSearchHost">
+                                <!-- "Show only selected" - Playnite binds it by name, so dropping it
+                                     silently removed the control that lets you review your current
+                                     selection. That is exactly what you need once a filter has more
+                                     than a screenful of options. Docked before the SearchBox so the
+                                     box (the DockPanel's fill child) yields the space, matching
+                                     Playnite's own ordering. Belongs to this template only - the
+                                     base ComboBoxListBaseTemplate has no search host in either
+                                     theme, which is correct. -->
+                                <CheckBox DockPanel.Dock="Right"
+                                          x:Name="PART_ToggleSelectedOnly"
+                                          Margin="8,0,0,0"
+                                          VerticalAlignment="Center"
+                                          ToolTip="{DynamicResource LOCOnlyItemsSelectedTooltip}"
+                                          FontFamily="{DynamicResource IconFontFamily}" />
                                 <SearchBox DockPanel.Dock="Left" x:Name="PART_SearchBox" />
                             </DockPanel>
                             <ItemsControl x:Name="PART_ItemsPanel" Grid.Row="1" />

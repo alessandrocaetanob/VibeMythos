@@ -24,8 +24,25 @@
                             </Style>
                         </Border.Style>
                         <DockPanel Background="{TemplateBinding Background}">
-                            <ComboBox Name="PART_SelectFields" MaxDropDownHeight="Auto"
-                                      DockPanel.Dock="Top" Style="{StaticResource ExplorerComboBox}"/>
+                            <!-- Playnite wires the panel's close affordance by this name. Without it
+                                 the Explorer panel could only be dismissed from the View menu, which
+                                 is a functional loss rather than a styling one - hard rule 6.
+                                 Uses the theme's own GridCloseButton and Fluent close glyph rather
+                                 than Playnite's Marlett "r", matching the Grid details panel. -->
+                            <DockPanel DockPanel.Dock="Top" LastChildFill="True">
+                                <Button Name="PART_ButtonClose"
+                                        Content="&#xE8BB;"
+                                        Style="{DynamicResource GridCloseButton}"
+                                        DockPanel.Dock="Right"
+                                        Width="35" Height="35"
+                                        VerticalAlignment="Center"
+                                        Focusable="False"
+                                        Cursor="Hand"
+                                        ToolTip="{DynamicResource LOCMythos_Close}"/>
+                                <ComboBox Name="PART_SelectFields" MaxDropDownHeight="Auto"
+                                          VerticalAlignment="Center"
+                                          Style="{StaticResource ExplorerComboBox}"/>
+                            </DockPanel>
                             <Separator Height="1" DockPanel.Dock="Top"
                                        BorderBrush="#1AFFFFFF"
                                        Focusable="False" SnapsToDevicePixels="True"/>
