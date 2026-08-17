@@ -152,7 +152,7 @@
          core resolves them for its own chrome and dialogs. Redefining WhiteColor as a near-black
          (#18181B) and BlackColor as a mid grey (#707275) is what forces Playnite's own
          light-themed lookups to render dark. A reference search will report them as dead; they
-         are not. See CLAUDE.md hard rule 9 and the Playnite-global check in Validating changes. -->
+         are not. See the Playnite-global check in CLAUDE.md under Validating changes. -->
     <Color x:Key="BlackColor">#707275</Color>
     <Color x:Key="WhiteColor">#18181B</Color>
     <Color x:Key="GreenColor">#34c759</Color>
@@ -216,6 +216,12 @@
     <SolidColorBrush x:Key="GlassBackgroundBrushDark" Color="#33000000" />
 
     <SolidColorBrush x:Key="ControlIdleBackgroundBrush" Color="#18181B" />
+    <!-- Disabled must RECEDE, so it sits below idle on the elevation ramp:
+         #141416 disabled < #18181B idle < #242427 hover < #323236 selected.
+         Do not reach for DisabledBrush here - that is a disabled *foreground* token
+         (#323236) used on Foreground everywhere else, and as a background it would make
+         disabled the brightest state of the four and byte-identical to selected. -->
+    <SolidColorBrush x:Key="DisabledBackgroundBrush" Color="#141416" />
     <SolidColorBrush x:Key="ControlIdleBorderBrush" Color="#323236" />
     <SolidColorBrush x:Key="ControlIdleBorderBrushOverlay" Color="#2EFFFFFF" />
     <SolidColorBrush x:Key="ControlIdleBackgroundBrushOverlay" Color="#E618181B" />
