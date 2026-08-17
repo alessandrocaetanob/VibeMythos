@@ -159,8 +159,14 @@
     <Color x:Key="TextColor">#E4E4E6</Color>
     <Color x:Key="TextColorDarker">#888991</Color>
     <Color x:Key="TextColorDark">#FF000000</Color>
-    <Color x:Key="MainColor">#2C3A67</Color>
-    <Color x:Key="MainColorDark">#0D1225</Color>
+    <!-- Playnite-global, and until now redefined at Playnite's *own* upstream values - so the
+         theme was overriding these keys with exactly the navy it was trying to replace. Retinted
+         onto the neutral ramp so anything core resolves through them stops rendering blue.
+         Live consumers are all in Playnite's default theme: NormalBrush / NormalBrushDark (both
+         re-declared further down, so already safe) and CheckBoxCheckMarkBkBrush, which still
+         reads MainColorDark. Retint, never delete - see the Playnite-global check in CLAUDE.md. -->
+    <Color x:Key="MainColor">#18181B</Color>
+    <Color x:Key="MainColorDark">#0B0C0E</Color>
     <Color x:Key="HoverColor">#247BA0</Color>
     <Color x:Key="GlyphColor">#18181B</Color>
     <Color x:Key="AccentSelectedColor">#FF04A5FF</Color>
@@ -341,6 +347,27 @@
 
     
     <LinearGradientBrush x:Key="WindowBackgroundBrush" StartPoint="0.5,-0.2" EndPoint="0.5,1" >
+        <GradientStop Color="#000000" Offset="0"/>
+        <GradientStop Color="#000000" Offset="1"/>
+    </LinearGradientBrush>
+
+    <!-- Playnite's own key, typo and all. WindowBackgourndBrush is the ONLY window-background key
+         Playnite core actually reads; the correctly-spelled WindowBackgroundBrush above is
+         theme-owned and consumed only by this theme's MainWindowStyle. Someone fixed the spelling
+         at some point and thereby stopped overriding the key that matters.
+
+         Leaving it undefined meant it fell through to the default theme's navy gradient
+         (#202b4d -> MainColorDark), which paints:
+           - CustomControls/WindowBase.xaml, which this theme does not ship, so Playnite's copy
+             loads and every plugin window built on it rendered navy inside a black theme;
+           - eight installed plugins that reference the key by name - ThemeModifier among them,
+             i.e. the window users open in order to configure this theme.
+
+         Retinting MainColorDark alone does not fix it: the default's first GradientStop is a
+         hardcoded #202b4d literal, so half the gradient would have stayed blue. Matches
+         WindowBackgroundBrush and PopupBackgroundColor, both already #000000, so every window
+         surface in the theme now agrees. -->
+    <LinearGradientBrush x:Key="WindowBackgourndBrush" StartPoint="0.5,-0.2" EndPoint="0.5,1" >
         <GradientStop Color="#000000" Offset="0"/>
         <GradientStop Color="#000000" Offset="1"/>
     </LinearGradientBrush>
