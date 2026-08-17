@@ -35,9 +35,13 @@ Once releases exist, the packaged `.pthm` from
 > from upstream Mythos. That means the two can be installed side by side, and Playnite will never
 > offer an upstream Mythos release as an "update" to this fork.
 >
-> **Anything you add inside the theme folder is deleted whenever the theme is installed or
-> updated** — Playnite wipes the directory before extracting. Keep custom platform icons, sidebar
-> icons and theme audio backed up somewhere outside it.
+> **Playnite wipes the theme folder before extracting, on every install and update.** VibeMythos
+> asks [ThemeExtras](https://playnite.link/addons.html#felixkmh_Extras_Plugin) to restore the
+> folders you're meant to add your own files to — `Images/Banners`, `Icons/Labels`, `Icons/Sidebar`,
+> `Icons/Platform Source` and `audio` — so those survive an update.
+>
+> **This only works with ThemeExtras installed.** Without it, and for anything outside those five
+> folders, your files are gone. Back up anything you can't easily recreate.
 <br><br>
 ## Core Functions & Setup
 ### Age Rating Banners
@@ -50,7 +54,7 @@ By default, cover art isn't visible in Details View. Open [ThemeModifier](https:
 ### Game Summary
 The game summary, found below the trailer, simply displays the `Synopsis` metadata for the selected title. This must be configured manually in `Game Details > Advanced > Synopsis`.
 ### Platform Icons
-Platform icons are displayed on the bottom right of detail panels. VibeMythos includes a handful of commonly used platform icons, but not all of them. If a specific platform does not have an icon, find a `.png` online, drop it in `<PlayniteInstall>\Themes\Desktop\VibeMythos_fb4d738f-62bd-4e08-afd9-52e8cb45f6ca\Icons\Labels`. Name icon files according to the IDs found [here.](https://github.com/JosefNemec/Playnite/blob/master/source/Playnite/Emulation/Platforms.yaml)
+Platform icons are displayed on the bottom right of detail panels. VibeMythos includes a handful of commonly used platform icons, but not all of them. If a specific platform does not have an icon, find a `.png` online, drop it in `<PlayniteInstall>\Themes\Desktop\VibeMythos_fb4d738f-62bd-4e08-afd9-52e8cb45f6ca\Icons\Labels`. Name icon files according to the IDs found [here.](https://github.com/JosefNemec/Playnite/blob/master/source/Playnite/Emulation/Platforms.yaml)<br><br>Library **source** icons (Steam, GOG, Epic…) work the same way but live in `Icons\Platform Source`, named after the library's source name. Both folders are preserved across theme updates when ThemeExtras is installed.
 ### Play Button Text
 For those using Playnite to open external launchers or applications, you can replace the default Launch text in `Game Details > Advanced > Play Button`.
 ### Sidebar
@@ -68,7 +72,7 @@ own when its plugin is absent, so the theme never leaves an empty husk behind.
 | --- | --- |
 | **[ExtraMetadataLoader](https://playnite.link/addons.html#ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429)** `required` | Game logos in Details View and Grid View, and the video banner in Details View. Without it, the logo slot falls back to the game icon. |
 | **[ThemeModifier](https://playnite.link/addons.html#playnite-thememodifier-plugin)** | 41 theme settings — accent colours, floating sidebar, Steam Links Bar, ambient backdrop reach, Grid View toggles. This is how you customise the theme. |
-| **[ThemeExtras](https://playnite.link/addons.html#felixkmh_Extras_Plugin)** | Navigation buttons in the top panel, and library banners on grid covers. |
+| **[ThemeExtras](https://playnite.link/addons.html#felixkmh_Extras_Plugin)** | Navigation buttons in the top panel, and library banners on grid covers. Also **preserves your custom icons and audio across theme updates** — see the install note above. |
 | **[Playnite Achievements](https://github.com/justin-delano/PlayniteAchievements)** | The achievements row in Details View, the Grid View progress readout, and the gold completion state at 100%. |
 | **[SuccessStory](https://playnite.link/addons.html#playnite-successstory-plugin)** | The achievements row in Details View only. The two plugins are mutually exclusive by design — with SuccessStory installed the Playnite Achievements blocks self-collapse, so the Grid View readout and gold 100% state are Playnite Achievements only. |
 | **[HowLongToBeat](https://playnite.link/addons.html#playnite-howlongtobeat-plugin)** | The Main Story / Main + Extra / Completionist estimate row above the metadata panel. |
