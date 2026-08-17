@@ -63,7 +63,7 @@ every workstream below.
 | Silent breakage | Two real ones: `ComboBox.xaml:146` `{DynamicResource subtalBrush}` (case typo → resolves to nothing); `GridViewGameOverview.xaml:105` references undefined `DetailsViewAllowUseOfLogos` (should be `GridViewAllowUseOfLogos` — grid logo toggle dead). Adjacent: `themeExtras.yaml` `BannersBySourceNamePath` points at an `Images/Banners/SourceName` directory that doesn't exist, and the `DetailsListSelectedGradient` key in `Constants.xaml` is defined-but-unused with two `GradientStop`s bound to an undefined `AccentIdleColor`. |
 | Dead upstream palette | Pre-fork navy/brown/beige remnants (`MainColor #2C3A67`, `Brown #795548`, `CardBorderBrush #D4D0B8`, yellow `BackgroundToneColor`, three unused radial "tube" gradients, plus `ExpanderBackgroundBrush`, which hardcodes `MainColor`'s hex directly) — roughly **60 genuinely dead Color/Brush keys**, of 80 dead keys of any type. ⚠️ Not all are safe to delete: 19 are Playnite-global and `DuplicateHider_MaxNumberOfIcons` is read by its plugin — see HYP-195. |
 | Structural duplication | The metadata-row block is duplicated across `DetailsViewGameOverview.xaml` and `GridViewGameOverview.xaml`. The full duplicated span is closer to **490 lines**, not 250 — the 16 metadata rows sit in one range while the HLTB and achievements blocks live ~230 lines earlier in each file. It is **not** byte-identical: the DuplicateHider host names genuinely differ (`DhDetailsSelectorHost`/`_SourceSelector1` vs `DhGridDetailsSelectorHost`/`_SourceSelector2`). Hardcoded HLTB hexes included. |
-| Zero render caching / virtualization tuning | `CacheMode`: 0 uses despite 46 scale-targeting animation elements across 7 files; `Fant` on every grid cover. ✅ **Corrected (HYP-206):** "no `VirtualizationMode=Recycling` anywhere" is true but **irrelevant** — Playnite sets it itself, as a local value, after the theme parses. See F3. |
+| ~~Zero render caching / virtualization tuning~~ **Not debt** | `CacheMode`: 0 uses despite 46 scale-targeting animation elements across 7 files; `Fant` on every grid cover. ✅ **Corrected twice.** (HYP-206) "no `VirtualizationMode=Recycling` anywhere" is true but **irrelevant** — Playnite sets it itself, as a local value, after the theme parses. (HYP-208) The 46/7 counts are exact but resolve to **14** real sites, and all 14 are disqualified — `CacheMode` should stay at 0. Playnite's own default theme also ships zero. This row describes a correct state, not debt. See F2 and F3. |
 | Identity | `theme.yaml` still says `Name: Mythos, Author: bansakai, Version: 2.0` with all links pointing upstream. |
 
 ---
@@ -279,7 +279,10 @@ target. Recomposition, keeping all existing toggles working:
   the selection ring (`SelectionBorder`, `AccentHighlightBrush` on `IsSelected`, `:92-95`, with a
   `ContentBrushOverlayTwo` hover ring at `:87-90`). What is actually left is **tuning, not building**:
   1.0175 is subtle next to the proposed 1.03, there is no shadow, and the ring has no animated reveal.
-  Adding `CacheMode=BitmapCache` to the animated element remains valid and unshipped.
+  ~~Adding `CacheMode=BitmapCache` to the animated element remains valid and unshipped.~~
+  🛑 **Not valid (HYP-208)** — grid items are virtualised *and recycled*, so the subtree structure
+  changes on every recycle, which is the documented trigger for cache regeneration. A `Style`-level
+  cache here makes scrolling worse while only ever benefiting the item under the cursor. See F2.
 - **The details drawer currently pops with zero transition** (0 storyboards in
   `GridViewGameOverview.xaml`) — slide+fade it over `Motion/Base`, respecting
   `GridViewDetailsPosition`.
@@ -400,8 +403,45 @@ library before/after.
    `HighQuality` means. If cover scaling really is the frame-time cost, the only meaningful change is
    `Fant`/`HighQuality` → `LowQuality`/`Linear`, which is a visible quality regression and must be
    measured before it is chosen. Re-verify with a profiler on a full library, not by reasoning.
-2. **`CacheMode="BitmapCache"`** on every scale-animated element (cover hover-zoom, play
-   button, sidebar items) — 46 scale-targeting animation elements currently re-rasterize per frame.
+2. ~~**`CacheMode="BitmapCache"`** on every scale-animated element (cover hover-zoom, play
+   button, sidebar items) — 46 scale-targeting animation elements currently re-rasterize per frame.~~
+   🛑 **Ship zero `CacheMode` attributes — do not execute (HYP-208).**
+
+   The counts are right and the conclusion is wrong, which is what makes this item dangerous:
+   **46** scale-targeting animation elements across **7** files is exact, and `CacheMode` really
+   does appear 0 times. But 46 counts animation *elements* — each transform needs a `ScaleX` and a
+   `ScaleY` animation, and an Enter and an Exit copy, so one hover effect costs four. The number of
+   places an attribute would actually be typed is **14 `ScaleTransform` declarations**, and every
+   one of them is disqualified:
+
+   | Sites | Why not |
+   |---|---|
+   | 2 — `ProgressBar.xaml:34,:42` | `LayoutTransform`, not `RenderTransform`. `BitmapCache` caches *rendered output*, so it cannot touch the per-frame measure/arrange these cause — and the rectangles are `Fill="{x:Null}"`, so there is nothing to rasterise either. |
+   | 2 — `DetailsViewItemStyle.xaml:42,:51` | 5px-wide solid-colour bars. Nothing to cache. |
+   | 8 — `PlayButton.xaml:60,:224`, `DetailsViewGameOverview.xaml:859,:919,:984,:1871`, `ComboBoxList.xaml:187,:193`, `SidebarItem.xaml:48` | All contain text or icon-font glyphs — exactly the content a cache degrades. |
+   | 2 — `GridViewItemStyle.xaml:8-11` and the grid cover | Virtualised **and recycled**, so the subtree structure changes on every recycle, which is the documented trigger for cache regeneration. Caching here makes scrolling worse while only ever benefiting the item under the cursor. |
+
+   Three facts from Microsoft's `BitmapCache` documentation kill the general case, none of them
+   obvious from the plan's framing:
+   - `EnableClearType` defaults to **false**, so all text inside a cache renders with grayscale
+     antialiasing — permanently, not just while animating. The cost is paid at rest, which is where
+     essentially all viewing time is spent.
+   - "RenderOptions and TextOptions do not propagate through a cached element." This theme sets
+     `TextOptions.TextFormattingMode="Ideal"` at the window level (`MainWindowStyle.xaml:8-9`), so
+     any cache placed between the window and a text element silently severs it — a second text
+     regression layered on the first.
+   - `RenderAtScale` is not a free fix: it multiplies the cache surface by the square of the factor
+     and forces regeneration.
+
+   The premise that these elements "currently re-rasterize per frame" is true only of the vector and
+   glyph content — and that re-rasterisation *is* the sharpness. `BitmapCache` stops both, because
+   they are the same mechanism. Playnite's own default theme agrees by omission: zero `CacheMode`
+   across its entire tree.
+
+   If a future session still wants the grid-cover case, the bar is: storyboard-scoped only (an
+   `ObjectAnimationUsingKeyFrames` toggling `CacheMode` on at `MultiDataTrigger.EnterActions` and
+   back to `x:Null` on exit), never a `Style`-level attribute, and measured on the real library
+   before merge.
 3. ~~**Virtualization spike:** `VirtualizingPanel.VirtualizationMode="Recycling"` + `ScrollUnit`
    on the games list.~~
    🛑 **No-op from the theme — do not execute (HYP-206).** Playnite already sets all three, as
@@ -414,8 +454,15 @@ library before/after.
 
    The *consequence* is worth keeping, though, and inverts the original caution: recycling is
    **already on in production**, so the DuplicateHider recycling comment at `Common.xaml:116-120`
-   describes a live condition, not a hypothetical one. `DataGrid.xaml:80` disabling `CanContentScroll`
-   in one branch is a separate, still-valid fix.
+   describes a live condition, not a hypothetical one.
+
+   ~~`DataGrid.xaml:80` disabling `CanContentScroll` in one branch is a separate, still-valid fix.~~
+   🛑 **Also drop this (HYP-208).** The line number is exact, but the line is **byte-for-byte
+   identical to Playnite's own default theme** at the same line — it is stock WPF, not something
+   this fork introduced. It governs an *implicit* `DataGrid` style that the library views never use
+   (they use `ExtendedListBox`), and the trigger only fires under grouping, which nothing here does.
+   Flipping it without also supplying `IsVirtualizingWhenGrouping`/`ScrollUnit` would trade smooth
+   pixel scrolling for jumpy item scrolling with no virtualization.
 4. Replace the notification panel's margin animation with a transform (C4).
 5. Hygiene. ✅ **Corrected (HYP-206) on both counts:**
    - ~~delete the two unfrozen, unused `ImageBrush`es (`Constants.xaml:261-271`)~~ — **already done in
@@ -425,7 +472,30 @@ library before/after.
      ~115-site mechanical edit, not a trivial one, and it is **not** a pure lift: `CheckBox.xaml:31-32`
      sets both to `False` deliberately and must be preserved. Given hard rule 10 (one parse error
      drops the whole theme), do this after CI lands, not before.
-   - Freezing remaining freezables is still valid and unmeasured.
+   - Freezing freezables: **measured, and the answer is "only `Constants.xaml`, and it is marginal"**
+     (HYP-208). The tree holds 163 `Freezable` declarations; 17 already carry `popt:Freeze`, 28
+     cannot be frozen at all (they bear a `Binding`/`DynamicResource`), and of the remaining 118
+     only the **67 keyed resources in `Constants.xaml`** are worth touching — the other 68 are inline
+     inside `ControlTemplate`s, which **WPF already freezes automatically at template-seal time**
+     (verified: a template-inline brush marked `popt:Freeze="False"` still reports `IsFrozen=True`).
+     Adding `Freeze` there is pure typo risk for zero gain.
+
+     Safety came out fine: freezing does **not** break ThemeModifier — Lacro59's `AddResources()`
+     does `Application.Current.Resources[key] = <new brush>`, a replacement, never a mutation — and
+     it does not break the `Background.Color` storyboards, because WPF auto-clones a frozen brush
+     along a complex property path.
+
+     ⚠️ The parse-error landmine is **not** where the plan assumed. `mc:Ignorable="PresentationOptions"`
+     — the pattern Microsoft's own docs recommend — **silently disables the freeze** under
+     `XamlReader.Load` (`IsFrozen=False`), so you get the risk and none of the benefit. Meanwhile a
+     typo in the namespace, or an `mc:Ignorable` naming an undeclared prefix, is a hard throw, which
+     by hard rule 10 costs the entire theme. Declare `xmlns:popt` **only**, with no `mc:Ignorable`.
+
+     Benefit at realistic scale is small: at 500 concurrent references to one brush, attach is
+     **20.7ms unfrozen vs 17.2ms frozen**. It only becomes dramatic past ~2,000 references
+     (20,958ms vs 963ms at 20,000), which this theme does not approach. **Do it after CI is
+     merged, or not at all** — 3.5ms does not justify 67 hand edits to the one file whose failure
+     mode is total.
 
 ---
 
