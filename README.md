@@ -15,20 +15,23 @@ A fork of [Mythos](https://github.com/bansakai/Mythos) by [bansakai](https://git
 
 ## Installation
 
-> [!WARNING]
-> **No packaged release exists yet.** Until one is published, install from source: copy the
-> contents of `source/` into a folder under your Playnite themes directory named
-> `VibeMythos_fb4d738f-62bd-4e08-afd9-52e8cb45f6ca`, then pick VibeMythos in
-> `Settings → Appearance`.
->
-> ```powershell
-> $dest = "<PlayniteInstall>\Themes\Desktop\VibeMythos_fb4d738f-62bd-4e08-afd9-52e8cb45f6ca"
-> New-Item -ItemType Directory -Force $dest
-> Copy-Item source\* $dest -Recurse -Force
-> ```
+Download the `.pthm` from
+[Releases](https://github.com/alessandrocaetanob/VibeMythos/releases/latest) and open it —
+Playnite installs it directly. Then pick VibeMythos in `Settings → Appearance`.
 
-Once releases exist, the packaged `.pthm` from
-[Releases](https://github.com/alessandrocaetanob/VibeMythos/releases/latest) can be opened directly.
+<details>
+<summary>Or install from source</summary>
+
+Copy the contents of `source/` into a folder under your Playnite themes directory named
+`VibeMythos_fb4d738f-62bd-4e08-afd9-52e8cb45f6ca`:
+
+```powershell
+$dest = "<PlayniteInstall>\Themes\Desktop\VibeMythos_fb4d738f-62bd-4e08-afd9-52e8cb45f6ca"
+New-Item -ItemType Directory -Force $dest
+Copy-Item source\* $dest -Recurse -Force
+```
+
+</details>
 
 > [!NOTE]
 > VibeMythos is **not** in Playnite's addon browser, and it uses its own theme `Id` — separate
