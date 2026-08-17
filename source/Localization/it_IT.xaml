@@ -4,8 +4,8 @@
 
     <sys:String x:Key="LOCVersionLabel">Pulsante Gioca</sys:String>
     <sys:String x:Key="LOCNotesLabel">Sinossi</sys:String>
-    <sys:String x:Key="LOCExitAppLabel">Esci da Mythos</sys:String>
-    <sys:String x:Key="LOCOpenPlaynite">Apri Mythos</sys:String>
+    <sys:String x:Key="LOCExitAppLabel">Esci da VibeMythos</sys:String>
+    <sys:String x:Key="LOCOpenPlaynite">Apri VibeMythos</sys:String>
 
     <sys:String x:Key="LOCPlayGame">Avvia</sys:String>
 

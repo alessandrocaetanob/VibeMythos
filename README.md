@@ -1,24 +1,47 @@
-<img src="https://raw.githubusercontent.com/bansakai/Mythos/Master/Resources/Mythos2.png" width="90" /><br>
-# Mythos
+<img src="https://raw.githubusercontent.com/alessandrocaetanob/VibeMythos/Master/Resources/Mythos2.png" width="90" /><br>
+# VibeMythos
+
+A fork of [Mythos](https://github.com/bansakai/Mythos) by [bansakai](https://github.com/bansakai) — a Fluent UI–inspired desktop theme for [Playnite](https://playnite.link). VibeMythos builds on Mythos 2.0 with bundled typography, deeper plugin integrations, and an ongoing push toward a more cinematic library. See [the 3.0 plan](docs/vibemythos-3.0-plan.md) for where it's headed.
 
 #### Credits:
+[bansakai](https://github.com/bansakai) - Creator of Mythos, which this theme is forked from and built on.<br>
 [sakasakiking](https://github.com/sakasakiking) - Creator of the Dune theme, whose work serves as the visual foundation and inspiration for Mythos.<br>
 [darklinkpower](https://github.com/darklinkpower) - Legend behind the original Mythic theme, without which this project wouldn't exist.<br>
 [holyCherryPerry](https://github.com/holyCherryPerry) - Valued contributor to various fixes and refinements.<br>
 [yabo-san](https://github.com/yabo-san) - GPU-accelerated Grid View scrolling.<br><br>
-![DownloadCount](https://img.shields.io/github/downloads/bansakai/Mythos/total.svg)<br><br>
-[![Screenshot](https://raw.githubusercontent.com/bansakai/Mythos/Master/Resources/Version%202/Mythos2banner.png)](https://playnite.link/addons.html#Mythos_9f42c1a7-6d8e-4b3f-b0a2-7e9c5d3f18a4)
+[![Screenshot](https://raw.githubusercontent.com/alessandrocaetanob/VibeMythos/Master/Resources/Version%202/Mythos2banner.png)](https://github.com/alessandrocaetanob/VibeMythos)
 <br>
 <br>
 
 ## Installation
 
-A. Download directly from [Playnite.](https://playnite.link/addons.html#Mythos_9f42c1a7-6d8e-4b3f-b0a2-7e9c5d3f18a4)<br><br>
-B. Download the latest packaged `.pthm` theme file from [Releases](https://github.com/bansakai/Mythos/releases/latest) and open it.
+> [!WARNING]
+> **No packaged release exists yet.** Until one is published, install from source: copy the
+> contents of `source/` into a folder under your Playnite themes directory named
+> `VibeMythos_fb4d738f-62bd-4e08-afd9-52e8cb45f6ca`, then pick VibeMythos in
+> `Settings → Appearance`.
+>
+> ```powershell
+> $dest = "<PlayniteInstall>\Themes\Desktop\VibeMythos_fb4d738f-62bd-4e08-afd9-52e8cb45f6ca"
+> New-Item -ItemType Directory -Force $dest
+> Copy-Item source\* $dest -Recurse -Force
+> ```
+
+Once releases exist, the packaged `.pthm` from
+[Releases](https://github.com/alessandrocaetanob/VibeMythos/releases/latest) can be opened directly.
+
+> [!NOTE]
+> VibeMythos is **not** in Playnite's addon browser, and it uses its own theme `Id` — separate
+> from upstream Mythos. That means the two can be installed side by side, and Playnite will never
+> offer an upstream Mythos release as an "update" to this fork.
+>
+> **Anything you add inside the theme folder is deleted whenever the theme is installed or
+> updated** — Playnite wipes the directory before extracting. Keep custom platform icons, sidebar
+> icons and theme audio backed up somewhere outside it.
 <br><br>
 ## Core Functions & Setup
 ### Age Rating Banners
-Mythos displays the Age Rating badge of a selected game within it's details panel. To enable them, go to `Appearance > Details View` and select Age Rating. Once enabled, mirror the following terminology in Library Manager:
+VibeMythos displays the Age Rating badge of a selected game within it's details panel. To enable them, go to `Appearance > Details View` and select Age Rating. Once enabled, mirror the following terminology in Library Manager:
 
 North America: `ESRB E10` `ESRB E` `ESRB T` `ESRB M` `ESRB AO` `ESRB RP`<br>Pan European: `PEGI 3` `PEGI 7` `PEGI 12` `PEGI 16` `PEGI 18`<BR>Russian: `RARS 0+` `RARS 6+` `RARS 12+` `RARS 16+` `RARS 18+`
 
@@ -27,27 +50,33 @@ By default, cover art isn't visible in Details View. Open [ThemeModifier](https:
 ### Game Summary
 The game summary, found below the trailer, simply displays the `Synopsis` metadata for the selected title. This must be configured manually in `Game Details > Advanced > Synopsis`.
 ### Platform Icons
-Platform icons are displayed on the bottom right of detail panels. Mythos includes a handful of commonly used platform icons, but not all of them. If a specific platform does not have an icon, find a `.png` online, drop it in `Mythos\Icons\Labels`. Name icon files according to the IDs found [here.](https://github.com/JosefNemec/Playnite/blob/master/source/Playnite/Emulation/Platforms.yaml)
+Platform icons are displayed on the bottom right of detail panels. VibeMythos includes a handful of commonly used platform icons, but not all of them. If a specific platform does not have an icon, find a `.png` online, drop it in `<PlayniteInstall>\Themes\Desktop\VibeMythos_fb4d738f-62bd-4e08-afd9-52e8cb45f6ca\Icons\Labels`. Name icon files according to the IDs found [here.](https://github.com/JosefNemec/Playnite/blob/master/source/Playnite/Emulation/Platforms.yaml)
 ### Play Button Text
 For those using Playnite to open external launchers or applications, you can replace the default Launch text in `Game Details > Advanced > Play Button`.
 ### Sidebar
-Download [Filter Presets Quick Launcher](https://playnite.link/addons.html#FilterPresetsQuickLauncher_ef9df36c-24c2-418c-8468-eed95a09d950) and navigate to the plugin's settings page to set up sidebar filters. Ensure you have the Sidebar enabled in `Main Menu > View > Sidebar.` The icons used in my screenshots can be found in `Mythos\Icons\Sidebar.`
+Download [Filter Presets Quick Launcher](https://playnite.link/addons.html#FilterPresetsQuickLauncher_ef9df36c-24c2-418c-8468-eed95a09d950) and navigate to the plugin's settings page to set up sidebar filters. Ensure you have the Sidebar enabled in `Main Menu > View > Sidebar.` The icons used in my screenshots can be found in the theme's `Icons\Sidebar` folder.
 ### Steam Links Bar
-![Steam Links Bar](https://github.com/bansakai/Mythos/blob/Master/Screenshots/steam_link_bar.png)<br><br>
-The Steam Links Bar displays all Steam client links directly below the game's image or video banner. To use this feature, download [ThemeModifier](https://playnite.link/addons.html#playnite-thememodifier-plugin) and check `Show Steam Links Bar`.<br><br>It's recommended to use the `Official Store` metadata option to import these seamlessly. Mythos will auto-detect a valid Steam Store Page link within the first `10` links, and display the remaining links dynamically.<br><br>Additionally, you can convert all Steam web links to client links using [Link Utilities.](https://playnite.link/addons.html#LinkUtilties_f692b4bb-238d-4080-ae76-4aaefde6f7a1) <br><br>
+![Steam Links Bar](https://github.com/alessandrocaetanob/VibeMythos/blob/Master/Screenshots/steam_link_bar.png)<br><br>
+The Steam Links Bar displays all Steam client links directly below the game's image or video banner. To use this feature, download [ThemeModifier](https://playnite.link/addons.html#playnite-thememodifier-plugin) and check `Show Steam Links Bar`.<br><br>It's recommended to use the `Official Store` metadata option to import these seamlessly. VibeMythos will auto-detect a valid Steam Store Page link within the first `10` links, and display the remaining links dynamically.<br><br>Additionally, you can convert all Steam web links to client links using [Link Utilities.](https://playnite.link/addons.html#LinkUtilties_f692b4bb-238d-4080-ae76-4aaefde6f7a1) <br><br>
 
-## Required Extensions
-- **Display Logos:** [ExtraMetadataLoader](https://playnite.link/addons.html#ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429) extension.
-- **Display Videos:** [ExtraMetadataLoader](https://playnite.link/addons.html#ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429) extension.
-<br><br>
-## Recommended Extensions
-- **Customize Theme:** [ThemeModifier](https://playnite.link/addons.html#playnite-thememodifier-plugin) extension. <img src="https://raw.githubusercontent.com/bansakai/Mythos/Master/Resources/twopointo.svg" width="40" /><br>
-- **Extra Features:** [ThemeExtras](https://playnite.link/addons.html#felixkmh_Extras_Plugin) extension. <img src="https://raw.githubusercontent.com/bansakai/Mythos/Master/Resources/twopointo.svg" width="40" /><br>
-- **Achievements:** [SuccessStory](https://playnite.link/addons.html#playnite-successstory-plugin) extension.
-- **HowLongToBeat:** [HowLongToBeat](https://playnite.link/addons.html#playnite-howlongtobeat-plugin) extension.
-- **Convert Links:** [Link Utilities](https://playnite.link/addons.html#LinkUtilties_f692b4bb-238d-4080-ae76-4aaefde6f7a1) extension.
-- **Sidebar Icons:** [Filter Presets Quick Launcher](https://playnite.link/addons.html#FilterPresetsQuickLauncher_ef9df36c-24c2-418c-8468-eed95a09d950) extension.
-<br><br>
+## Plugin Pairing Guide
+
+Every integration below is **optional except ExtraMetadataLoader** — each block collapses on its
+own when its plugin is absent, so the theme never leaves an empty husk behind.
+
+| Plugin | Lights up |
+| --- | --- |
+| **[ExtraMetadataLoader](https://playnite.link/addons.html#ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429)** `required` | Game logos in Details View and Grid View, and the video banner in Details View. Without it, the logo slot falls back to the game icon. |
+| **[ThemeModifier](https://playnite.link/addons.html#playnite-thememodifier-plugin)** | 41 theme settings — accent colours, floating sidebar, Steam Links Bar, ambient backdrop reach, Grid View toggles. This is how you customise the theme. |
+| **[ThemeExtras](https://playnite.link/addons.html#felixkmh_Extras_Plugin)** | Navigation buttons in the top panel, and library banners on grid covers. |
+| **[Playnite Achievements](https://github.com/justin-delano/PlayniteAchievements)** | The achievements row in Details View, the Grid View progress readout, and the gold completion state at 100%. |
+| **[SuccessStory](https://playnite.link/addons.html#playnite-successstory-plugin)** | The achievements row in Details View only. The two plugins are mutually exclusive by design — with SuccessStory installed the Playnite Achievements blocks self-collapse, so the Grid View readout and gold 100% state are Playnite Achievements only. |
+| **[HowLongToBeat](https://playnite.link/addons.html#playnite-howlongtobeat-plugin)** | The Main Story / Main + Extra / Completionist estimate row above the metadata panel. |
+| **[DuplicateHider](https://playnite.link/addons.html#felixkmh_DuplicateHider_Plugin)** | Library source badges (Steam, GOG, Epic, Xbox…) on grid covers, in the Details View **Library row**, and in the Grid View details panel. |
+| **[UniPlaySong](https://github.com/aHuddini/UniPlaySong)** | The Now Playing toast. (A themed top-panel transport is designed but not yet shipped.) |
+| **[Link Utilities](https://playnite.link/addons.html#LinkUtilties_f692b4bb-238d-4080-ae76-4aaefde6f7a1)** | Converts Steam web links to client links so the Steam Links Bar opens in-app. |
+| **[Filter Presets Quick Launcher](https://playnite.link/addons.html#FilterPresetsQuickLauncher_ef9df36c-24c2-418c-8468-eed95a09d950)** | Sidebar filter entries. No dedicated wiring — it inherits the theme's generic `SidebarItem` styling like any sidebar plugin. |
+<br>
 ## Fonts
 The theme **ships its own text fonts** in `Typefaces/` — Inter Tight for titles, Inter for body
 text, and the Mythos-modified Inter for the description and notes. The icon font is the one
@@ -57,12 +86,13 @@ exception and still comes from the system:
   — with `Segoe MDL2 Assets` as the Windows 10 fallback.
 
 > [!IMPORTANT]
-> **The bundled fonts only load on a portable Playnite install** — one where the theme sits in
-> `<PlayniteInstall>\Themes\Desktop\`. Font paths resolve against Playnite's own program
-> directory, so if you installed the theme through the addon browser on a standard install it
-> most likely lives in `%AppData%\Playnite\Themes\Desktop\`, where the bundled files are out of
-> reach. Nothing breaks — each family falls back to the system-installed face — but you get plain
-> Inter everywhere instead of three distinct faces.
+> **The bundled fonts only load on a portable Playnite install.** Font paths resolve against
+> Playnite's own program directory. A portable install keeps themes there; a standard install
+> puts them in `%AppData%\Playnite\Themes\Desktop\`, where the bundled files are out of reach.
+> This is decided purely by which kind of Playnite you run — **the install method makes no
+> difference**, since Playnite routes both the addon browser and a double-clicked `.pthm` to the
+> same location. Nothing breaks — each family falls back to the system-installed face — but you
+> get plain Inter everywhere instead of three distinct faces.
 >
 > **How to tell:** if game titles and body text look like the same font, the bundled files did not
 > resolve. To get the intended look on a standard install, install the fonts yourself:
@@ -77,11 +107,11 @@ Inter and Inter Tight are licensed under the SIL Open Font License 1.1 — see
 modification of Inter and is covered by the same OFL terms.
 <br><br>
 ## Additional Resources
-- **Download:** [Playnite Logo Concept](https://raw.githubusercontent.com/bansakai/Mythos/Master/Resources/PlayniteLogo.svg) used in Mythos 1.X.
-- **Download:** [Mythos MacOS Icon](https://raw.githubusercontent.com/bansakai/Mythos/Master/Resources/Mythos.png) for MyDockFinder users.
-- **Download:** [Playnite MacOS Icon](https://raw.githubusercontent.com/bansakai/Mythos/Master/Resources/Playnite.png) for MyDockFinder users.
-- **Download:** [Playnite Fullscreen MacOS Icon](https://raw.githubusercontent.com/bansakai/Mythos/Master/Resources/Playnite%20FS.png) for MyDockFinder users.
-- **Download:** [Age Rating Template](https://raw.githubusercontent.com/bansakai/Mythos/Master/Resources/Age%20Rating%20Template.ai) to create your own rating images.
+- **Download:** [Playnite Logo Concept](https://raw.githubusercontent.com/alessandrocaetanob/VibeMythos/Master/Resources/PlayniteLogo.svg) used in Mythos 1.X.
+- **Download:** [Mythos MacOS Icon](https://raw.githubusercontent.com/alessandrocaetanob/VibeMythos/Master/Resources/Mythos.png) for MyDockFinder users.
+- **Download:** [Playnite MacOS Icon](https://raw.githubusercontent.com/alessandrocaetanob/VibeMythos/Master/Resources/Playnite.png) for MyDockFinder users.
+- **Download:** [Playnite Fullscreen MacOS Icon](https://raw.githubusercontent.com/alessandrocaetanob/VibeMythos/Master/Resources/Playnite%20FS.png) for MyDockFinder users.
+- **Download:** [Age Rating Template](https://raw.githubusercontent.com/alessandrocaetanob/VibeMythos/Master/Resources/Age%20Rating%20Template.ai) to create your own rating images.
 <br><br>
 ## Playnite Settings
 ![Static Badge](https://img.shields.io/badge/Highly%20Recommended-red?style=flat)<br>
@@ -91,35 +121,35 @@ modification of Inter and is covered by the same OFL terms.
 <br>
    
 ### Appearance → General<br>
-<img src="https://raw.githubusercontent.com/bansakai/Mythos/Master/Screenshots/Settings_General.png" width="600" /><br>
+<img src="https://raw.githubusercontent.com/alessandrocaetanob/VibeMythos/Master/Screenshots/Settings_General.png" width="600" /><br>
 ### Appearance → Advanced<br>
-<img src="https://raw.githubusercontent.com/bansakai/Mythos/Master/Screenshots/Settings_Advanced.png" width="600" /><br>
+<img src="https://raw.githubusercontent.com/alessandrocaetanob/VibeMythos/Master/Screenshots/Settings_Advanced.png" width="600" /><br>
 ### Appearance → Details View<br>
-<img src="https://raw.githubusercontent.com/bansakai/Mythos/Master/Screenshots/Settings_Details.png" width="600" /><br>
+<img src="https://raw.githubusercontent.com/alessandrocaetanob/VibeMythos/Master/Screenshots/Settings_Details.png" width="600" /><br>
 ### Appearance → Grid View<br>
-<img src="https://raw.githubusercontent.com/bansakai/Mythos/Master/Screenshots/Settings_Grid.png" width="600" /><br>
+<img src="https://raw.githubusercontent.com/alessandrocaetanob/VibeMythos/Master/Screenshots/Settings_Grid.png" width="600" /><br>
 ### Appearance → Layout<br>
-<img src="https://raw.githubusercontent.com/bansakai/Mythos/Master/Screenshots/Settings_Layout.png" width="600" /><br>
+<img src="https://raw.githubusercontent.com/alessandrocaetanob/VibeMythos/Master/Screenshots/Settings_Layout.png" width="600" /><br>
 ### Appearance → Top Panel<br>
-<img src="https://raw.githubusercontent.com/bansakai/Mythos/Master/Screenshots/Settings_TopPanel.png" width="600" />
+<img src="https://raw.githubusercontent.com/alessandrocaetanob/VibeMythos/Master/Screenshots/Settings_TopPanel.png" width="600" />
 </details><br>
 
 > [!NOTE]
-> **Features NOT Fully Supported in Mythos:**
-> - Non-English Localizations - Many locale files still need to be written to support features added by Mythos.
+> **Features NOT Fully Supported in VibeMythos:**
+> - Non-English Localizations - Many locale files still need to be written to support features added by the theme.
 > - Sidebar Alignment - The sidebar will always display on the left when enabled.
 > - Filter Panel Alignment - Due to the layout of the theme, the Filter Panel will always align left.
-> - Game Version - This field has been repurposed to support [Play Button](https://github.com/bansakai/Mythos#custom-play-button) text.
-> - Notes - This field has been repurposed to support [Synopsis](https://github.com/bansakai/Mythos#game-summary) text.
+> - Game Version - This field has been repurposed to support [Play Button](#play-button-text) text.
+> - Notes - This field has been repurposed to support [Synopsis](#game-summary) text.
 > - Draw Separators Between Panels - This feature has been disabled almost entirely.
 
 
 ## Showcase
-![Screenshot](https://raw.githubusercontent.com/bansakai/Mythos/Master/Screenshots/5.png)
+![Screenshot](https://raw.githubusercontent.com/alessandrocaetanob/VibeMythos/Master/Screenshots/5.png)
 
-![Screenshot](https://raw.githubusercontent.com/bansakai/Mythos/Master/Screenshots/6.png)
+![Screenshot](https://raw.githubusercontent.com/alessandrocaetanob/VibeMythos/Master/Screenshots/6.png)
 
-![Screenshot](https://raw.githubusercontent.com/bansakai/Mythos/Master/Screenshots/2.png)
+![Screenshot](https://raw.githubusercontent.com/alessandrocaetanob/VibeMythos/Master/Screenshots/2.png)
 
-![Screenshot](https://raw.githubusercontent.com/bansakai/Mythos/Master/Screenshots/1.png)
+![Screenshot](https://raw.githubusercontent.com/alessandrocaetanob/VibeMythos/Master/Screenshots/1.png)
 

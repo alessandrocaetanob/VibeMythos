@@ -9,7 +9,7 @@ Constants:
     - TopPanelSquareStyle: 'Rounded Square Mode'
     - TopPanelSeparator: 'Show Plugin Separator'
     - UseNavigationButtons: 'Navigation Buttons (Requires ThemeExtras)'
-    - UseMythosLogo: 'Use Mythos Icon as Menu Button'
+    - UseMythosLogo: 'Use Theme Icon as Menu Button'
     - HideNotificationBadge: 'Hide Notification Badge'
     - "Ambient Backdrop"
     - AmbientBackdropExtent(0.2,1.0): 'Artwork Reach (Vertical)'
