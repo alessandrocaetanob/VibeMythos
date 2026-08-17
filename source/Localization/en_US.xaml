@@ -15,15 +15,6 @@
 
     <sys:String x:Key="LOCPlayGame">Launch</sys:String>
 
-    <!--<sys:String x:Key="LOCMenuDownloadMetadata">Download Metadata</sys:String>
-    <sys:String x:Key="LOCOpenMetadataFolder">Open Media Folder</sys:String>
-    <sys:String x:Key="LOCMenuOpenFullscreen">Enter Fullscreen Mode</sys:String>
-    <sys:String x:Key="LOCClearFilters">Clear</sys:String>
-    <sys:String x:Key="LOCHideGame">Hide Game</sys:String>
-    <sys:String x:Key="LOCUnHideGame">Remove from Hidden</sys:String>
-    <sys:String x:Key="LOCMenuAddons">Addons...</sys:String>
-    <sys:String x:Key="LOCMenuSelectRandomGame">Random Game</sys:String>
-    <sys:String x:Key="LOCCreateDesktopShortcut">Add Desktop Shortcut</sys:String>-->
 
     <sys:String x:Key="LOCMythos_Search">Search</sys:String>
 

@@ -11,10 +11,6 @@
                 <Setter Property="Background" Value="{DynamicResource ControlHoverBackgroundBrush}" />
                 <Setter Property="BorderBrush" Value="{DynamicResource ControlHoverBorderBrush}" />
             </Trigger>
-            <!--<Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="BorderBrush" Value="{DynamicResource ControlSelectedBorderBrush}" />
-                <Setter Property="Background" Value="{DynamicResource ControlSelectedBackgroundBrush}" />
-            </Trigger>-->
         </Style.Triggers>
     </Style>
 

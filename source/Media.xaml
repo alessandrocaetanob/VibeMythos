@@ -3,7 +3,20 @@
                     xmlns:popt="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options">
 
     <BitmapImage x:Key="TrayIcon" UriSource="{ThemeFile 'Images/applogo.ico'}" RenderOptions.BitmapScalingMode="Fant" popt:Freeze="True"/>
+    <!-- Playnite names these by TASKBAR BACKGROUND, not by glyph colour: TrayIconWhite is the
+         icon drawn on a white/light taskbar, TrayIconBlack the one drawn on a black/dark one.
+         Its own default theme maps them accordingly - TrayIconWhite to applogo_black.ico and
+         TrayIconBlack to applogo_white.ico.
+
+         The theme defined the first two and left TrayIconBlack to fall through to Playnite's
+         applogo_white.ico, so on a DARK taskbar - the Windows default - the notification area
+         showed Playnite's branding rather than this theme's. Playnite.dll reads all three.
+
+         Pointed at the same blue mark for now: it reads clearly on either background and is at
+         least ours. A dedicated monochrome variant would be better on a light taskbar and is a
+         design task, not a hygiene one. -->
     <BitmapImage x:Key="TrayIconWhite" UriSource="{ThemeFile 'Images/applogo_blue.ico'}" RenderOptions.BitmapScalingMode="Fant" popt:Freeze="True"/>
+    <BitmapImage x:Key="TrayIconBlack" UriSource="{ThemeFile 'Images/applogo_blue.ico'}" RenderOptions.BitmapScalingMode="Fant" popt:Freeze="True"/>
 
     <TextBlock x:Key="FullscreenModeIcon" Text="&#xe7f4;" FontFamily="{DynamicResource IconFontFamily}"/>
     <TextBlock x:Key="AddGameIcon" Text="&#xE710;" FontFamily="{DynamicResource IconFontFamily}"/>
