@@ -6,9 +6,7 @@
          for why these carry a path, and for the rules on adding a new one. -->
     <FontFamily x:Key="TightFont">Themes/Desktop/VibeMythos_fb4d738f-62bd-4e08-afd9-52e8cb45f6ca/Typefaces/#Inter Tight, Inter Tight, Segoe UI Variable Display, Segoe UI</FontFamily>
 
-    <Visibility x:Key="GridViewCoverCompStatusSubtitleVisibility">Collapsed</Visibility>
     <sys:Boolean x:Key="GridViewAllowUseOfLogos">True</sys:Boolean>
-    <sys:Boolean x:Key="GridViewCoverUseRoundedCorners">True</sys:Boolean>
     <HorizontalAlignment x:Key="CloseButtonAlignSide">Right</HorizontalAlignment>
 
     <!-- Implemented Modifiers -->
@@ -21,6 +19,10 @@
     <sys:Boolean x:Key="UseFloatingFilterPanel">True</sys:Boolean>
     <sys:Boolean x:Key="UseNavigationButtons">False</sys:Boolean>
     <sys:Boolean x:Key="UseButtonBorders">True</sys:Boolean>
+    <!-- Key name kept deliberately. HYP-200 retired the "Mythos" wording from the label in
+         thememodifier.yaml, but the key itself is what ThemeModifier persists a user's choice
+         against - renaming it silently resets that setting for everyone who has touched it.
+         Not worth a user-visible regression to tidy a name nobody sees. -->
     <sys:Boolean x:Key="UseMythosLogo">False</sys:Boolean>
     <sys:Boolean x:Key="HideNotificationBadge">False</sys:Boolean>
     <sys:Boolean x:Key="ShowNowPlayingToast">True</sys:Boolean>

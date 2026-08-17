@@ -8,15 +8,6 @@
     <sys:String x:Key="LOCOpenPlaynite">VibeMythos öffnen</sys:String>
 
     <sys:String x:Key="LOCPlayGame">Starten</sys:String>
-    <sys:String x:Key="LOCMenuDownloadMetadata">Metadaten herunterladen</sys:String>
-    <sys:String x:Key="LOCOpenMetadataFolder">Medienordner öffnen</sys:String>
-    <sys:String x:Key="LOCMenuOpenFullscreen">Vollbildmodus öffnen</sys:String>
-    <sys:String x:Key="LOCClearFilters">Zurücksetzen</sys:String>
-    <sys:String x:Key="LOCHideGame">Spiel ausblenden</sys:String>
-    <sys:String x:Key="LOCUnHideGame">Aus Ausgeblendet entfernen</sys:String>
-    <sys:String x:Key="LOCMenuAddons">Erweiterungen...</sys:String>
-    <sys:String x:Key="LOCMenuSelectRandomGame">Zufälliges Spiel</sys:String>
-    <sys:String x:Key="LOCCreateDesktopShortcut">Desktop-Verknüpfung hinzufügen</sys:String>
 
     <sys:String x:Key="LOCMythos_Search">Suchen</sys:String>
     <sys:String x:Key="LOCMythos_SteamNews">Neuigkeiten</sys:String>
