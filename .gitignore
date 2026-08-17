@@ -3,3 +3,8 @@
 
 # Serena project config — auto-generated per working copy, machine-specific
 .serena/
+
+# Python bytecode. tools/validate_theme.py is a script, but importing it (to unit-probe
+# a regex, or from a CI step) writes tools/__pycache__ next to it.
+__pycache__/
+*.py[cod]
