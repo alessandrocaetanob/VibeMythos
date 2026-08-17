@@ -1,20 +1,35 @@
 # Release history for VibeMythos.
 #
-# Empty by design. This addon has its own Id (split from upstream Mythos in HYP-200), so
-# upstream's 18 prior releases are NOT this addon's history - they belong to
-# Mythos_9f42c1a7-... and their PackageUrls serve bansakai's binaries. Carrying them here
-# would have advertised the wrong theme under this addon's identity.
+# This addon has its own Id (split from upstream Mythos in HYP-200), so upstream's 18 prior
+# releases are NOT this addon's history - they belong to Mythos_9f42c1a7-... and their
+# PackageUrls serve bansakai's binaries. Carrying them here would advertise the wrong theme
+# under this addon's identity.
 #
-# Add the first entry when a GitHub release actually exists, in this shape:
-#
-#   - Version: 2.1
-#     RequiredApiVersion: 2.9.0
-#     ReleaseDate: YYYY-MM-DD
-#     PackageUrl: https://github.com/alessandrocaetanob/VibeMythos/releases/download/2.1/VibeMythos_fb4d738f-62bd-4e08-afd9-52e8cb45f6ca_2_1.pthm
-#     Changelog:
-#       - ...
-#
-# Version must match source/theme.yaml, and RequiredApiVersion must match its ThemeApiVersion.
-# Never add an entry before the release asset exists - every user's updater would hit a 404.
+# Rules for every entry below:
+#   - Version must match source/theme.yaml's Version.
+#   - RequiredApiVersion must match its ThemeApiVersion, and Playnite rejects a theme whose
+#     value is a different major OR newer than its own DesktopApiVersion (2.9.0 on 10.56).
+#   - Never add an entry before the release asset exists. Playnite's updater downloads
+#     PackageUrl directly, so a missing asset is a 404 for every user, and Toolbox's addon
+#     verifier fails the manifest outright when the URL serves an HTML page instead of a file.
+#   - PackageUrl embeds both the tag and the packed filename. The filename is produced by
+#     Toolbox from the Id and Version with dots replaced by underscores - do not hand-write it.
 AddonId: VibeMythos_fb4d738f-62bd-4e08-afd9-52e8cb45f6ca
-Packages: []
+Packages:
+  - Version: 2.1
+    RequiredApiVersion: 2.9.0
+    ReleaseDate: 2026-08-17
+    PackageUrl: https://github.com/alessandrocaetanob/VibeMythos/releases/download/2.1/VibeMythos_fb4d738f-62bd-4e08-afd9-52e8cb45f6ca_2_1.pthm
+    Changelog:
+      - "First packaged release of the fork. A deliberate test release, cut while the install base is ~0 to prove Playnite's wipe-and-extract update path."
+      - "Carries its own theme Id. While it shared upstream's, bansakai's next release above this version would have silently replaced VibeMythos with upstream Mythos - Playnite matches addons by Id alone, never by name or author."
+      - "Bundles Inter, Inter Tight and the Mythos-modified Inter, which were previously bare system lookups that silently resolved to whatever happened to be installed. These load on portable installs only."
+      - "Playnite Achievements as an info-panel row, plus a Grid View readout and a gold 100% completion state."
+      - "DuplicateHider source badges on covers, in the details Library row and in the grid panel."
+      - "A HowLongToBeat estimate row, a Now Playing toast for UniPlaySong, and an ambient blurred backdrop with adjustable reach."
+      - "Restores the global background-task progress bar, which was missing its template parts entirely."
+      - "Fixes plugin windows rendering Playnite's stock navy inside a near-black theme, and the blank caption bar on settings and plugin dialogs."
+      - "Restores the Explorer close button and the filter panel's 'show selected only' toggle, both dropped from their templates."
+      - "Stops maximised dialogs clipping their caption strip, and TreeView and ToggleButton painting outside their layout bounds."
+      - "Stops the top panel's left cluster overlapping the centred plugin buttons on narrow windows; the search box now shrinks instead of the layout overflowing."
+      - "Repairs six unresolved resource references and purges 51 dead keys."
