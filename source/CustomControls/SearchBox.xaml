@@ -23,15 +23,35 @@
         </Setter>
     </Style>
 
+    <!-- HYP-237: this box is the one elastic element in the top panel's left cluster, so it carries
+         no width of its own. It stretches to fill the star column that hosts it in
+         Views/TopPanel.xaml, and that column's MaxWidth (bound to SearchBoxWidth) is what caps it.
+
+         Above roughly 760px that yields exactly SearchBoxWidth, so the ThemeModifier setting keeps
+         its meaning and the rendering is unchanged. Below that the left cluster no longer fits its
+         grid column, and the old fixed width made it spill right and paint under the centred plugin
+         items; shrinking keeps the cluster inside its column instead.
+
+         Do not "restore" a width here. The sizing deliberately lives on the ColumnDefinition:
+           - MaxWidth caps a desired size, it never supplies one. Set on this control inside a
+             content-sized parent, the box collapses to its floor at *every* window width. Measured:
+             44px at 1920. A star column has the opposite behaviour — it takes the space it is given
+             — which is why the cap belongs there.
+           - Neither BoxGrid nor PART_TextInpuText may carry a Width. Both used to be pinned to
+             SearchBoxWidth, which re-pinned the control from inside its own template.
+           - No horizontal StackPanel anywhere on this path. StackPanel measures children with
+             infinite width in the stacking direction, so nothing downstream of one can shrink. -->
     <Style x:Key="TopPanelSearchBox" TargetType="{x:Type SearchBox}" BasedOn="{StaticResource {x:Type SearchBox}}">
         <Setter Property="VerticalAlignment" Value="Stretch"/>
-        <Setter Property="Width" Value="{DynamicResource SearchBoxWidth}"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
         <Setter Property="Height" Value="35"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type SearchBox}">
-                    <Grid x:Name="BoxGrid" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" ClipToBounds="False">
-                        <TextBox x:Name="PART_TextInpuText" Style="{DynamicResource MythosSearchTextBox}" Width="{DynamicResource SearchBoxWidth}" HorizontalAlignment="Left"
+                    <!-- Clips so the "Search" prompt truncates at the field edge instead of
+                         painting over the filter toggle once the box is narrower than the text. -->
+                    <Grid x:Name="BoxGrid" Height="{TemplateBinding Height}" ClipToBounds="True">
+                        <TextBox x:Name="PART_TextInpuText" Style="{DynamicResource MythosSearchTextBox}" HorizontalAlignment="Stretch"
                                 VerticalContentAlignment="Center" Padding="10,0,30,1"/>
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center" IsHitTestVisible="False">
                             <ContentControl x:Name="PART_SeachIcon" ContentTemplate="{DynamicResource SearchTextIconTemplate}"
