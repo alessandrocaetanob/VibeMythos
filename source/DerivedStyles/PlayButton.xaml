@@ -340,8 +340,8 @@
         <Setter Property="FontSize" Value="{DynamicResource FontSizeLarge}"/>
         <Setter Property="FontWeight" Value="Bold"/>
         <Setter Property="Background" Value="Transparent" />
-        <Setter Property="Foreground" Value="{DynamicResource ButtonIdleBrush}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource ButtonIdleBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource IdleBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource IdleBrush}" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Padding" Value="8" />
         <Setter Property="Cursor" Value="Hand"/>

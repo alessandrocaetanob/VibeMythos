@@ -1348,7 +1348,7 @@
                                                 <TextBox x:Name="PART_TextNotes"
                                                         IsHitTestVisible="False"
                                                         IsReadOnly="True"
-                                                        Foreground="{DynamicResource ButtonTextBrush}"
+                                                        Foreground="{DynamicResource TextBrush}"
                                                         AcceptsReturn="True"
                                                         BorderThickness="0"
                                                         TextWrapping="Wrap"

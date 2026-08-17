@@ -1,0 +1,7 @@
+ThemeExtras reads library banners from this folder, keyed by library SourceName
+(e.g. "Steam.png", "GOG.png"), per BannersBySourceNamePath in themeExtras.yaml.
+
+Shipped empty on purpose: themeExtras.yaml already declared the path while the folder
+did not exist. Images/Banners is listed under PersistentPaths, so anything you drop
+here survives theme updates - unlike the rest of the theme directory, which Playnite
+wipes on every install.

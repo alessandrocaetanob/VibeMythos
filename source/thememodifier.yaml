@@ -37,6 +37,7 @@ Constants:
     - GridViewPlayButtons: 'Show Play Button on Hover'
     - GridViewDetailsPanel: 'Enable Details Panel'
     - GridViewCloseButton: 'Show Details Panel Close Button'
+    - GridViewAllowUseOfLogos: 'Show Logo in Details Panel (Requires ExtraMetadataLoader)'
     - GridViewCoverCloudIcon: 'Cloud Icon for Uninstalled Games'
     - GridViewCoverSourceSelector: 'Source Icons on Covers (Requires DuplicateHider)'
     - GridViewCoverPlatformIcon: 'Single Source Icon (Fallback, No Plugin)'

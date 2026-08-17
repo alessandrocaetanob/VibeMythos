@@ -34,7 +34,7 @@ These are the constraints that are not discoverable from the code, and violating
    too late to re-base objects already constructed during parsing. Consequences:
    - Use `{ThemeFile 'Images/x.png'}` for images. A bare `UriSource="Images/x.png"` silently
      resolves nowhere — the `WindowImageBackgroundBrush` and `WindowImageBackgroundBrush1`
-     `ImageBrush`es in `Constants.xaml` are dead for this reason.
+     `ImageBrush`es were dead for this reason, and were removed in HYP-195.
    - `{ThemeFile}` **cannot** carry a font: it `File.Exists`-checks the relative path, and a
      `FontFamily` needs a `#Family Name` fragment that breaks the check. The fragment is
      mandatory — a path to a `.ttf` with no fragment silently yields Arial.
@@ -100,7 +100,7 @@ These are the constraints that are not discoverable from the code, and violating
 |---|---|
 | `source/` | The theme itself (extracted from the upstream 2.0 `.pthm`, which is just a zip). This is what gets edited and packaged. |
 | `source/theme.yaml` | Manifest: `Id`, `Version`, `ThemeApiVersion` (2.9.0 — must match Playnite's `DesktopApiVersion`; a major bump breaks loading). |
-| `source/Constants.xaml` | Colors, brushes, sizes, and all ThemeModifier-editable toggles. 247 keyed resources. |
+| `source/Constants.xaml` | Colors, brushes, sizes, and all ThemeModifier-editable toggles. 196 keyed resources. |
 | `source/Common.xaml`, `source/Media.xaml` | Base styles / icon and image specs. |
 | `source/Views/` | Library views and panels (`MainWindow`, `TopPanel`, `DetailsViewGameOverview`, `GridViewGameOverview`, `Sidebar`, …). |
 | `source/DefaultControls/` | Restyles of built-in WPF controls. |
@@ -146,6 +146,55 @@ Get-ChildItem source/Localization -Filter *.xaml | Where-Object Name -ne 'en_US.
 
 Use the namespace-aware `Get-Keys` above, **not** `grep 'x:Key='` — the grep count is inflated by commented-out blocks (46 lines vs 37 real keys in `en_US.xaml`).
 
+**Resource reference resolution** — the highest-value check in the repo. An unresolved `DynamicResource` never throws; WPF just leaves the property at its inherited value, so a typo'd or deleted key is invisible until someone notices the wrong colour months later. It found four of the six broken references repaired in HYP-195 (the other two were already known), and it is the *only* thing that can catch a case typo.
+
+Run both blocks below together — the second reuses `Get-Keys`. Four details are load-bearing; changing any of them silently weakens the check:
+
+- **Ordinal comparison.** WPF resource lookup is case-sensitive. A PowerShell `@{}` hashtable is **not**, so `$defined.ContainsKey('subtalBrush')` returns true when only `SubtalBrush` exists — which is exactly the bug that started HYP-195. Use an ordinal `HashSet`.
+- **Four roots.** The theme, Playnite's default theme, Playnite's localization, and Playnite's global templates (which supply `False`, `ObjectToStringConverter`, `BooleanToVisibilityConverter` and ~1,100 others). Miss one and you get a flood of false positives.
+- **Strip comments first.** A key named inside `<!-- -->` is not a usage.
+- **Fail loudly on a bad path.** Without the count guards, a wrong `F:\Playnite` path yields an empty universe and the checks report "all clear" — indistinguishable from success, and the most dangerous possible output.
+
+```powershell
+$nsX='http://schemas.microsoft.com/winfx/2006/xaml'
+function Get-Keys($p){
+  try { $x=[xml](Get-Content $p -Raw); $nm=New-Object System.Xml.XmlNamespaceManager($x.NameTable); $nm.AddNamespace('x',$nsX)
+        $x.SelectNodes('//*[@x:Key]',$nm) | ForEach-Object { $_.GetAttribute('Key',$nsX) } }
+  catch { Write-Warning "unparseable, contributes no keys: $p"; @() }   # never fail silently
+}
+$defined = New-Object 'System.Collections.Generic.HashSet[string]'([StringComparer]::Ordinal)
+foreach ($r in @('source','F:\Playnite\Themes\Desktop\Default','F:\Playnite\Localization','F:\Playnite\Templates\Themes')) {
+  if (-not (Test-Path $r)) { throw "resource root missing: $r" }
+  Get-ChildItem $r -Recurse -Filter *.xaml | ForEach-Object { Get-Keys $_.FullName | ForEach-Object { [void]$defined.Add($_) } }
+}
+if ($defined.Count -lt 1000) { throw "only $($defined.Count) keys loaded - expected ~1600; a root is wrong" }
+$bad = 0
+Get-ChildItem source -Recurse -Filter *.xaml | ForEach-Object {
+  $f=$_; $t=[regex]::Replace((Get-Content $f.FullName -Raw),'(?s)<!--.*?-->','')
+  # [^{},]+? permits spaces (e.g. "DuplicateHider_Epic Games_Icon") while excluding "{",
+  # which skips nested extensions like {StaticResource {x:Type Button}} whose key is
+  foreach ($m in [regex]::Matches($t,'\{(?:Dynamic|Static)Resource\s+(?:ResourceKey=)?([^{},]+?)\s*[},]')) {
+    if (-not $defined.Contains($m.Groups[1].Value)) { $bad++; "UNRESOLVED $($f.Name): $($m.Groups[1].Value)" }
+  }
+}
+"$bad unresolved"
+```
+
+**Before deleting any key, check it is not Playnite-global.** A key the theme never references may still be read by Playnite core for its own chrome — the inverted `WhiteColor`/`BlackColor` pair is the load-bearing example, and `MainColor` and `TooltipBackgroundBrush` are two the 3.0 plan wrongly listed as dead upstream palette.
+
+⚠️ **Scope this to every theme file, not just `Constants.xaml`.** `Constants.xaml` redefines ~51 Playnite-global keys, but roughly **118 more** live in `Media.xaml`, `Views/SearchView.xaml`, `Views/TopPanel.xaml` and `DerivedStyles/` — window styles, item templates, tray icons, menu icons. All have zero theme references and are resolved by core by name, i.e. the exact profile a dead-key sweep deletes.
+
+```powershell
+$core = New-Object 'System.Collections.Generic.HashSet[string]'([StringComparer]::Ordinal)
+Get-ChildItem 'F:\Playnite\Themes\Desktop\Default' -Recurse -Filter *.xaml | ForEach-Object { Get-Keys $_.FullName | ForEach-Object { [void]$core.Add($_) } }
+if ($core.Count -lt 100) { throw "default theme unreadable ($($core.Count) keys) - check the path" }
+Get-ChildItem source -Recurse -Filter *.xaml | ForEach-Object {
+  $f=$_; Get-Keys $f.FullName | Where-Object { $core.Contains($_) } | ForEach-Object { "PLAYNITE-GLOBAL (retint, never delete)  $($f.Name): $_" }
+}
+```
+
+Plugins also read theme keys they never appear to reference — `DuplicateHider_MaxNumberOfIcons` is one. Treat any `<Plugin>_*` key as an external API. Note the underscore heuristic is **not sufficient**: `SuccessStoryListGradient` and `SteamTealBrush` carry no underscore and were only confirmed safe by scanning the installed plugin DLLs. When in doubt, grep `F:\Playnite\Extensions` for the literal key name.
+
 **Font chain / theme Id coupling** — the font tokens in `Constants.xaml` embed the deployed folder name, which Playnite derives from `theme.yaml`'s `Id`. Change the `Id` without updating the chains and the bundled fonts silently stop loading (see hard rule 7):
 
 ```powershell
@@ -176,7 +225,7 @@ Copy-Item source\* $dest -Recurse -Force
 
 Restart Playnite and select the theme in Settings → Appearance. **There is no hot reload.**
 
-> A deploy once ran as a move and emptied 299 of the 305 files from `source/`. Nothing was lost — `git restore source/` recovered it — but verify `find source -type f | wc -l` still reports 305 after deploying.
+> A deploy once ran as a move and emptied 299 of the 305 files from `source/`. Nothing was lost — `git restore source/` recovered it — but verify `find source -type f | wc -l` still reports 314 after deploying.
 
 Packaging, from `F:\Playnite`:
 

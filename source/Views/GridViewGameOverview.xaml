@@ -77,7 +77,8 @@
                                                     </Grid.RowDefinitions>
                                                     <StackPanel Grid.Row="0" Margin="0">
                                                         <Grid Height="200" Margin="5,20,5,20">
-                                                            <Border x:Name="GameIcon" CornerRadius="0">
+                                                            <Border x:Name="GameIcon" CornerRadius="0"
+                                                                    Tag="{DynamicResource GridViewAllowUseOfLogos}">
                                                                 <Image Name="PART_ImageIcon"
                                                                        VerticalAlignment="Center"
                                                                        HorizontalAlignment="Center"
@@ -94,6 +95,12 @@
                                                                             <DataTrigger Binding="{PluginSettings Plugin=ExtraMetadataLoader, Path=IsLogoAvailable, FallbackValue=False}" Value="False">
                                                                                 <Setter Property="Visibility" Value="Visible" />
                                                                             </DataTrigger>
+                                                                            <!-- The logo Border below is gated on the same key. Without this the
+                                                                                 toggle would collapse the logo and reveal nothing, leaving an
+                                                                                 empty 200px slot. -->
+                                                                            <DataTrigger Binding="{Binding Tag, RelativeSource={RelativeSource Self}}" Value="False">
+                                                                                <Setter Property="Visibility" Value="Visible" />
+                                                                            </DataTrigger>
                                                                         </Style.Triggers>
                                                                     </Style>
                                                                 </Border.Style>
@@ -102,7 +109,7 @@
                                                             <Border x:Name="ExtraMetadataLoader_LogoLoaderControlGrid"
                                                                     VerticalAlignment="Center"
                                                                     HorizontalAlignment="Center"
-                                                                    Tag="{DynamicResource DetailsViewAllowUseOfLogos}">
+                                                                    Tag="{DynamicResource GridViewAllowUseOfLogos}">
                                                                 <Border.Style>
                                                                     <Style TargetType="Border">
                                                                         <Setter Property="Visibility" Value="Visible" />
