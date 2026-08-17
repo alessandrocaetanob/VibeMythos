@@ -1,0 +1,11 @@
+UniPlaySong reads theme-shipped audio from this folder:
+
+  UPS_BackgroundAudio.mp3|ogg|wav|flac   becomes selectable as "Active Theme Music"
+  Achievements/<rarity>.wav              per-rarity achievement unlock jingles
+
+Shipped empty on purpose - VibeMythos does not bundle audio yet (HYP-236 is gated on
+sourcing license-safe files, which the repository's MIT LICENSE would not cover).
+
+"audio" is listed under PersistentPaths in themeExtras.yaml, so anything you drop here
+survives theme updates - unlike the rest of the theme directory, which Playnite wipes
+recursively on every install. That protection needs ThemeExtras installed.

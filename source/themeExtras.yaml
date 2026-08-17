@@ -1,6 +1,23 @@
 ThemeId: VibeMythos_fb4d738f-62bd-4e08-afd9-52e8cb45f6ca
+
+# Playnite wipes the theme directory recursively before extracting, on every install AND every
+# update - ExtensionInstaller.InstallPackedFile calls FileSystem.CreateDirectory(installDir, true).
+# Anything a user has dropped inside the theme folder is destroyed. ThemeExtras restoring these
+# paths afterwards is the only mechanism that survives it.
+#
+# Every entry below is a directory the README tells users to put their own files in. Keep the two
+# in sync: documenting a drop point without listing it here silently destroys their work on the
+# next update, and the loss is invisible until they go looking for a missing icon.
+#
+# This protection requires ThemeExtras to be installed. Without it the wipe is unmitigated, so the
+# README warning must name that dependency rather than claiming the files are simply safe.
 PersistentPaths:
-- Images/Banners
+- Images/Banners          # ThemeExtras library banners, keyed by SourceName / platform / plugin id
+- Icons/Labels            # platform icons, named by Playnite platform ID
+- Icons/Sidebar           # sidebar filter icons
+- Icons/Platform Source   # library source icons - GridViewItemTemplate.xaml resolves {SourceName}.png
+                          # here, and Media.xaml's DuplicateHider_*_Icon keys point at the same files
+- audio                   # UniPlaySong theme music and per-rarity achievement jingles (HYP-236)
 BannersBySpecIdPath: Images/Banners/PlatformSpecId
 BannersByPlatformNamePath: Images/Banners/PlatformName
 BannersByPluginIdPath: Images/Banners/PluginId
