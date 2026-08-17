@@ -13,7 +13,13 @@
     <Setter Property="BorderBrush" Value="{DynamicResource ControlIdleBorderBrush}"/>
     <Setter Property="SnapsToDevicePixels" Value="True"/>
     <Setter Property="Padding" Value="12,8,12,8"/>
-    <Setter Property="Height" Value="28"/>
+    <!-- MinHeight, not Height. This is the IMPLICIT ToggleButton style, so it applies to every
+         unstyled toggle in Playnite core and in plugin windows - the theme's own toggles all
+         override it inline. A fixed 28 could not contain the padding it sets alongside it:
+         8 top + 8 bottom + a ~19px text line needs ~35px, so any text-bearing toggle was
+         clipped along its bottom edge. Playnite's default sets no height here at all.
+         28 stays as a floor so icon-only toggles keep their pill proportions. -->
+    <Setter Property="MinHeight" Value="28"/>
     <Setter Property="Template">
         <Setter.Value>
             <ControlTemplate TargetType="{x:Type ToggleButton}">
@@ -22,7 +28,7 @@
                         BorderBrush="{TemplateBinding BorderBrush}"
                         Background="{TemplateBinding Background}"
                         CornerRadius="{DynamicResource ControlCornerRadius}"
-                        Height="{TemplateBinding Height}">
+                        MinHeight="{TemplateBinding MinHeight}">
                     <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                       VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                       Margin="{TemplateBinding Padding}"
