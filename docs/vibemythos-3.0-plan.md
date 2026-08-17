@@ -1,8 +1,20 @@
 # VibeMythos 3.0 — Premium Desktop Library
 
-Date: 2026-08-10
+Date: 2026-08-10 · corrected 2026-08-17 (HYP-206)
 Status: proposed plan
-Baseline: Mythos 2.0 fork, Playnite 10.56, `ThemeApiVersion 2.9.0` (verified current — no bump needed)
+Baseline: Mythos 2.0 fork, Playnite 10.56.0.23531, `ThemeApiVersion 2.9.0` (verified current — no bump needed)
+
+> **Read this first.** The body below was written against the 2026-08-10 tree. HYP-206 re-verified it
+> against `bba0dc2` and the installed Playnite 10.56, and corrected it in place — every correction is
+> marked **✅ Corrected (HYP-206)**. Two items were *unsafe as written* and would have broken the theme
+> if executed literally (C2's video-hack removal, B's "keep the Id"), and several were already shipped.
+>
+> **Milestones, not this document, are the source of truth for what is left.** The plan predates the
+> Linear milestone structure; work is tracked in *v2.1 Test Release*, *3.0-alpha Foundation*,
+> *3.0-beta Cinema*, *3.0 Release* and *3.1+ Beyond*. Where the two disagree, believe Linear.
+>
+> **Re-verify line numbers before acting on any individual item.** They have already drifted twice —
+> `FlyOutEase` alone has been cited at `:396`, corrected to `:360`, and is actually at `:389`.
 
 VibeMythos 3.0 is the release where the fork stops being "Mythos plus fixes" and becomes its
 own theme: a design system instead of inherited constants, a motion language instead of
@@ -23,8 +35,9 @@ ad-hoc storyboards, and a details view that reads like a store page for *your* l
 
 ## Where 2.x actually stands (audit, 2026-08-10)
 
-Full inventory was taken from the current tree (79 XAML files, ~11.6k lines). What it found
-shapes every workstream below.
+Full inventory was taken from the 2026-08-10 tree (79 XAML files, ~11.6k lines). At `bba0dc2` that is
+**79 `.xaml` files / 11,768 lines**, inside **311** files total in `source/`. What it found shapes
+every workstream below.
 
 **Strengths to build on**
 
@@ -45,12 +58,12 @@ shapes every workstream below.
 | No radius discipline | 17 radius tokens (two of them duplicates at 22: `ControlCornerRadiusLarger`, `GridCornerDetailsPanel`) **plus 48 literal `CornerRadius` values** in attribute form (72 counting `Setter`-form). Visible seam: `Sidebar.xaml:36` fill at radius 15 under a stroke at 16 (`:107`). |
 | No spacing system | 110 distinct literal `Margin` values in attribute form (135 counting `Setter`-form); `Padding="0,11,0,11"` ×34; six `Margin="0,0,0,-1"` nudges compensating for the missing scale. |
 | No motion tokens | Hover gesture alone: 7 distinct durations and 4 explicit easing types, with 36 of 58 hover animations carrying no explicit easing at all (implicit Linear). Theme-wide: 12 durations, 6 easing types. All literals. |
-| Hover chaos | ~133 `Setter`s inside `IsMouseOver` triggers, resolving to **27 distinct brush tokens** (33 counting hardcoded literal colours). `HoverBrush` (`#E7E9EA`, a *foreground*) is used as a background exactly once, in `Menu.xaml` — a one-off fix, not the pattern this row originally implied. |
+| Hover chaos | ~133 `Setter`s inside `IsMouseOver` triggers, resolving to **27 distinct brush tokens** (33 counting hardcoded literal colours). ✅ **Corrected (HYP-206):** `HoverBrush` (`#E7E9EA`, a *foreground*) is painted as a background/fill at **3 sites, not one** — `Menu.xaml:45` (`Background`) and `Thumb.xaml:51,:54` (`Fill`). Its ~20 other uses are all `Foreground`/`CaretBrush`, which are legitimate. `HoverBrush` is itself a **Playnite-global key: retint it, never rename it.** |
 | Type scale half-adopted | 31 literal `FontSize` (13/15/19 aren't even in the scale) vs 39 tokenized. `FontSizeLarger`/`FontSizeLargest` are used but not defined *by this theme* — they resolve only because Playnite's default theme defines them (20/29) and merges first. Not a break, but the theme doesn't own its own display size, including on the game title (`DetailsViewGameOverview.xaml:735`). |
 | Silent breakage | Two real ones: `ComboBox.xaml:146` `{DynamicResource subtalBrush}` (case typo → resolves to nothing); `GridViewGameOverview.xaml:105` references undefined `DetailsViewAllowUseOfLogos` (should be `GridViewAllowUseOfLogos` — grid logo toggle dead). Adjacent: `themeExtras.yaml` `BannersBySourceNamePath` points at an `Images/Banners/SourceName` directory that doesn't exist, and the `DetailsListSelectedGradient` key in `Constants.xaml` is defined-but-unused with two `GradientStop`s bound to an undefined `AccentIdleColor`. |
 | Dead upstream palette | Pre-fork navy/brown/beige remnants (`MainColor #2C3A67`, `Brown #795548`, `CardBorderBrush #D4D0B8`, yellow `BackgroundToneColor`, three unused radial "tube" gradients, plus `ExpanderBackgroundBrush`, which hardcodes `MainColor`'s hex directly) — roughly **60 genuinely dead Color/Brush keys**, of 80 dead keys of any type. ⚠️ Not all are safe to delete: 19 are Playnite-global and `DuplicateHider_MaxNumberOfIcons` is read by its plugin — see HYP-195. |
 | Structural duplication | The metadata-row block is duplicated across `DetailsViewGameOverview.xaml` and `GridViewGameOverview.xaml`. The full duplicated span is closer to **490 lines**, not 250 — the 16 metadata rows sit in one range while the HLTB and achievements blocks live ~230 lines earlier in each file. It is **not** byte-identical: the DuplicateHider host names genuinely differ (`DhDetailsSelectorHost`/`_SourceSelector1` vs `DhGridDetailsSelectorHost`/`_SourceSelector2`). Hardcoded HLTB hexes included. |
-| Zero render caching / virtualization tuning | `CacheMode`: 0 uses despite 46 scale-targeting animation elements across 7 files; `Fant` (most expensive scaler) on every grid cover; no `VirtualizationMode=Recycling` anywhere. |
+| Zero render caching / virtualization tuning | `CacheMode`: 0 uses despite 46 scale-targeting animation elements across 7 files; `Fant` on every grid cover. ✅ **Corrected (HYP-206):** "no `VirtualizationMode=Recycling` anywhere" is true but **irrelevant** — Playnite sets it itself, as a local value, after the theme parses. See F3. |
 | Identity | `theme.yaml` still says `Name: Mythos, Author: bansakai, Version: 2.0` with all links pointing upstream. |
 
 ---
@@ -69,10 +82,17 @@ directories.
   (rest → `ContentBrushOverlay` `#1AFFFFFF` → hover `ContentBrushOverlayHover` `#33FFFFFF`
   → pressed/selected). Migrate the 26 hover brushes down to ~4 sanctioned ones; retire
   `HoverBrush`-as-background.
+  ✅ **Corrected (HYP-206):** that is **3 call sites**, not one — `Menu.xaml:45`, `Thumb.xaml:51`,
+  `Thumb.xaml:54`. Retire the *usage*; **keep the key**. `HoverBrush` is Playnite-global (one of the
+  42 core paint keys), so deleting or renaming it hands core chrome back to Playnite's stock palette.
 - Tokenize the strays: HLTB tri-color (`#008272/#0078d4/#2ea855`, duplicated in both
   overview files), destructive hover (`Simplebutton.xaml:444` `#c0392b` →
   `DestructiveColor`), scrim gradients, `Menu.xaml:10`, the `ToggleButton.xaml` animation
   target colors.
+- ✅ **Corrected (HYP-206): the purge already happened.** HYP-195 removed 51 dead keys; `Constants.xaml`
+  now holds **196 keys over 449 lines**. `MainColor` and `TooltipBackgroundBrush` were listed above as
+  "dead upstream palette" and are **not** — both are Playnite-global core paint keys. Retint, never
+  delete. Anything still outstanding here is naming/aliasing, not deletion.
 - Purge the dead navy/brown/beige/radial keys. **Keep** the inverted `WhiteColor`/
   `BlackColor` hack (it forces Playnite-core lookups dark — load-bearing) but document it
   with a comment block, and alias the misspellings (`SubtalBrush` → `TextSubtleBrush`,
@@ -144,7 +164,8 @@ directories.
 ### A4. Motion vocabulary
 
 Three duration tokens + two easings, as keyed resources next to the existing `FlyOutEase`
-(`Constants.xaml:396`):
+(`Constants.xaml:389` — ✅ **corrected (HYP-206)**; this was published as `:396`, then wrongly
+"corrected" to `:360`, and is at `:389` as of `bba0dc2`. Grep for it, don't trust any of the three):
 
 | Token | Value | Use |
 | --- | --- | --- |
@@ -163,8 +184,13 @@ where WPF forces literals, the tokens still serve as the documented source of tr
 - Fix the two silent breaks (`subtalBrush` casing, `DetailsViewAllowUseOfLogos` →
   `GridViewAllowUseOfLogos`), plus the stale `BannersBySourceNamePath` directory and the
   unused `DetailsListSelectedGradient`.
-- Share the duplicated 250-line metadata block via styles in `Common.xaml` (new files are
-  forbidden; `Common.xaml` is the sanctioned shared home).
+- Share the duplicated 250-line metadata block via styles in `Common.xaml`.
+  ✅ **Corrected (HYP-206): new files are not categorically forbidden.** `ApplyTheme` accepts any path
+  the default theme's dictionaries already merge, and **16 of those are still unclaimed** — including
+  `DefaultControls/Border.xaml`, `DefaultControls/TextBlock.xaml` and `DefaultControls/Label.xaml`,
+  which are natural homes for shared base styles. `Common.xaml` remains a fine choice, but it is a
+  style preference now, not a constraint. See CLAUDE.md hard rule 1 for the full list and the
+  regeneration command; HYP-212 confirms one on device first.
 
   ⚠️ **Share the chrome, not the elements.** The block is built from `PART_Elem*`-named
   elements, and Playnite resolves those by name within the *view's* namescope. Hoisting
@@ -178,14 +204,16 @@ where WPF forces literals, the tokens still serve as the documented source of tr
 
 ## Workstream B — Identity: actually become VibeMythos
 
-- `source/theme.yaml`: `Name: VibeMythos`, `Version: 3.0`, author `alessandrocaetanob
-  (based on Mythos by bansakai)`, links → this fork. **Keep the `Id`
-  (`Mythos_9f42c1a7-…`) unchanged** — changing it orphans every existing install's update
-  path and the deployed-folder mapping, **and silently breaks all three font tokens**, which
-  embed the Id as a path segment (HYP-194; CLAUDE.md carries a validator for the coupling).
-  Keep `ThemeApiVersion: 2.9.0`.
-  ⚠️ Do bump `Version` — it is still `2.0`. The updater keys off it, so shipping 3.0 without
-  the bump means existing installs never fetch the release and the bundled fonts never arrive.
+- ✅ **Shipped in HYP-200, and this bullet instructed the opposite of what shipped.** The plan said
+  **"keep the `Id` (`Mythos_9f42c1a7-…`) unchanged"**. That was reversed deliberately: sharing
+  upstream's Id meant bansakai's next release above our `Version` would resolve to *his* addon-database
+  entry and, via `ExtensionInstaller.InstallPackedFile`'s recursive wipe, silently replace this fork
+  with upstream Mythos on the user's next update check. The fork now carries its own
+  `VibeMythos_fb4d738f-62bd-4e08-afd9-52e8cb45f6ca`. **Do not "restore" the old Id.**
+  `Name`, `Author`, links and `Version: 2.1` all shipped with it; `ThemeApiVersion` stays `2.9.0`.
+  The Id↔font-chain coupling the bullet warned about is real and is covered by the CLAUDE.md validator.
+  ⚠️ `Version` must still rise for the 3.0 release — the updater compares it, so shipping without a
+  bump means existing installs never fetch the release.
 - `Manifest/Addon_Manifest.yaml` + `Installer_Manifest.yaml`: new identity + 3.0 release
   entry.
 - README rewrite: new hero banner, feature tour with fresh screenshots, credits chain
@@ -205,8 +233,16 @@ cards, motion on entry.** Use the `frontend-design` skill when executing each of
 
 The Aniki A/B pattern, pure XAML: two stacked `Image` layers, flip a bool on selection
 change, `DataTrigger` storyboard crossfades opacity over `Motion/Base`. Apply to: ambient
-backdrop, details cover/logo, grid-drawer art, Now Playing album art. Kills the single
-most un-premium behavior in the theme — the hard cut on every selection change.
+backdrop, details cover/logo, grid-drawer art, Now Playing album art.
+
+✅ **Corrected (HYP-206): the premise is wrong.** "Kills the single most un-premium behavior — the hard
+cut on every selection change" does not describe the theme. The ambient backdrop **already crossfades**:
+`Views/Library.xaml:22` uses Playnite's own `FadeImage` for `PART_ImageBackground`, exactly as stock
+does. There is no hard cut to kill there. The genuinely un-transitioned surface is the **grid drawer**
+(zero storyboards in `GridViewGameOverview.xaml`), which is why the 3.0-beta milestone opens with
+HYP-217 rather than with this item. Keep this scoped to the surfaces that actually pop — and note the
+proposed `NotifyOnTargetUpdated` retrigger is **not a property on `PluginSettings`**, so writing it is
+a parse failure, i.e. a whole-theme failure (CLAUDE.md hard rule 10). HYP-162 is the spike.
 
 ### C2. Details view as hero page
 
@@ -222,13 +258,28 @@ target. Recomposition, keeping all existing toggles working:
   ~40ms offsets, opacity+8px translate, `Motion/Slow` once per game change. One
   storyboard, huge perceived-quality gain.
 - Metadata right rail consumes the shared block from A5.
-- Remove the `Margin="0,-9999,0,0"` off-screen video-loader hack in favor of a proper
-  collapsed state.
+- ~~Remove the `Margin="0,-9999,0,0"` off-screen video-loader hack in favor of a proper
+  collapsed state.~~
+  🛑 **Unsafe as written — do not execute (HYP-206).** The hack is load-bearing. The
+  `ExtraMetadataLoader_VideoLoaderControl` at `DetailsViewGameOverview.xaml:763-768` is pushed
+  off-screen but **must keep rendering**, because `:787-790` uses it as the `Visual` of the
+  `VisualBrush` that fills the visible `Rectangle` inside `VideoDisplayGrid`. Collapsing it — or
+  giving it `Visibility="Collapsed"`, zero size, or anything that stops it producing layout —
+  removes the brush's source and the video area goes blank. That is a *worse* bug than the hack.
+  Any replacement must keep a live, laid-out visual to feed the brush (e.g. clip or zero-opacity it
+  rather than collapse it) and must be verified with a game that actually has a trailer. Tracked
+  separately as HYP-223 and deliberately parked at Low priority. Independently re-verified
+  2026-08-17 — this one came from a single agent and was the most dangerous claim in the audit.
 
 ### C3. Grid view as gallery
 
-- Cover hover: lift (scale 1.03 + stronger shadow) with `CacheMode=BitmapCache` on the
-  animated element; selection ring in accent with animated reveal.
+- ✅ **Corrected (HYP-206): both already ship.** `DerivedStyles/GridViewItemStyle.xaml` has the
+  hover-lift (`ScaleTransform` to **1.0175**, 0.3s `CubicEase` out, `:35-85`) gated by the working
+  `GridViewCoverZoomOnHover` ThemeModifier toggle via the `ZoomOnHoverProxy` `Tag` at `:22-23`, and
+  the selection ring (`SelectionBorder`, `AccentHighlightBrush` on `IsSelected`, `:92-95`, with a
+  `ContentBrushOverlayTwo` hover ring at `:87-90`). What is actually left is **tuning, not building**:
+  1.0175 is subtle next to the proposed 1.03, there is no shadow, and the ring has no animated reveal.
+  Adding `CacheMode=BitmapCache` to the animated element remains valid and unshipped.
 - **The details drawer currently pops with zero transition** (0 storyboards in
   `GridViewGameOverview.xaml`) — slide+fade it over `Motion/Base`, respecting
   `GridViewDetailsPosition`.
@@ -240,10 +291,17 @@ target. Recomposition, keeping all existing toggles working:
   spacing-scale pass, consistent glass treatment with the sidebar's floating mode.
 - Replace the notification panel's `ThicknessAnimation` (layout-thrashing,
   `MainWindow.xaml:23-55`) with a `TranslateTransform` slide.
-- Finish plugin-window polish (HYP-193) so Settings/plugin dialogs stop looking
-  un-themed: tab affordance, control contrast in `DefaultControls/`.
+- ~~Finish plugin-window polish (HYP-193)~~ ✅ **Shipped in PR #8** — this prose contradicted the plan's
+  own Sequencing section, which already said so. Remaining scope was ruled out as a
+  PlayniteAchievements limitation, not a theme bug.
 - Finish the UniPlaySong top-panel story (HYP-159): themed transport styling via
   `TopPanelItem` containers + the Now Playing toast already shipped.
+  ✅ **Corrected (HYP-206):** build against the real API — see the corrected UniPlaySong row in
+  CLAUDE.md's cheat sheet. Three self-styled drop-ins already exist
+  (`UPS_MediaController{Bar,Compact,Overlay}`), so the choice is *use them* vs *build custom transport*
+  from `ActiveMedia*` state plus `playnite://uniplaysong/…` URIs — not "no controls exist". Settings
+  paths are flat (`ActiveMediaIsPlaying`). ⚠️ The toast's storyboard lives in a `Style`, so it may not
+  use `Storyboard.TargetName` — animate by property path (CLAUDE.md hard rule 11).
 
 ---
 
@@ -303,8 +361,9 @@ Screen, JAST USA Library, Filter Presets Quick Launcher (rides our existing
 - **Key ownership:** ThemeOptions loads *after* ThemeModifier. Decide per key which
   plugin owns it, or settings will silently not stick (same failure mode as the old DKG
   Theme Modifier incident). Proposal: ThemeModifier keeps simple toggles/colors
-  (existing 41 settings), ThemeOptions owns presets and anything new that needs sliders
-  with steps, two-way state, or extra files.
+  (existing **42** settings — ✅ corrected (HYP-206); `thememodifier.yaml` is 51 lines = 1 `Constants:`
+  header + 8 section headers + 42 settings, and the README's "41" is wrong), ThemeOptions owns presets
+  and anything new that needs sliders with steps, two-way state, or extra files.
 
 ---
 
@@ -334,20 +393,39 @@ Ship 3.0 with constants-only presets (cheap, safe), holding extra-XAML packs for
 Ordered by expected impact; each verified on the real `F:\Playnite` install with a full
 library before/after.
 
-1. **Grid cover scaling:** `Fant` → `HighQuality` (linear) for covers in
-   `GridViewItemTemplate.xaml:30,33`; keep `Fant` only for large, static hero art. Fant
-   on every cover is the likeliest frame-time cost at scroll speed.
+1. ~~**Grid cover scaling:** `Fant` → `HighQuality` (linear)~~
+   🛑 **No-op — do not execute (HYP-206).** In WPF's `BitmapScalingMode`, **`Fant` and `HighQuality`
+   are the same enum value**, and `Linear` and `LowQuality` are likewise the same. So this swap
+   changes literally nothing, and the parenthetical "(linear)" describes the opposite of what
+   `HighQuality` means. If cover scaling really is the frame-time cost, the only meaningful change is
+   `Fant`/`HighQuality` → `LowQuality`/`Linear`, which is a visible quality regression and must be
+   measured before it is chosen. Re-verify with a profiler on a full library, not by reasoning.
 2. **`CacheMode="BitmapCache"`** on every scale-animated element (cover hover-zoom, play
    button, sidebar items) — 46 scale-targeting animation elements currently re-rasterize per frame.
-3. **Virtualization spike:** `VirtualizingPanel.VirtualizationMode="Recycling"` +
-   `ScrollUnit` on the games list. ⚠️ Recycling interacts with plugin-injected controls
-   (the DuplicateHider recycling comment at `Common.xaml:116-120` exists for a reason) —
-   this is a measured experiment, not a default-on change. Also fix
-   `DataGrid.xaml:80` disabling `CanContentScroll` in one branch.
+3. ~~**Virtualization spike:** `VirtualizingPanel.VirtualizationMode="Recycling"` + `ScrollUnit`
+   on the games list.~~
+   🛑 **No-op from the theme — do not execute (HYP-206).** Playnite already sets all three, as
+   **local values**, in `OnApplyTemplate` — i.e. *after* theme XAML is parsed, so a theme attribute on
+   `PART_ListGames` is overwritten every time. Verified in Playnite's source for **both** views:
+   `LibraryGridView.cs` sets `ScrollUnit.Pixel`, `IsVirtualizingWhenGrouping=true` and
+   `VirtualizationMode.Recycling`; `LibraryDetailsView.cs` sets the same three plus
+   `CacheLength(5, Item)`. Local values beat style/template setters in WPF's precedence order, so
+   there is nothing for the theme to win here.
+
+   The *consequence* is worth keeping, though, and inverts the original caution: recycling is
+   **already on in production**, so the DuplicateHider recycling comment at `Common.xaml:116-120`
+   describes a live condition, not a hypothetical one. `DataGrid.xaml:80` disabling `CanContentScroll`
+   in one branch is a separate, still-valid fix.
 4. Replace the notification panel's margin animation with a transform (C4).
-5. Hygiene: delete the two unfrozen, unused `ImageBrush`es (`Constants.xaml:261-271`);
-   `UseLayoutRounding`/`SnapsToDevicePixels` once at the window root instead of 12
-   scattered declarations; freeze anything freezable that remains.
+5. Hygiene. ✅ **Corrected (HYP-206) on both counts:**
+   - ~~delete the two unfrozen, unused `ImageBrush`es (`Constants.xaml:261-271`)~~ — **already done in
+     HYP-195.** There are now **zero** `ImageBrush` matches anywhere in `source/`.
+   - "12 scattered `UseLayoutRounding`/`SnapsToDevicePixels` declarations" is **115** — 109
+     `SnapsToDevicePixels` + 6 `UseLayoutRounding`. Consolidating to the window root is therefore a
+     ~115-site mechanical edit, not a trivial one, and it is **not** a pure lift: `CheckBox.xaml:31-32`
+     sets both to `False` deliberately and must be preserved. Given hard rule 10 (one parse error
+     drops the whole theme), do this after CI lands, not before.
+   - Freezing remaining freezables is still valid and unmeasured.
 
 ---
 
@@ -358,9 +436,15 @@ library before/after.
   possible:** no raw hex outside `Constants.xaml` (allowlist for the benign
   `OpacityMask` cases), no literal `CornerRadius`/`FontSize` outside token files, no
   `StaticResource` on ThemeModifier-exposed keys.
-- **Localization (HYP-166):** stop overriding the 16 Playnite-global `LOC*` keys, add the
-  2 missing keys to all 10 locales, drop `de_DE`'s 9 stale keys, full pt-BR pass. New 3.0
-  strings are `LOCMythos_`-prefixed from day one.
+- **Localization (HYP-166).** ✅ **Corrected (HYP-206)** — re-counted 2026-08-17 with the namespace-aware
+  `Get-Keys`: it is **7** Playnite-global `LOC*` overrides, not 16 (`LOCAddonChangesRestart`,
+  `LOCExitAppLabel`, `LOCNotesLabel`, `LOCOpenPlaynite`, `LOCPlayGame`, `LOCSettingsRestartNotification`,
+  `LOCVersionLabel`), and **3** missing keys, not 2 (`LOCAddonChangesRestart`,
+  `LOCSettingsRestartNotification`, `LOCMythos_NowPlaying`). `de_DE`'s 9 stale keys are **already
+  gone** — all 10 locales now sit at exactly 35 keys with 0 extras. CLAUDE.md's Known-state section
+  was right and this bullet was stale. Remaining: back-fill the 3, full pt-BR pass, and note that
+  `LOCPlayGame` is deliberately overridden as a ThemeModifier `Terminology` entry — retiring it means
+  retiring that setting too. New 3.0 strings are `LOCMythos_`-prefixed from day one.
 - SonarQube quality gate green on every PR (`sonar analyze -p alessandrocaetanob_VibeMythos`).
 - Release checklist: deploy → visual pass → `Toolbox.exe pack` → `Toolbox.exe verify addon`
   → screenshots → `Installer_Manifest.yaml` entry.
@@ -391,15 +475,20 @@ PlayniteAchievements limitation rather than a theme bug.
 
 ## Risks and constraints
 
-- **No new XAML files** without ThemeOptions installed — shared code goes to
-  `Common.xaml`; every ThemeOptions-dependent feature needs a no-plugin default.
-- **Font shipping mechanism** needs the on-device spike before committing. Theme XAML
-  parses with no BaseUri (see A3), so the only candidate is an app-base-relative path,
-  which depends on where the theme is installed. If every form fails, make the tokens
-  honest with a real fallback stack and ship an optional font-installer note (never a
-  registry-hack requirement).
-- **Recycling vs injected controls** (F3) can corrupt plugin UI — experiment behind
-  measurement, keep revert path.
+- ~~**No new XAML files** without ThemeOptions installed~~ — ✅ **corrected (HYP-206):** 16
+  default-theme paths are claimable today without any plugin (CLAUDE.md hard rule 1). ThemeOptions is
+  only needed for paths *outside* that list. Every ThemeOptions-dependent feature still needs a
+  no-plugin default.
+- **One XAML parse error reverts the user to Playnite's default theme** — not one broken file, the
+  whole theme (`ApplyTheme` pre-flights everything and `break`s on the first throw). This is the
+  binding constraint on the ~500-site token migration and the reason CI (HYP-168) must land first.
+- ~~**Font shipping mechanism** needs the on-device spike before committing.~~ ✅ **Resolved — shipped
+  in HYP-194.** The install-root-relative form works on this portable install; fallbacks are appended
+  for standard installs where the app base and the theme directory diverge.
+- ~~**Recycling vs injected controls** (F3) can corrupt plugin UI — experiment behind measurement.~~
+  ✅ **Corrected (HYP-206):** there is no experiment to run — Playnite forces recycling on regardless
+  of the theme (see F3), so this is the *current* production condition rather than a change under
+  consideration. Any DuplicateHider icon corruption is happening today.
 - **ThemeModifier vs ThemeOptions key ownership** must be decided before E lands.
 - **Upstream sync:** Mythos ships all default-theme files; any Playnite release touching
   theme files needs a diff pass (watch Playnite releases; 10.56 is the verified baseline).
@@ -414,10 +503,12 @@ PlayniteAchievements limitation rather than a theme bug.
 
 1. Static: XAML well-formedness + localization parity + thememodifier resolution
    (CLAUDE.md commands), SonarQube gate.
-2. Deploy to `F:\Playnite\Themes\Desktop\Mythos_9f42c1a7-…` via `Copy-Item` (never move),
-   restart Playnite, run the visual checklist per touched surface — **with the plugin
-   matrix both ways** (each integrated plugin installed and uninstalled; nothing may leave
-   an empty husk).
+2. Deploy to `F:\Playnite\Themes\Desktop\VibeMythos_fb4d738f-62bd-4e08-afd9-52e8cb45f6ca` via
+   `Copy-Item` (never move) — ✅ **path corrected (HYP-206)**; the old `Mythos_9f42c1a7-…` folder is
+   upstream's Id and is not where this theme deploys. Check for an `%AppData%` shadow first (it wins
+   over the install dir), then restart Playnite and run the visual checklist per touched surface —
+   **with the plugin matrix both ways** (each integrated plugin installed and uninstalled; nothing may
+   leave an empty husk).
 3. Perf: scroll the full library in Grid view before/after F changes; hover-zoom a row of
    covers; watch for dropped frames at 60Hz.
 4. Package: `Toolbox.exe pack` + `verify addon` clean.

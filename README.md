@@ -71,7 +71,7 @@ own when its plugin is absent, so the theme never leaves an empty husk behind.
 | Plugin | Lights up |
 | --- | --- |
 | **[ExtraMetadataLoader](https://playnite.link/addons.html#ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429)** `required` | Game logos in Details View and Grid View, and the video banner in Details View. Without it, the logo slot falls back to the game icon. |
-| **[ThemeModifier](https://playnite.link/addons.html#playnite-thememodifier-plugin)** | 41 theme settings — accent colours, floating sidebar, Steam Links Bar, ambient backdrop reach, Grid View toggles. This is how you customise the theme. |
+| **[ThemeModifier](https://playnite.link/addons.html#playnite-thememodifier-plugin)** | 42 theme settings — accent colours, floating sidebar, Steam Links Bar, ambient backdrop reach, Grid View toggles. This is how you customise the theme. |
 | **[ThemeExtras](https://playnite.link/addons.html#felixkmh_Extras_Plugin)** | Navigation buttons in the top panel, and library banners on grid covers. Also **preserves your custom icons and audio across theme updates** — see the install note above. |
 | **[Playnite Achievements](https://github.com/justin-delano/PlayniteAchievements)** | The achievements row in Details View, the Grid View progress readout, and the gold completion state at 100%. |
 | **[SuccessStory](https://playnite.link/addons.html#playnite-successstory-plugin)** | The achievements row in Details View only. The two plugins are mutually exclusive by design — with SuccessStory installed the Playnite Achievements blocks self-collapse, so the Grid View readout and gold 100% state are Playnite Achievements only. |
@@ -98,8 +98,13 @@ exception and still comes from the system:
 > same location. Nothing breaks — each family falls back to the system-installed face — but you
 > get plain Inter everywhere instead of three distinct faces.
 >
-> **How to tell:** if game titles and body text look like the same font, the bundled files did not
-> resolve. To get the intended look on a standard install, install the fonts yourself:
+> **How to tell:** compare **game titles against body text** — if those look like the same font, the
+> bundled files did not resolve. Do *not* judge by the game description: it is rendered by Playnite's
+> HTML view, which can only use fonts **installed on your system**, so it never uses the bundled files
+> on any install type, portable included. A description that looks different from the rest of the UI
+> is expected behaviour, not a failed font load.
+>
+> To get the intended look on a standard install, install the fonts yourself:
 > [Inter](https://fonts.google.com/specimen/Inter),
 > [Inter Tight](https://fonts.google.com/specimen/Inter+Tight), and
 > [Inter Mod](https://raw.githubusercontent.com/alessandrocaetanob/VibeMythos/Master/source/Typefaces/Inter-Mod-Regular.ttf)
