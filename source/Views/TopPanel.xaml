@@ -306,7 +306,7 @@
                                                     </Style>
                                                 </Border.Style>
                                                 <TextBlock Text="&#xE700;"
-                                                        FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets"
+                                                        FontFamily="{DynamicResource IconFontFamily}"
                                                         FontSize="16"
                                                         Foreground="{DynamicResource TextBrush}"
                                                         HorizontalAlignment="Center"
@@ -371,7 +371,7 @@
                                                     </ControlTemplate>
                                                 </Button.Template>
                                                 <TextBlock Text="&#xE76B;"
-                                                        FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets"
+                                                        FontFamily="{DynamicResource IconFontFamily}"
                                                         FontSize="16"
                                                         Foreground="{DynamicResource TextBrush}"
                                                         HorizontalAlignment="Center"
@@ -429,7 +429,7 @@
                                                     </ControlTemplate>
                                                 </Button.Template>
                                                 <TextBlock Text="&#xE76C;"
-                                                        FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets"
+                                                        FontFamily="{DynamicResource IconFontFamily}"
                                                         FontSize="16"
                                                         Foreground="{DynamicResource TextBrush}"
                                                         HorizontalAlignment="Center"
@@ -666,7 +666,7 @@
                                                             Background="Transparent"
                                                             CornerRadius="{DynamicResource TopPanelControlCornerRadius}"/>
                                                     <TextBlock Text="&#xE711;"
-                                                               FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets"
+                                                               FontFamily="{DynamicResource IconFontFamily}"
                                                                FontSize="11"
                                                                Foreground="{DynamicResource TextBrush}"
                                                                Opacity="0.7"

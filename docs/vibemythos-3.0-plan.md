@@ -41,13 +41,13 @@ shapes every workstream below.
 
 | Debt | Evidence |
 | --- | --- |
-| Fonts are not shipped | `FontFamily` = `Inter`/`Inter Tight`/`Inter Mod` are bare system lookups (`Constants.xaml:5,67,68`); no `source/Fonts/` exists. On any machine without Inter installed the whole theme silently falls back to default WPF fonts. |
-| No radius discipline | 14 radius tokens (two of them duplicates at 22) **plus 35 literal `CornerRadius` values**. Visible seam: `Sidebar.xaml:36` fill at radius 15 under a stroke at 16 (`:107`). |
+| ~~Fonts are not shipped~~ **(fixed — HYP-194)** | `FontFamily`/`TightFont`/`MonospaceFontFamily` were bare system lookups and no font directory existed. Worse than a clean fallback: WPF family matching is fuzzy, so on the dev machine (where `Inter` is installed but `Inter Tight` and `Inter Mod` are not) **both silently resolved to `Inter`**. Measured: `FontFamily("Inter Mod, Consolas").FamilyNames` → `'Inter'`. Now shipped in `source/Typefaces/`. |
+| No radius discipline | 14 radius tokens (two of them duplicates at 22) **plus 48 literal `CornerRadius` values**. Visible seam: `Sidebar.xaml:36` fill at radius 15 under a stroke at 16 (`:107`). |
 | No spacing system | 109 distinct `Margin` values; `Padding="0,11,0,11"` ×34; six `Margin="0,0,0,-1"` nudges compensating for the missing scale. |
 | No motion tokens | 12 distinct durations, 5 easing families for the same hover gesture; all literals. |
 | Hover chaos | 132 `IsMouseOver` triggers resolving to **26 different brushes** — including `HoverBrush` (`#E7E9EA`, a *foreground*) used as a background 10×. |
-| Type scale half-adopted | 31 literal `FontSize` (13/15/19 aren't even in the scale) vs 40 tokenized; `FontSizeLarger`/`FontSizeLargest` are **referenced but never defined** — including on the game title (`DetailsViewGameOverview.xaml:735`). |
-| Silent breakage | `ComboBox.xaml:146` `{DynamicResource subtalBrush}` (case typo → resolves to nothing); `GridViewGameOverview.xaml:105` references undefined `DetailsViewAllowUseOfLogos` (grid logo toggle dead); `themeExtras.yaml` `DefaultBannerPath` points at a nonexistent file. |
+| Type scale half-adopted | 31 literal `FontSize` (13/15/19 aren't even in the scale) vs 40 tokenized. `FontSizeLarger`/`FontSizeLargest` are used but not defined *by this theme* — they resolve only because Playnite's default theme defines them (20/29) and merges first. Not a break, but the theme doesn't own its own display size, including on the game title (`DetailsViewGameOverview.xaml:735`). |
+| Silent breakage | Two real ones: `ComboBox.xaml:146` `{DynamicResource subtalBrush}` (case typo → resolves to nothing); `GridViewGameOverview.xaml:105` references undefined `DetailsViewAllowUseOfLogos` (should be `GridViewAllowUseOfLogos` — grid logo toggle dead). Adjacent: `themeExtras.yaml` `BannersBySourceNamePath` points at an `Images/Banners/SourceName` directory that doesn't exist, and the `DetailsListSelectedGradient` key in `Constants.xaml` is defined-but-unused with two `GradientStop`s bound to an undefined `AccentIdleColor`. |
 | Dead upstream palette | Pre-fork navy/brown/beige remnants (`MainColor #2C3A67`, `Brown #795548`, `CardBorderBrush #D4D0B8`, yellow `BackgroundToneColor`, three unused radial "tube" gradients) — roughly 30 genuinely dead keys. |
 | Structural duplication | The ~250-line metadata-row block (16 rows + HLTB + achievements styles) exists **byte-for-byte twice**: `DetailsViewGameOverview.xaml:421-670` and `GridViewGameOverview.xaml:411-660`, hardcoded HLTB hexes included. |
 | Zero render caching / virtualization tuning | `CacheMode`: 0 uses despite 38 scale animations; `Fant` (most expensive scaler) on every grid cover; no `VirtualizationMode=Recycling` anywhere. |
@@ -92,20 +92,54 @@ directories.
 
 ### A3. Typography: ship the fonts, finish the scale
 
-- **Ship Inter, Inter Tight, and the existing Inter Mod** (all OFL-licensed) in
-  `source/Fonts/`, referenced with theme-relative composite `FontFamily` URIs with a
-  system-font fallback stack (`Inter, Segoe UI Variable Text, Segoe UI`). The Lacro59
-  theme-dev wiki documents the bundled-`Fonts/`-folder pattern; **first task is a 30-minute
-  on-device spike** to pin the exact URI form that works from a deployed theme directory.
-  This is the single highest-leverage premium fix in the whole plan — today the theme
-  renders in Segoe on most machines.
-- Define the missing `FontSizeLarger`/`FontSizeLargest`; migrate the 31 literal sizes onto
-  the scale (13→14, 15→16, 19→20); add weight tokens (`Font/Display` = Inter Tight
-  SemiBold, `Font/Body` = Inter Regular, `Font/Label` = Inter Medium).
+- ✅ **Shipped in HYP-194.** Inter, Inter Tight and Inter Mod (all OFL-licensed) now live in
+  `source/Typefaces/`. `Inter-Mod-Regular.ttf` had been committed under `Resources/`, which is
+  not packaged into the theme — exactly why it never loaded — and was moved.
+
+  ⚠️ **The folder must not be called `Fonts/`.** `Toolbox.exe pack` blacklists `^Fonts\\`
+  (`Playnite.Toolbox/Themes.cs`) because Playnite's scaffolder puts its own common fonts
+  there — a theme's `Fonts/` works when deployed by hand and is **silently dropped from the
+  `.pthm`**. Verify every release by listing the packed archive, not just by deploying.
+
+  **A fallback stack cannot substitute for shipping the files.** Comma fallback does work
+  in general (`"Bogus, Segoe UI Variable Text"` → `Segoe UI Variable Text`), but WPF's
+  fuzzy family matching resolves `Inter Tight` and `Inter Mod` to `Inter` *before* any
+  fallback is consulted.
+
+  **The URI mechanism is constrained** (traced through Playnite 10.56, 2026-08-17):
+  `Playnite/Common/Xaml.cs` loads theme XAML with `XamlReader.Load(stream)` and **no
+  `ParserContext`**, and `Themes.cs` assigns `ResourceDictionary.Source` only *after*
+  parsing — too late to re-base the already-constructed `FontFamily` objects. So relative
+  font URIs resolve against the **Playnite install root**, not the theme folder.
+  `{ThemeFile}` can't help either: it runs the target property's `TypeConverter` (right
+  shape for `FontFamily`) but `GetFilePath` does `File.Exists` on the relative path, so
+  the mandatory `#FamilyName` fragment fails the check and it returns `null`.
+  Measured working forms: `<dir>\#Inter Mod`, `<dir>\X.ttf#Inter Mod`, and `<dir>/#Inter Mod`
+  *with* a base URI ending in `/`. A path with no fragment silently
+  yields Arial. **The install-root-relative form is confirmed working on device**
+  (`Themes/Desktop/<themeDir>/Typefaces/#Inter`) — verified 2026-08-17 by dropping the bare-name
+  fallback in favour of Comic Sans and confirming the UI still rendered Inter after a
+  restart. Still append fallbacks: a theme installed to `%AppData%\Playnite\Themes\` would
+  miss the path, and the chain lets it degrade instead of break.
+  **Variable fonts do work** — WPF enumerates `InterTight[wght].ttf` as family `Inter
+  Tight` with all nine named weight instances (Thin→Black) addressable, so one 568 KB file
+  covers every weight. Choose per family by the *reported family name*, not by format:
+  Inter's variable file reports `Inter Variable Text` (wrong name for our token) so Inter
+  ships as four statics, while Inter Tight ships as the single variable file. Watch the
+  filename: `[wght]` is a PowerShell wildcard *and* illegal in a URI, so use
+  `Copy-Item -LiteralPath` and rename on the way in.
+- Own `FontSizeLarger`/`FontSizeLargest` in the theme's own `Constants.xaml` rather than
+  inheriting Playnite's 20/29; migrate the 31 literal sizes onto the scale (13→14, 15→16,
+  19→20); add weight tokens (`Font/Display` = Inter Tight SemiBold, `Font/Body` = Inter
+  Regular, `Font/Label` = Inter Medium).
 - Numeric UI (playtime, sizes, scores, achievement counts) gets tabular figures for
-  stable alignment.
-- Centralize the 30+ hardcoded `"Segoe Fluent Icons, Segoe MDL2 Assets"` declarations
-  onto the existing `IconFontStyle` (`Common.xaml:42`) / a single `IconFontFamily` token.
+  stable alignment. While here, settle whether `MonospaceFontFamily` = `Inter Mod` is a
+  misnomer — it looks like a modified Inter with tabular figures, not a true monospace.
+- ✅ **Shipped in HYP-194.** The **63** hardcoded `"Segoe Fluent Icons, Segoe MDL2 Assets"`
+  declarations (53 as a `FontFamily="…"` attribute, 10 as a `Setter` `Value`, 31 of them in
+  `Media.xaml` alone) are now on a single `IconFontFamily` token, including the copy that was
+  baked into the `IconFontStyle` style. The one `Marlett` usage is correctly left alone — swept,
+  it would render a literal `6` instead of the filter-row chevron.
 
 ### A4. Motion vocabulary
 
@@ -126,12 +160,19 @@ where WPF forces literals, the tokens still serve as the documented source of tr
 
 ### A5. Repair and dedupe
 
-- Fix the three silent breaks (`subtalBrush` casing, `DetailsViewAllowUseOfLogos` →
-  `GridViewAllowUseOfLogos`, missing `Images/Banners/UnknownLibrary.png`).
-- Hoist the duplicated 250-line metadata block into shared styles/`DataTemplate`s in
-  `Common.xaml` (new files are forbidden; `Common.xaml` is the sanctioned shared home).
-  One source of truth for the 16 metadata rows, HLTB row, and achievements row, consumed
-  by both overview views.
+- Fix the two silent breaks (`subtalBrush` casing, `DetailsViewAllowUseOfLogos` →
+  `GridViewAllowUseOfLogos`), plus the stale `BannersBySourceNamePath` directory and the
+  unused `DetailsListSelectedGradient`.
+- Share the duplicated 250-line metadata block via styles in `Common.xaml` (new files are
+  forbidden; `Common.xaml` is the sanctioned shared home).
+
+  ⚠️ **Share the chrome, not the elements.** The block is built from `PART_Elem*`-named
+  elements, and Playnite resolves those by name within the *view's* namescope. Hoisting
+  them into a shared `DataTemplate`/`ControlTemplate` puts them in a separate namescope
+  and silently drops that row's functionality — the same failure class as the missing
+  progress-bar parts in HYP-155. Extract only the row `Border` style (padding, brush,
+  thickness), the `Label` style and the `SharedSizeGroup` column pattern; keep every
+  named element inline in both views. That still roughly halves each copy.
 
 ---
 
@@ -140,7 +181,11 @@ where WPF forces literals, the tokens still serve as the documented source of tr
 - `source/theme.yaml`: `Name: VibeMythos`, `Version: 3.0`, author `alessandrocaetanob
   (based on Mythos by bansakai)`, links → this fork. **Keep the `Id`
   (`Mythos_9f42c1a7-…`) unchanged** — changing it orphans every existing install's update
-  path and the deployed-folder mapping. Keep `ThemeApiVersion: 2.9.0`.
+  path and the deployed-folder mapping, **and silently breaks all three font tokens**, which
+  embed the Id as a path segment (HYP-194; CLAUDE.md carries a validator for the coupling).
+  Keep `ThemeApiVersion: 2.9.0`.
+  ⚠️ Do bump `Version` — it is still `2.0`. The updater keys off it, so shipping 3.0 without
+  the bump means existing installs never fetch the release and the bundled fonts never arrive.
 - `Manifest/Addon_Manifest.yaml` + `Installer_Manifest.yaml`: new identity + 3.0 release
   entry.
 - README rewrite: new hero banner, feature tour with fresh screenshots, credits chain
@@ -328,17 +373,19 @@ Four phases, each shippable; existing Linear issues slot in where noted.
 
 | Phase | Contents | Existing issues |
 | --- | --- | --- |
-| **3.0-alpha "Foundation"** | A1–A5 (tokens, fonts, repairs, dedupe) · B (identity) · F1/F2/F5 (safe perf) | HYP-166 (loc hygiene) |
-| **3.0-beta "Cinema"** | C1–C4 (crossfades, hero details, grid gallery, panels) · finish HYP-159, HYP-193 | HYP-162, HYP-156 |
+| **3.0-alpha "Foundation"** | A1–A5 (tokens, fonts, repairs, dedupe) · B (identity) · F1/F2/F5 (safe perf) | HYP-194 (fonts), HYP-195 (repairs), HYP-196 (metadata dedupe), HYP-197 (colour), HYP-198 (shape/space), HYP-199 (motion), HYP-200 (identity), HYP-166 (loc hygiene) |
+| **3.0-beta "Cinema"** | C1–C4 (crossfades, hero details, grid gallery, panels) · finish HYP-159 | HYP-162, HYP-156 |
 | **3.0 "Alive"** | D Tier 1 (ThemeOptions, BackgroundChanger, GameActivity, GameRelations) · E (constants presets) · G (CI, release) | HYP-164, HYP-161, HYP-165, HYP-167, HYP-168 |
 | **3.1+ "Beyond"** | D Tier 2 & 3 shelves · extra-XAML visual packs · F3 virtualization experiment | — |
 
-Proposed new Linear issues (one per work session, per workflow): design-token overhaul ·
-font shipping spike+rollout · motion tokens+migration · metadata block dedupe · silent-break
-repairs · identity/manifest rename · details hero recomposition · grid drawer transition ·
-staggered entrance · BackgroundChanger backdrop · GameActivity session row · GameRelations
-shelf · ThemeOptions preset engine · accent/density packs · perf pass (scaling+caching) ·
-CI lint upgrades · README/screenshot refresh.
+The 3.0-alpha issues are now open (HYP-194 through HYP-200). Still to be filed as their
+phases come up: details hero recomposition · grid drawer transition · staggered entrance ·
+BackgroundChanger backdrop · GameActivity session row · GameRelations shelf · ThemeOptions
+preset engine · accent/density packs · perf pass (scaling+caching) · CI lint upgrades ·
+README/screenshot refresh.
+
+HYP-193 (plugin window polish) shipped in PR #8; its remaining scope was ruled out as a
+PlayniteAchievements limitation rather than a theme bug.
 
 ---
 
@@ -346,16 +393,22 @@ CI lint upgrades · README/screenshot refresh.
 
 - **No new XAML files** without ThemeOptions installed — shared code goes to
   `Common.xaml`; every ThemeOptions-dependent feature needs a no-plugin default.
-- **Font shipping mechanism** needs the on-device spike before committing; if the
-  composite URI fails from a theme directory, fall back to the system stack and ship an
-  optional font installer note (never a registry-hack requirement).
+- **Font shipping mechanism** needs the on-device spike before committing. Theme XAML
+  parses with no BaseUri (see A3), so the only candidate is an app-base-relative path,
+  which depends on where the theme is installed. If every form fails, make the tokens
+  honest with a real fallback stack and ship an optional font-installer note (never a
+  registry-hack requirement).
 - **Recycling vs injected controls** (F3) can corrupt plugin UI — experiment behind
   measurement, keep revert path.
 - **ThemeModifier vs ThemeOptions key ownership** must be decided before E lands.
 - **Upstream sync:** Mythos ships all default-theme files; any Playnite release touching
   theme files needs a diff pass (watch Playnite releases; 10.56 is the verified baseline).
-- Every metric/claim in this plan's audit is from the 2026-08-10 tree — re-verify line
-  numbers before executing individual items.
+- The audit was taken from the 2026-08-10 tree and re-verified on **2026-08-17**. That
+  pass corrected three claims: `FontSizeLarger`/`FontSizeLargest` do resolve (via
+  Playnite's default theme), `Images/Banners/UnknownLibrary.png` does exist, and the
+  literal counts were low (48 `CornerRadius`, 63 icon-font declarations — of which 53 are the
+  attribute form the original count measured). Re-verify line
+  numbers again before executing individual items.
 
 ## Verification (per phase)
 

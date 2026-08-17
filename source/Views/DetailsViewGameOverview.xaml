@@ -334,7 +334,7 @@
                                                             HorizontalAlignment="Center"
                                                             Margin="0,0,0,2">
                                                     <TextBlock Text="&#xE735;"
-                                                               FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets"
+                                                               FontFamily="{DynamicResource IconFontFamily}"
                                                                FontSize="{DynamicResource FontSizeSmaller}"
                                                                Foreground="{DynamicResource PlatinumBrush}"
                                                                VerticalAlignment="Center"
@@ -834,7 +834,7 @@
 
                                                     <!-- Play button -->
                                                     <Button Width="40" Height="40"
-                                                            FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets"
+                                                            FontFamily="{DynamicResource IconFontFamily}"
                                                             FontSize="16"
                                                             Cursor="Hand"
                                                             Content="&#xF5B0;"
@@ -894,7 +894,7 @@
 
                                                     <!-- Pause button -->
                                                     <Button Width="40" Height="40"
-                                                            FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets"
+                                                            FontFamily="{DynamicResource IconFontFamily}"
                                                             FontSize="16"
                                                             Cursor="Hand"
                                                             Content="&#xE769;"
@@ -955,7 +955,7 @@
 
                                                 <!-- Mute toggle -->
                                                 <ToggleButton Width="40" Height="40"
-                                                            FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets"
+                                                            FontFamily="{DynamicResource IconFontFamily}"
                                                             FontSize="18"
                                                             Cursor="Hand"
                                                             HorizontalAlignment="Left"
@@ -1261,7 +1261,7 @@
 
                                                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                                                                         <TextBlock x:Name="Icon"
-                                                                                FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets"
+                                                                                FontFamily="{DynamicResource IconFontFamily}"
                                                                                 FontSize="14"
                                                                                 Margin="0,0,8,0"
                                                                                 VerticalAlignment="Center"
@@ -1695,7 +1695,7 @@
                                                             <Grid MinHeight="90">
                                                                 <HtmlTextView Name="PART_HtmlDescription"
                                                                             HtmlFontSize="{DynamicResource FontSize}"
-                                                                            HtmlFontFamily="{DynamicResource MonospaceFontFamily}"
+                                                                            HtmlFontFamily="{DynamicResource HtmlDescriptionFontFamily}"
                                                                             HtmlForeground="{DynamicResource TextColorDarker}"
                                                                             LinkForeground="#FF04A5FF"
                                                                             ScrollViewer.HorizontalScrollBarVisibility="Disabled"

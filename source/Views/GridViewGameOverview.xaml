@@ -324,7 +324,7 @@
                                                                         HorizontalAlignment="Center"
                                                                         Margin="0,0,0,2">
                                                                 <TextBlock Text="&#xE735;"
-                                                                           FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets"
+                                                                           FontFamily="{DynamicResource IconFontFamily}"
                                                                            FontSize="{DynamicResource FontSizeSmaller}"
                                                                            Foreground="{DynamicResource PlatinumBrush}"
                                                                            VerticalAlignment="Center"
@@ -711,7 +711,7 @@
                                     <TextBlock Grid.Row="0"
                                             Text="&#xE946;"
 					    Foreground="{DynamicResource TextBrushDarker}"
-					    FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets"
+					    FontFamily="{DynamicResource IconFontFamily}"
                                             FontSize="{DynamicResource FontSizeLarge28}"
                                             HorizontalAlignment="Center">
                                         <TextBlock.Style>

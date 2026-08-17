@@ -59,7 +59,7 @@
                     <Setter.Value>
                         <DataTemplate>
                             <TextBlock Text="&#xE710;"
-                                    FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets"
+                                    FontFamily="{DynamicResource IconFontFamily}"
                                     FontSize="11"
                                     FontWeight="Regular"
                                     HorizontalAlignment="Center"

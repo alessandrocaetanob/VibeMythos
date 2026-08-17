@@ -39,7 +39,7 @@
     </Style>
 
     <Style x:Key="FilterPresetButtonAction" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
-        <Setter Property="FontFamily" Value="Segoe Fluent Icons, Segoe MDL2 Assets"/>
+        <Setter Property="FontFamily" Value="{DynamicResource IconFontFamily}"/>
         <Setter Property="FontSize" Value="16"/>
         <Setter Property="Height" Value="28"/>
         <Setter Property="Width" Value="28"/>

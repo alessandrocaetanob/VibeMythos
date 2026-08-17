@@ -97,7 +97,7 @@
                                         </Style>
                                     </Border.Style>
                                     <TextBlock Text="&#xE735;" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center"
-                                           FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets"
+                                           FontFamily="{DynamicResource IconFontFamily}"
                                            FontSize="{DynamicResource FontSizeLarge}" />
                                 </Border>
                                 <!-- DuplicateHider source selector: one clickable icon per copy of

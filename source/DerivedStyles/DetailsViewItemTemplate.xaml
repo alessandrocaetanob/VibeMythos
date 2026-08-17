@@ -12,7 +12,7 @@
                             d:DataContext="{x:Static DesignMainViewModel.DesignSelectedGameIntance}">
                         <DockPanel>
                             <TextBlock Text="&#xE735;" Foreground="{DynamicResource IdleBrush}" Margin="8,0,5,0"
-                                       DockPanel.Dock="Right" FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets"
+                                       DockPanel.Dock="Right" FontFamily="{DynamicResource IconFontFamily}"
                                        FontSize="{DynamicResource FontSizeSmall}" VerticalAlignment="Center" 
                                        Tag="{DynamicResource DetailsViewShowFavorites}">
                                 <TextBlock.Style>
