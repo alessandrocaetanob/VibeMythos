@@ -185,6 +185,50 @@
                                                    TextTrimming="CharacterEllipsis"
                                                    MaxWidth="280"
                                                    HorizontalAlignment="Left"/>
+                                        <!-- Live position/duration from the unified active-media surface
+                                             (flat paths, UniPlaySong 1.5.8+). ActiveMediaProgress is 0-100,
+                                             matching ProgressBar's default Maximum. Of the two Visibility
+                                             triggers, the later wins when both match. -->
+                                        <Grid Margin="0,6,0,0" MinWidth="180" MaxWidth="280">
+                                            <Grid.Style>
+                                                <Style TargetType="Grid">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{PluginSettings Plugin=UniPlaySong, Path=ActiveMediaHasMedia, FallbackValue=False}" Value="True">
+                                                            <Setter Property="Visibility" Value="Visible"/>
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{PluginSettings Plugin=UniPlaySong, Path=ActiveMediaDurationText, FallbackValue=''}" Value="">
+                                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Grid.Style>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Text="{PluginSettings Plugin=UniPlaySong, Path=ActiveMediaPositionText}"
+                                                       FontFamily="{DynamicResource FontFamily}"
+                                                       FontSize="{DynamicResource FontSizeSmaller}"
+                                                       Opacity="0.6"
+                                                       Foreground="{DynamicResource TextBrush}"
+                                                       VerticalAlignment="Center"/>
+                                            <ProgressBar Grid.Column="1"
+                                                         Height="4"
+                                                         Margin="8,0"
+                                                         BorderThickness="0"
+                                                         Background="{DynamicResource ContentBorderBrushOverlay}"
+                                                         Value="{PluginSettings Plugin=UniPlaySong, Path=ActiveMediaProgress, FallbackValue=0, Mode=OneWay}"
+                                                         VerticalAlignment="Center"/>
+                                            <TextBlock Grid.Column="2"
+                                                       Text="{PluginSettings Plugin=UniPlaySong, Path=ActiveMediaDurationText}"
+                                                       FontFamily="{DynamicResource FontFamily}"
+                                                       FontSize="{DynamicResource FontSizeSmaller}"
+                                                       Opacity="0.6"
+                                                       Foreground="{DynamicResource TextBrush}"
+                                                       VerticalAlignment="Center"/>
+                                        </Grid>
                                     </StackPanel>
                                 </StackPanel>
                             </Border>
