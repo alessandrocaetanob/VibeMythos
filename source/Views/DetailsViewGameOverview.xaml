@@ -1332,19 +1332,6 @@
 
                                         <StackPanel Margin="0,20,0,5">
                                             <StackPanel x:Name="PART_ElemNotes" Margin="0,15,0,20">
-                                                <StackPanel.Style>
-                                                    <Style TargetType="StackPanel">
-                                                        <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding Game.Notes}" Value="">
-                                                                <Setter Property="Visibility" Value="Collapsed"/>
-                                                            </DataTrigger>
-                                                            <DataTrigger Binding="{Binding Game.Notes}" Value="{x:Null}">
-                                                                <Setter Property="Visibility" Value="Collapsed"/>
-                                                            </DataTrigger>
-                                                        </Style.Triggers>
-                                                    </Style>
-                                                </StackPanel.Style>
-
                                                 <TextBox x:Name="PART_TextNotes"
                                                         IsHitTestVisible="False"
                                                         IsReadOnly="True"
