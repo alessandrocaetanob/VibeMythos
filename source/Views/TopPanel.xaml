@@ -493,14 +493,16 @@
 
                                 <!-- Search and filter pill: a backdrop spanning the box, the gap, the
                                      toggle and both inset columns — not a container. Horizontal
-                                     padding comes from the 6px spacer columns; only the vertical
-                                     padding stays here, so the pill keeps its 47px height
-                                     (35px content + 2x5 padding + 2x1 border). -->
+                                     padding comes from the 6px spacer columns. Being childless, the
+                                     Border has no content to size it, so the 47px height (35px
+                                     content + 2x5 padding + 2x1 border, matching the centre pill)
+                                     must be explicit — without it the backdrop measures 12px and
+                                     renders as a sliver under the search text (HYP-243). -->
                                 <Border Grid.Column="2" Grid.ColumnSpan="5"
+                                        Height="47"
                                         Background="{DynamicResource GlassControlBrushDark}"
                                         BorderBrush="{DynamicResource ContentBorderBrushOverlay}"
                                         BorderThickness="1"
-                                        Padding="0,5,0,5"
                                         Margin="0"
                                         VerticalAlignment="Center">
                                     <Border.Style>
