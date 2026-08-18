@@ -129,6 +129,47 @@
                                                                 <ContentControl x:Name="ExtraMetadataLoader_LogoLoaderControl" />
                                                             </Border>
                                                         </Grid>
+
+                                                        <!-- Playnite binds Text and Visibility (its global
+                                                             DetailsVisibility.Name flag, shared by both views) on
+                                                             the TextBlock at local-value precedence, so no Style
+                                                             trigger on the TextBlock itself can gate it - the gate
+                                                             lives on this wrapper, the same mechanism the Details
+                                                             view's DetailsViewTitle Border uses. The triggers mirror
+                                                             GameIcon above: the title appears exactly when no logo
+                                                             is there to carry the game's identity, never alongside
+                                                             one. 22px instead of the Details view's FontSizeLargest:
+                                                             that key is 29, Playnite-inherited rather than
+                                                             theme-owned, and it wraps badly in this fixed 300px
+                                                             column. -->
+                                                        <Border Tag="{DynamicResource GridViewAllowUseOfLogos}"
+                                                                Margin="0,0,0,16">
+                                                            <Border.Style>
+                                                                <Style TargetType="Border">
+                                                                    <Setter Property="Visibility" Value="Collapsed" />
+                                                                    <Style.Triggers>
+                                                                        <DataTrigger Binding="{PluginSettings Plugin=ExtraMetadataLoader, Path=EnableLogos, FallbackValue=False}" Value="False">
+                                                                            <Setter Property="Visibility" Value="Visible" />
+                                                                        </DataTrigger>
+                                                                        <DataTrigger Binding="{PluginSettings Plugin=ExtraMetadataLoader, Path=IsLogoAvailable, FallbackValue=False}" Value="False">
+                                                                            <Setter Property="Visibility" Value="Visible" />
+                                                                        </DataTrigger>
+                                                                        <DataTrigger Binding="{Binding Tag, RelativeSource={RelativeSource Self}}" Value="False">
+                                                                            <Setter Property="Visibility" Value="Visible" />
+                                                                        </DataTrigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </Border.Style>
+                                                            <TextBlock Name="PART_TextDisplayName"
+                                                                       FontFamily="{DynamicResource TightFont}"
+                                                                       FontSize="{DynamicResource FontSizeLarge22}"
+                                                                       FontWeight="Bold"
+                                                                       TextWrapping="Wrap"
+                                                                       TextAlignment="Center"
+                                                                       HorizontalAlignment="Center"
+                                                                       Foreground="{DynamicResource TextBrush}"/>
+                                                        </Border>
+
                                                         <StackPanel Margin="0,0,0,10">
                                                             <ItemsControl Name="PART_ElemAgeRating" ItemsSource="{Binding Game.AgeRatings}">
                                                                 <ItemsControl.ItemsPanel>
@@ -700,6 +741,35 @@
                                                                     </ItemsControl.ItemTemplate>
                                                                 </ItemsControl>
                                                             </Border>
+                                                        </StackPanel>
+
+                                                        <!-- Playnite collapses the wrapper (DescriptionVisibility:
+                                                             empty description OR the field hidden in settings) at
+                                                             local-value precedence, so a theme-side empty-state
+                                                             trigger would be dead code. HtmlForeground and
+                                                             LinkForeground are Colors, not Brushes - a Brush key
+                                                             there is a parse-time type failure that costs the whole
+                                                             theme (hard rule 10). No read-more truncation here:
+                                                             unlike the Details page, this is one narrow scrolling
+                                                             column, so the description simply flows at the end of
+                                                             it. -->
+                                                        <StackPanel Name="PART_ElemDescription" Margin="0,10,0,25">
+                                                            <TextBlock Text="{DynamicResource LOCGameDescriptionTitle}"
+                                                                        Tag="{DynamicResource DetailsViewDescSubHeader}"
+                                                                        Visibility="{Binding RelativeSource={RelativeSource Self}, Path=Tag, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                                                        Foreground="{DynamicResource SubtalBrush}"
+                                                                        FontWeight="Regular"
+                                                                        FontSize="13"
+                                                                        Margin="0,0,0,10" />
+                                                            <HtmlTextView Name="PART_HtmlDescription"
+                                                                          HtmlFontSize="{DynamicResource FontSize}"
+                                                                          HtmlFontFamily="{DynamicResource HtmlDescriptionFontFamily}"
+                                                                          HtmlForeground="{DynamicResource TextColorDarker}"
+                                                                          LinkForeground="#FF04A5FF"
+                                                                          ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                                                          ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                                                                          Margin="0"
+                                                                          HorizontalAlignment="Stretch"/>
                                                         </StackPanel>
                                                     </StackPanel>
                                                 </Grid>
