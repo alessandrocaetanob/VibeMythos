@@ -7,7 +7,7 @@
                     mc:Ignorable="d">
 
     <Style TargetType="{x:Type Separator}">
-        <Setter Property="BorderBrush" Value="#28282b" />
+        <Setter Property="BorderBrush" Value="{DynamicResource PopupBorderBrush}" />
         <Setter Property="Margin" Value="8" />
         <Setter Property="Focusable" Value="False"/>
         <Setter Property="Template">

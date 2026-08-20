@@ -45,7 +45,7 @@
 						Visibility="{Binding Tag, RelativeSource={RelativeSource Self}, Converter={StaticResource BooleanToVisibilityConverter}}" />
                                     <!--Game Not Installed-->
                                     <Border Background="Transparent" x:Name="TextGameName" Visibility="Collapsed"/>
-                                    <Border Background="#B3000000" x:Name="BorderMouseOver" Visibility="Collapsed"/>
+                                    <Border Background="{DynamicResource CoverScrimBrush}" x:Name="BorderMouseOver" Visibility="Collapsed"/>
                                     <!--Game Not Installed-->
                                 </Grid>
 
@@ -57,7 +57,7 @@
                                             <Setter Property="Background" Value="Transparent"/>
                                             <Style.Triggers>
                                                 <DataTrigger Binding="{Binding Visibility, ElementName=PART_ButtonPlay}" Value="Visible">
-                                                    <Setter Property="Background" Value="#80000000"/>
+                                                    <Setter Property="Background" Value="{DynamicResource CoverScrimLightBrush}"/>
                                                 </DataTrigger>
                                             </Style.Triggers>
                                         </Style>
@@ -167,7 +167,7 @@
                                         </Style>
                                     </Border.Style>
                                     <Path Data="{StaticResource CloudIconGeometry}"
-                                        Fill="#BFFFFFFF"
+                                        Fill="{DynamicResource CoverIconBrush}"
                                         Width="22" Height="22"
                                         Stretch="Uniform"
                                         HorizontalAlignment="Center"
