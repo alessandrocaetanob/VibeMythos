@@ -545,9 +545,11 @@ PlayniteAchievements limitation rather than a theme bug.
 
 ## Risks and constraints
 
-- ~~**No new XAML files** without ThemeOptions installed~~ — ✅ **corrected (HYP-206):** 16
-  default-theme paths are claimable today without any plugin (CLAUDE.md hard rule 1). ThemeOptions is
-  only needed for paths *outside* that list. Every ThemeOptions-dependent feature still needs a
+- ~~**No new XAML files** without ThemeOptions installed~~ — ✅ **corrected (HYP-206), then verified
+  on device (HYP-212, 2026-08-19):** 16 default-theme paths are claimable today without any plugin,
+  and the theme's copy wins over the default's (CLAUDE.md hard rule 1 carries the run table).
+  ThemeOptions is only needed for paths *outside* that list, which leaves it justified by the preset
+  engine alone rather than by extra-XAML loading. Every ThemeOptions-dependent feature still needs a
   no-plugin default.
 - **One XAML parse error reverts the user to Playnite's default theme** — not one broken file, the
   whole theme (`ApplyTheme` pre-flights everything and `break`s on the first throw). This is the
