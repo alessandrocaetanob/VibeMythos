@@ -25,8 +25,7 @@ from pathlib import Path
 
 X_NS = "http://schemas.microsoft.com/winfx/2006/xaml"
 KEY_ATTR = f"{{{X_NS}}}Key"
-NAME_ATTR = f"{{{X_NS}}}Name"
-PART_RE = re.compile(r"\bPART_[A-Za-z0-9_]+")
+PART_RE = re.compile(r"\bPART_\w+", re.ASCII)
 
 BASELINE = Path(__file__).resolve().parent / "baseline"
 
@@ -86,11 +85,26 @@ def main() -> int:
     ap.add_argument("--playnite", required=True, help=r'Playnite install root, e.g. F:\Playnite')
     args = ap.parse_args()
 
-    root = Path(args.playnite)
+    # Resolve once and check the argument really is a Playnite install before reading
+    # anything out of it. --playnite is a path from the command line, so everything below
+    # is derived from user input; a typo that happened to point somewhere readable would
+    # otherwise produce a plausible-looking but meaningless fixture.
+    root = Path(args.playnite).expanduser().resolve(strict=False)
+    if not root.is_dir():
+        print(f"FAIL  not a directory: {root}", file=sys.stderr)
+        return 1
+
     default = root / "Themes" / "Desktop" / "Default"
     templates = root / "Templates" / "Themes"
     localization = root / "Localization"
+    marker = root / "Playnite.DesktopApp.exe"
 
+    if not marker.is_file():
+        print(
+            f"FAIL  {root} does not look like a Playnite install (no Playnite.DesktopApp.exe)",
+            file=sys.stderr,
+        )
+        return 1
     if not default.is_dir():
         print(f"FAIL  no default theme at {default}", file=sys.stderr)
         return 1

@@ -36,7 +36,7 @@ from pathlib import Path
 
 X_NS = "http://schemas.microsoft.com/winfx/2006/xaml"
 KEY_ATTR = f"{{{X_NS}}}Key"
-PART_RE = re.compile(r"\bPART_[A-Za-z0-9_]+")
+PART_RE = re.compile(r"\bPART_\w+", re.ASCII)
 LOCALIZATION_DIR = "Localization"
 
 
