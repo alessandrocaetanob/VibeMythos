@@ -237,6 +237,43 @@ Only raise it once a Playnite release actually raises `DesktopApiVersion`.
 
 There is no compiler, so these checks are the only automated safety net. All are verified to run in this repo's PowerShell.
 
+**Start here: `tools/check_xaml_wpf.ps1`.** It is the closest thing this repo has to a
+compiler, and the only check that covers hard rule 10 properly — it parses *and realizes*
+every file against real WPF in a Playnite-shaped context.
+
+```powershell
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File tools/check_xaml_wpf.ps1
+```
+
+Everything below, and `tools/validate_theme.py` in CI, proves the files are well-formed XML
+and that their resource keys resolve. `Xaml.FromFile` also throws on an unknown property or
+a bad type converter, and neither an `[xml]` cast nor the Python checker can see that.
+Demonstrated rather than asserted: a `<Setter Property="NoSuchProperty">` in `Button.xaml`
+passes both Python checks and fails this one at the exact file and line.
+
+Four things make it work, and getting any of them wrong measures the harness instead of the
+theme. The script handles all four; they are listed because the failure modes look like
+theme bugs:
+
+- **32-bit host.** Playnite is PE32/x86, so a 64-bit PowerShell cannot load its assemblies
+  and every `Views/*.xaml` fails with `Failed to create a 'Type' from the text 'TopPanel'`.
+  This one detail is the difference between **28** and **78** passing files. The script
+  re-launches itself under `SysWOW64`.
+- **Playnite's assemblies**, for the CLR types the Views reference by `clr-namespace`.
+- **An `Application` object**, because `StaticResource` falls back to
+  `Application.Current.Resources` — that is *how* one theme file resolves a key another
+  defines. Playnite's default theme, Localization and Templates are merged in first.
+- **Forced realization.** `ResourceDictionary` defers its values, so a broken
+  `StaticResource` stays invisible until something reads the key.
+
+⚠️ A clean run is **`78 realized, 1 expected failure`**, not zero failures. `Media.xaml`
+always fails on a `BitmapImage`: `{ThemeFile}` resolves against a *deployed* theme directory
+and `source/` is not one (hard rule 7). Any *other* failure is real. Exit code is 0 on a
+clean run and 1 on an unexpected failure, so it can be chained.
+
+It cannot run in CI — Windows plus a Playnite install — so a green GitHub Actions run is
+weaker evidence than a green local one. Run it before opening a PR that touches XAML.
+
 **XAML well-formedness** (every file must parse as XML):
 
 ```powershell

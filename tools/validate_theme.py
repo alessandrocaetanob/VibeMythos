@@ -106,17 +106,22 @@ EXTERNAL_KEYS = {
     # while they sat in this allowlist the checker could not report them going missing.
 }
 
-# NOTE on the two lists above: a hand-maintained allowlist is the weak point of this
-# checker. It cannot distinguish "Playnite defines this" from "nobody defines this",
-# so a genuinely broken key that happens to match a prefix slips through, and every
-# new Playnite release risks a fresh false positive.
+# This block used to warn that a hand-maintained allowlist was the weak point of the
+# checker - it could not distinguish "Playnite defines this" from "nobody defines this", so
+# a broken key that happened to match a prefix slipped through. HYP-213 fixed that: the
+# frozen manifest in tools/baseline/ carries the real names for everything Playnite ships
+# as a .xaml, so the "LOC" and "Glyph" prefixes are gone and a typo in one now fails.
 #
-# The PowerShell version in CLAUDE.md avoids this by reading all four real resource
-# roots, but that needs a Playnite install and so cannot run in CI. HYP-168 replaces
-# both approaches with a frozen key manifest (~31 KB, the union of the three external
-# roots as newline-delimited names): no install needed, nothing third-party
-# redistributed, and no guessing by prefix. Until then, treat a pass here as weaker
-# evidence than a pass from the PowerShell check.
+# What is left above is genuinely irreducible, and worth knowing before trusting a pass:
+#   - the plugin prefixes cannot be enumerated from a Playnite install at all
+#   - the 21 GlobalResources names are compiled into Playnite.DesktopApp.exe as
+#     globalresources.baml and are not on disk to harvest
+#
+# One gap the manifest does not close: this checks that keys *resolve*, not that the file
+# is valid XAML. Xaml.FromFile also throws on an unknown property or a bad type converter,
+# and by hard rule 10 that costs the user the entire theme. tools/check_xaml_wpf.ps1 covers
+# it by parsing against real WPF, but it needs Windows and a Playnite install, so it cannot
+# run here - a green CI run is not the same as a green local one.
 
 RESOURCE_RE = re.compile(r"\{\s*(?:Dynamic|Static)Resource\s+([^},\s]+)\s*[,}]")
 # `{DynamicResource {x:Static ...}}` and friends are not plain key lookups.
