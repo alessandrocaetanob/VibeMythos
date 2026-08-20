@@ -54,16 +54,16 @@
                                     <Storyboard>
                                         <DoubleAnimation Storyboard.TargetName="DotTranslate"
                                                         Storyboard.TargetProperty="X"
-                                                        To="17" Duration="0:0:0.25">
+                                                        To="17" Duration="{StaticResource MotionBase}">
                                             <DoubleAnimation.EasingFunction>
-                                                <QuarticEase EasingMode="EaseOut"/>
+                                                <StaticResource ResourceKey="EaseStandard"/>
                                             </DoubleAnimation.EasingFunction>
                                         </DoubleAnimation>
                                         <DoubleAnimation Storyboard.TargetName="Dot"
                                                         Storyboard.TargetProperty="Opacity"
-                                                        To="1" Duration="0:0:0.25">
+                                                        To="1" Duration="{StaticResource MotionBase}">
                                             <DoubleAnimation.EasingFunction>
-                                                <QuarticEase EasingMode="EaseOut"/>
+                                                <StaticResource ResourceKey="EaseStandard"/>
                                             </DoubleAnimation.EasingFunction>
                                         </DoubleAnimation>
                                     </Storyboard>
@@ -74,16 +74,16 @@
                                     <Storyboard>
                                         <DoubleAnimation Storyboard.TargetName="DotTranslate"
                                                         Storyboard.TargetProperty="X"
-                                                        To="0" Duration="0:0:0.25">
+                                                        To="0" Duration="{StaticResource MotionBase}">
                                             <DoubleAnimation.EasingFunction>
-                                                <QuarticEase EasingMode="EaseOut"/>
+                                                <StaticResource ResourceKey="EaseStandard"/>
                                             </DoubleAnimation.EasingFunction>
                                         </DoubleAnimation>
                                         <DoubleAnimation Storyboard.TargetName="Dot"
                                                         Storyboard.TargetProperty="Opacity"
-                                                        To="0.6" Duration="0:0:0.25">
+                                                        To="0.6" Duration="{StaticResource MotionBase}">
                                             <DoubleAnimation.EasingFunction>
-                                                <QuarticEase EasingMode="EaseOut"/>
+                                                <StaticResource ResourceKey="EaseStandard"/>
                                             </DoubleAnimation.EasingFunction>
                                         </DoubleAnimation>
                                     </Storyboard>

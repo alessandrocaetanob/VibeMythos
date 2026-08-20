@@ -71,10 +71,10 @@
                                     <Storyboard>
                                         <DoubleAnimation Storyboard.TargetName="SelectedScale"
                                                          Storyboard.TargetProperty="ScaleX"
-                                                         To="1" Duration="0:0:0.4" EasingFunction="{StaticResource FlyOutEase}"/>
+                                                         To="1" Duration="{StaticResource MotionSlow}" EasingFunction="{StaticResource FlyOutEase}"/>
                                         <DoubleAnimation Storyboard.TargetName="SelectedRectangle"
                                                          Storyboard.TargetProperty="Opacity"
-                                                         To="1" Duration="0:0:0.4"/>
+                                                         To="1" Duration="{StaticResource MotionSlow}" EasingFunction="{StaticResource EaseStandard}"/>
                                     </Storyboard>
                                 </BeginStoryboard>
                             </Trigger.EnterActions>
@@ -83,10 +83,10 @@
                                     <Storyboard>
                                         <DoubleAnimation Storyboard.TargetName="SelectedScale"
                                                          Storyboard.TargetProperty="ScaleX"
-                                                         To="0" Duration="0:0:0.4" EasingFunction="{StaticResource FlyOutEase}"/>
+                                                         To="0" Duration="{StaticResource MotionSlow}" EasingFunction="{StaticResource FlyOutEase}"/>
                                         <DoubleAnimation Storyboard.TargetName="SelectedRectangle"
                                                          Storyboard.TargetProperty="Opacity"
-                                                         To="0" Duration="0:0:0.4"/>
+                                                         To="0" Duration="{StaticResource MotionSlow}" EasingFunction="{StaticResource EaseStandard}"/>
                                     </Storyboard>
                                 </BeginStoryboard>
                             </Trigger.ExitActions>
@@ -98,13 +98,13 @@
                                     <Storyboard>
                                         <DoubleAnimation Storyboard.TargetName="HoverScale"
                                                          Storyboard.TargetProperty="ScaleX"
-                                                         To="1" Duration="0:0:0.4" EasingFunction="{StaticResource FlyOutEase}"/>
+                                                         To="1" Duration="{StaticResource MotionSlow}" EasingFunction="{StaticResource FlyOutEase}"/>
                                         <DoubleAnimation Storyboard.TargetName="HoverRectangle"
                                                          Storyboard.TargetProperty="Opacity"
-                                                         To="0.75" Duration="0:0:0.1"/>
+                                                         To="0.75" Duration="{StaticResource MotionFast}" EasingFunction="{StaticResource EaseStandard}"/>
                                         <DoubleAnimation Storyboard.TargetName="BackgroundBorder"
                                                          Storyboard.TargetProperty="Opacity"
-                                                         To="1" Duration="0:0:0.1"/>
+                                                         To="1" Duration="{StaticResource MotionFast}" EasingFunction="{StaticResource EaseStandard}"/>
                                     </Storyboard>
                                 </BeginStoryboard>
                             </Trigger.EnterActions>
@@ -113,13 +113,13 @@
                                     <Storyboard>
                                         <DoubleAnimation Storyboard.TargetName="HoverScale"
                                                          Storyboard.TargetProperty="ScaleX"
-                                                         To="0" Duration="0:0:0.4" EasingFunction="{StaticResource FlyOutEase}"/>
+                                                         To="0" Duration="{StaticResource MotionSlow}" EasingFunction="{StaticResource FlyOutEase}"/>
                                         <DoubleAnimation Storyboard.TargetName="HoverRectangle"
                                                          Storyboard.TargetProperty="Opacity"
-                                                         To="0" Duration="0:0:0.1"/>
+                                                         To="0" Duration="{StaticResource MotionFast}" EasingFunction="{StaticResource EaseStandard}"/>
                                         <DoubleAnimation Storyboard.TargetName="BackgroundBorder"
                                                          Storyboard.TargetProperty="Opacity"
-                                                         To="0" Duration="0:0:0.2"/>
+                                                         To="0" Duration="{StaticResource MotionBase}" EasingFunction="{StaticResource EaseStandard}"/>
                                     </Storyboard>
                                 </BeginStoryboard>
                             </Trigger.ExitActions>
@@ -137,7 +137,7 @@
                     <BeginStoryboard>
                         <Storyboard>
                             <DoubleAnimation Storyboard.TargetProperty="RenderTransform.X"
-                                             To="2" Duration="0:0:0.1"/>
+                                             To="2" Duration="{StaticResource MotionFast}" EasingFunction="{StaticResource EaseStandard}"/>
                         </Storyboard>
                     </BeginStoryboard>
                 </MultiTrigger.EnterActions>
@@ -145,7 +145,7 @@
                     <BeginStoryboard>
                         <Storyboard>
                             <DoubleAnimation Storyboard.TargetProperty="RenderTransform.X"
-                                             To="0" Duration="0:0:0.1"/>
+                                             To="0" Duration="{StaticResource MotionFast}" EasingFunction="{StaticResource EaseStandard}"/>
                         </Storyboard>
                     </BeginStoryboard>
                 </MultiTrigger.ExitActions>
