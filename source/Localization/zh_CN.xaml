@@ -2,8 +2,8 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:sys="clr-namespace:System;assembly=mscorlib">
 
-    <sys:String x:Key="LOCVersionLabel">游戏按钮</sys:String>
-    <sys:String x:Key="LOCNotesLabel">简介</sys:String>
+    <sys:String x:Key="LOCAddonChangesRestart">⠀</sys:String>
+    <sys:String x:Key="LOCSettingsRestartNotification">⠀</sys:String>
     <sys:String x:Key="LOCExitAppLabel">退出 VibeMythos</sys:String>
     <sys:String x:Key="LOCOpenPlaynite">打开 VibeMythos</sys:String>
 
@@ -31,6 +31,7 @@
     <sys:String x:Key="LOCMythos_SocialLinks">社交链接</sys:String>
     <sys:String x:Key="LOCMythos_Tags">标签:</sys:String>
     <sys:String x:Key="LOCMythos_AchievementsTitle">成就</sys:String>
+    <sys:String x:Key="LOCMythos_NowPlaying">正在播放</sys:String>
     <sys:String x:Key="LOCMythos_ShowAll">查看全部</sys:String>
     <sys:String x:Key="LOCMythos_Unlocked">已解锁:</sys:String>
     <sys:String x:Key="LOCMythos_Of">共</sys:String>

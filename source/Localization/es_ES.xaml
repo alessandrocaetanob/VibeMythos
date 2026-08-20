@@ -2,8 +2,8 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:sys="clr-namespace:System;assembly=mscorlib">
 
-    <sys:String x:Key="LOCVersionLabel">Botón de juego</sys:String>
-    <sys:String x:Key="LOCNotesLabel">Sinopsis</sys:String>
+    <sys:String x:Key="LOCAddonChangesRestart">⠀</sys:String>
+    <sys:String x:Key="LOCSettingsRestartNotification">⠀</sys:String>
     <sys:String x:Key="LOCExitAppLabel">Salir de VibeMythos</sys:String>
     <sys:String x:Key="LOCOpenPlaynite">Abrir VibeMythos</sys:String>
 
@@ -31,6 +31,7 @@
     <sys:String x:Key="LOCMythos_SocialLinks">Enlaces sociales</sys:String>
     <sys:String x:Key="LOCMythos_Tags">Etiquetas:</sys:String>
     <sys:String x:Key="LOCMythos_AchievementsTitle">Logros</sys:String>
+    <sys:String x:Key="LOCMythos_NowPlaying">REPRODUCIENDO AHORA</sys:String>
     <sys:String x:Key="LOCMythos_ShowAll">Ver todo</sys:String>
     <sys:String x:Key="LOCMythos_Unlocked">Desbloqueado:</sys:String>
     <sys:String x:Key="LOCMythos_Of">de</sys:String>
