@@ -1,4 +1,4 @@
-﻿
+
     <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -507,7 +507,7 @@
                                                                 <ColumnDefinition Width="*" />
                                                             </Grid.ColumnDefinitions>
                                                             <Label Grid.Column="0" Content="{DynamicResource LOCInstallSizeLabel}" VerticalAlignment="Center"/>
-                                                            <TextBlock Grid.Column="1" Name="PART_TextInstallSize" HorizontalAlignment="Right" Margin="0,0,4,0"/>
+                                                            <TextBlock Grid.Column="1" Name="PART_TextInstallSize" Typography.NumeralAlignment="Tabular" HorizontalAlignment="Right" Margin="0,0,4,0"/>
                                                         </Grid>
                                                     </Border>
 
@@ -519,7 +519,7 @@
                                                                 <ColumnDefinition Width="*" />
                                                             </Grid.ColumnDefinitions>
                                                             <Label Grid.Column="0" Content="{DynamicResource LOCMythos_PlayTime}" VerticalAlignment="Center"/>
-                                                            <TextBlock Grid.Column="1" Name="PART_TextPlayTime" HorizontalAlignment="Right" Margin="0,0,4,0"/>
+                                                            <TextBlock Grid.Column="1" Name="PART_TextPlayTime" Typography.NumeralAlignment="Tabular" HorizontalAlignment="Right" Margin="0,0,4,0"/>
                                                         </Grid>
                                                     </Border>
 
@@ -683,8 +683,8 @@
                                         <StackPanel Name="PART_ElemTags" Margin="0,0,0,10">
                                             <TextBlock Text="{DynamicResource LOCMythos_Tags}"
                                                         Foreground="{DynamicResource SubtalBrush}"
-                                                        FontWeight="Regular"
-                                                        FontSize="13"
+                                                        FontWeight="{DynamicResource FontWeightBody}"
+                                                        FontSize="{DynamicResource FontSize}"
                                                         Margin="0,0,0,10" />
 
                                             <Border CornerRadius="{DynamicResource ControlCornerRadius}" Background="Transparent" Margin="0">
@@ -1268,7 +1268,7 @@
                                                                                 Text="&#xE71B;"/>
                                                                         <TextBlock x:Name="LabelText"
                                                                                 VerticalAlignment="Center"
-                                                                                FontWeight="SemiBold"
+                                                                                FontWeight="{DynamicResource FontWeightDisplay}"
                                                                                 Text="{Binding Name}"/>
                                                                     </StackPanel>
                                                                 </Button>
@@ -1344,7 +1344,7 @@
                                                         Padding="0"
                                                         Background="Transparent"
                                                         FontFamily="{DynamicResource MonospaceFontFamily}"
-                                                        FontSize="16" />
+                                                        FontSize="{DynamicResource FontSizeLarge}" />
                                         </StackPanel>
 
                                             <Grid Tag="{DynamicResource DetailsViewGenreFeature}"
@@ -1375,7 +1375,7 @@
                                                         </StackPanel.Style>
 
                                                         <Label Content="{StaticResource LOCGenresLabel}"
-                                                               Foreground="{DynamicResource TextBrushDarker}" FontSize="{StaticResource FontSize}" FontWeight="Medium"/>
+                                                               Foreground="{DynamicResource TextBrushDarker}" FontSize="{StaticResource FontSize}" FontWeight="{DynamicResource FontWeightLabel}"/>
                                                         <Grid Margin="0,5,0,0">
                                                             <ItemsControl ItemsSource="{Binding Game.Genres}" Margin="0,4,0,0">
                                                                 <ItemsControl.ItemsPanel>
@@ -1414,7 +1414,7 @@
                                                         </StackPanel.Style>
 
                                                         <Label Content="{StaticResource LOCFeaturesLabel}"
-                                                               Foreground="{DynamicResource TextBrushDarker}" FontSize="{StaticResource FontSize}" FontWeight="Medium"/>
+                                                               Foreground="{DynamicResource TextBrushDarker}" FontSize="{StaticResource FontSize}" FontWeight="{DynamicResource FontWeightLabel}"/>
                                                         <Grid Margin="0,5,0,0">
                                                             <ItemsControl ItemsSource="{Binding Game.Features}" Margin="0,4,0,0">
                                                                 <ItemsControl.ItemsPanel>
@@ -1537,7 +1537,7 @@
                                                             </Path>
                                                             <TextBlock Text="{DynamicResource LOCMythos_ShowAll}"
                                                                     FontSize="{DynamicResource FontSize}"
-                                                                    FontWeight="Medium"
+                                                                    FontWeight="{DynamicResource FontWeightLabel}"
                                                                     VerticalAlignment="Center"
                                                                     Foreground="{DynamicResource TextBrush}"/>
                                                         </StackPanel>
@@ -1550,7 +1550,7 @@
                                                             Foreground="{DynamicResource TextBrushDarker}"
                                                             Margin="0,0,5,0" />
                                                     <TextBlock Text="{PluginSettings Plugin=SuccessStory, Path=Unlocked, Mode=OneWay, FallbackValue=0}"
-                                                            FontWeight="SemiBold"
+                                                            FontWeight="{DynamicResource FontWeightDisplay}"
                                                             Margin="0,0,4.5,0"
                                                             FontSize="{DynamicResource FontSize}"
                                                             FontFamily="{DynamicResource FontFamily}">
@@ -1742,7 +1742,7 @@
                                                             </ToggleButton.Style>
                                                             <TextBlock Style="{StaticResource ExpandToggleContentStyle}"
                                                                     Foreground="{DynamicResource AccentHighlightBrush}"
-                                                                    FontSize="{DynamicResource FontSize}" FontWeight="SemiBold"/>
+                                                                    FontSize="{DynamicResource FontSize}" FontWeight="{DynamicResource FontWeightDisplay}"/>
                                                         </ToggleButton>
                                                     </StackPanel>
                                                 </StackPanel>

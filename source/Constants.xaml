@@ -61,13 +61,32 @@
     <sys:Double x:Key="FontSize">14</sys:Double>
     <sys:Double x:Key="FontSizeLarge">16</sys:Double>
     <sys:Double x:Key="FontSizeLarge18">18</sys:Double>
-    <sys:Double x:Key="FontSizeLarge20">20</sys:Double>
     <sys:Double x:Key="FontSizeLarge22">22</sys:Double>
-    <sys:Double x:Key="FontSizeLarge24">24</sys:Double>
     <sys:Double x:Key="FontSizeLarge28">28</sys:Double>
-    <sys:Double x:Key="FontSizeLarge32">32</sys:Double>
-    <sys:Double x:Key="FontSizeLarge40">40</sys:Double>
-    <sys:Double x:Key="FontSizeLarge48">48</sys:Double>
+    <!-- The theme now owns its display sizes (HYP-211). These were consumed in four places
+         but defined nowhere in source/ - they resolved only because Playnite's default theme
+         defines them and merges first, which meant the Details View game title was sized by
+         a number this theme never declared, and a Playnite release changing it would have
+         silently resized the flagship surface.
+
+         Values deliberately match Playnite's current 20/29 rather than the 20/28 the
+         abandoned foundations branch used. Owning the value is the point; changing it is a
+         separate decision, and 28 would have shrunk the game title by 1px for no stated
+         reason. It would also not have stopped there: FontSizeLarger is read by four
+         installed plugin DLLs (checkdlc, gameactivity, howlongtobeat,
+         ScreenshotUtilitiesLocalProvider) and FontSizeLargest by gameactivity, so these two
+         keys resize other people's UI as well as ours. -->
+    <sys:Double x:Key="FontSizeLarger">20</sys:Double>
+    <sys:Double x:Key="FontSizeLargest">29</sys:Double>
+
+    <!-- Weight tokens. Named for the role, not the number, so a weight change is one edit.
+         Deliberately NOT called FontDisplay/FontBody/FontLabel as the issue proposed: WPF
+         keeps family and weight on separate properties, so a single resource cannot carry
+         "Inter Tight SemiBold", and a key named FontDisplay holding a bare FontWeight would
+         lie about its own type. Pair these with TightFont / FontFamily above. -->
+    <FontWeight x:Key="FontWeightDisplay">SemiBold</FontWeight>
+    <FontWeight x:Key="FontWeightBody">Regular</FontWeight>
+    <FontWeight x:Key="FontWeightLabel">Medium</FontWeight>
     <!-- The theme ships its own fonts in Typefaces/, but reaching them is awkward.
 
          The directory is NOT called Fonts/ on purpose. Toolbox's packer blacklists
@@ -111,8 +130,20 @@
          nothing. Use HtmlDescriptionFontFamily below. -->
     <FontFamily x:Key="FontFamily">Themes/Desktop/VibeMythos_fb4d738f-62bd-4e08-afd9-52e8cb45f6ca/Typefaces/#Inter, Inter, Segoe UI Variable Text, Segoe UI</FontFamily>
     <!-- Misnomer kept for compatibility: "Inter Mod" is a modified Inter, not a monospace,
-         and both consumers are prose (the Notes box and the HTML description). Terminal
-         entries are therefore a prose stack, not Consolas. -->
+         and its one consumer is prose (the Notes box). Terminal entries are therefore a
+         prose stack, not Consolas.
+
+         Measured 2026-08-20, because the 3.0 plan guessed it was "a modified Inter with
+         tabular figures". It is not that either. Advance widths at 100px match plain Inter
+         to three decimals - '0'=63.087 '1'=40.673 '7'=56.593 'i'=24.22 'M'=90.333 - so it
+         is neither monospaced (i != M) nor tabular (0 != 1 != 7), and it buys nothing over
+         FontFamily. Whatever "Mod" changes, it is glyph shapes, not metrics. Kept only
+         because swapping it would alter those shapes on a live surface.
+
+         For numeric UI use Typography.NumeralAlignment="Tabular" instead. Measured to work
+         on all three bundled families (every digit snaps to 64.843 on Inter) and to inherit
+         through ContentControl templates, so one setting on an ancestor reaches the score
+         ContentControls. -->
     <FontFamily x:Key="MonospaceFontFamily">Themes/Desktop/VibeMythos_fb4d738f-62bd-4e08-afd9-52e8cb45f6ca/Typefaces/#Inter Mod, Inter Mod, Segoe UI Variable Text, Segoe UI</FontFamily>
     <!-- HtmlTextView renders through HtmlRenderer, which only sees system-installed fonts -
          the bundled files are unreachable there - and it injects this value into a quoted
