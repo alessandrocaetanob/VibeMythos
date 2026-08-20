@@ -268,6 +268,46 @@ def report(title: str, problems: list[str]) -> bool:
     return True
 
 
+
+# Hard rule 12: a Style-hosted storyboard cannot reach Constants.xaml, so the motion tokens are
+# deliberately duplicated into every file whose storyboards use them. That is the only mechanism
+# that survives ApplyTheme's pre-flight - and it is a drift risk, because nothing else notices if
+# one copy is edited and the others are not. tools/check_xaml_wpf.ps1 catches the failure mode;
+# this catches the values quietly disagreeing.
+MOTION_KEYS = ("MotionFast", "MotionBase", "MotionSlow", "EaseStandard", "EaseEmphasized")
+
+
+def _motion_signature(el: ET.Element) -> str:
+    """Value of a motion token: element text for Duration, attributes for an easing."""
+    text = (el.text or "").strip()
+    if text:
+        return text
+    attrs = {k: v for k, v in sorted(el.attrib.items()) if not k.startswith(f"{{{X_NS}}}")}
+    return el.tag.split("}")[-1] + " " + " ".join(f"{k}={v}" for k, v in attrs.items())
+
+
+def check_motion_drift(files: list[Path]) -> list[str]:
+    seen: dict[str, dict[str, str]] = {key: {} for key in MOTION_KEYS}
+    for path in files:
+        try:
+            tree = ET.parse(path)
+        except ET.ParseError:
+            continue
+        for el in tree.iter():
+            key = el.get(KEY_ATTR)
+            if key in seen:
+                seen[key][path.as_posix()] = _motion_signature(el)
+
+    problems = []
+    for key, defs in seen.items():
+        values = set(defs.values())
+        if len(values) > 1:
+            problems.append(
+                f"{key}: {len(values)} different values across {len(defs)} definitions - "
+                + "; ".join(f"{where}={what!r}" for where, what in sorted(defs.items()))
+            )
+    return problems
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--source", default="source", type=Path)
@@ -295,6 +335,7 @@ def main() -> int:
         )
     ok &= report("resource keys resolve", check_resources(files, keys | baseline))
     ok &= report("localization parity", check_localization(source))
+    ok &= report("motion token values agree", check_motion_drift(files))
 
     constants_keys = defined_keys([source / "Constants.xaml"])
     en = source / "Localization" / "en_US.xaml"

@@ -206,6 +206,51 @@ These are the constraints that are not discoverable from the code, and violating
     storyboard into the element's own `Triggers`/`ControlTemplate.Triggers`, where `TargetName` is
     legal. (Documented the hard way in UniPlaySong's theme-integration guide; it applies to every
     `Style`-hosted storyboard in this theme.)
+12. **A `Style`-hosted storyboard cannot reach a resource in `Constants.xaml` — by either
+    mechanism.** Define what it needs *locally, in the same file*. This cost the user a working
+    theme on 2026-08-20 (HYP-244); the reasoning that led there was careful and still wrong, so
+    the whole chain is worth keeping.
+
+    Rule 10 says `ApplyTheme` pre-flights every file through `Xaml.FromFile` **before merging any
+    of them**. The consequence nobody drew: during that pass a `StaticResource` resolves against
+    Playnite's default theme *only*. The theme's own `Constants.xaml` has been parsed, but it is
+    not in scope yet — and it does not matter that App.xaml merges it first (it does, position 1
+    of 84). Merge order is a *runtime* fact; pre-flight happens before any of it.
+
+    That alone is survivable, because an ordinary `Setter` value is **deferred** until the style
+    is applied. That is why ~13 theme-only keys are consumed cross-file today and work fine
+    (`PlayIconGeometry` in `PlayButton.xaml`, `CardBackgroundBrush` in `LibraryGridView.xaml`…).
+    Those precedents are real, and they are exactly what makes the trap convincing.
+
+    The trap is that a storyboard inside a `Style` or `ControlTemplate` **must be frozen** for the
+    timing system, and freezing forces its `StaticResource` to resolve **eagerly, right there in
+    pre-flight** rather than being deferred. So a `Duration` or easing key in `Constants.xaml` is
+    unreachable from a storyboard:
+
+    | | why not |
+    |---|---|
+    | `DynamicResource` | a Freezable holding a dynamic reference cannot be frozen (rule 3's inverse) |
+    | `StaticResource` | resolves during pre-flight, when `Constants.xaml` is not in scope |
+
+    ⚠️ The two fail *differently*, which is why testing one tells you nothing about the other. A
+    `DynamicResource` here **parses and realizes fine** and breaks silently later, when the trigger
+    fires — a dead animation, no log line. A `StaticResource` throws in pre-flight and takes the
+    **entire theme** down under rule 10.
+
+    So: duplicate the `Duration`/easing definitions into every file whose storyboards use them.
+    `CustomControls/SidebarItem.xaml` had been doing this with `ElasticEase`/`BackEase` since
+    before the fork — that is not a stylistic quirk to tidy away, it is the only mechanism that
+    works. `Constants.xaml` keeps the canonical copy as documentation of intent.
+
+    ✅ Catch it before deploying. `tools/check_xaml_wpf.ps1` phase 1 reproduces pre-flight exactly
+    — Playnite's dictionaries merged, **zero** theme dictionaries — and reports the offending file
+    and line. Verified both directions: 10 theme-killers against the broken tree, 0 against the
+    fix. The harness originally missed this because it merged theme dictionaries as it went, which
+    models the state *after* `ApplyTheme` succeeds, not pre-flight.
+
+    ```powershell
+    powershell.exe -NoProfile -ExecutionPolicy Bypass -File tools/check_xaml_wpf.ps1 -PreFlight
+    ```
 
 ## Repository layout
 
@@ -238,11 +283,12 @@ Only raise it once a Playnite release actually raises `DesktopApiVersion`.
 There is no compiler, so these checks are the only automated safety net. All are verified to run in this repo's PowerShell.
 
 **Start here: `tools/check_xaml_wpf.ps1`.** It is the closest thing this repo has to a
-compiler, and the only check that covers hard rule 10 properly — it parses *and realizes*
-every file against real WPF in a Playnite-shaped context.
+compiler, and the only check that covers hard rules 10 and 12 — it parses every file against
+real WPF in a Playnite-shaped context.
 
 ```powershell
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File tools/check_xaml_wpf.ps1
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File tools/check_xaml_wpf.ps1 -PreFlight
 ```
 
 Everything below, and `tools/validate_theme.py` in CI, proves the files are well-formed XML
@@ -251,8 +297,21 @@ a bad type converter, and neither an `[xml]` cast nor the Python checker can see
 Demonstrated rather than asserted: a `<Setter Property="NoSuchProperty">` in `Button.xaml`
 passes both Python checks and fails this one at the exact file and line.
 
-Four things make it work, and getting any of them wrong measures the harness instead of the
-theme. The script handles all four; they are listed because the failure modes look like
+**It runs two phases, and they are not interchangeable.**
+
+| Phase | Context | Catches |
+|---|---|---|
+| 1 · pre-flight | Playnite's dictionaries, **zero** theme dictionaries | anything that throws in `Xaml.FromFile` — one failure loses the **whole theme** |
+| 2 · runtime | merge as you go, force every value to realize | deferred breakage pre-flight legitimately cannot see |
+
+Phase 1 is the one that decides the exit code, and the one that matters. It exists because
+the harness originally had only phase 2 and **passed a theme-killer straight through to a
+deploy** (HYP-244): merging as it went put `Constants.xaml` in scope, which models the state
+*after* `ApplyTheme` succeeds rather than the pre-flight it actually does first. `-PreFlight`
+runs phase 1 alone, which is faster and enough for a quick check.
+
+Three things make it work, and getting any of them wrong measures the harness instead of the
+theme. The script handles all three; they are listed because the failure modes look like
 theme bugs:
 
 - **32-bit host.** Playnite is PE32/x86, so a 64-bit PowerShell cannot load its assemblies
@@ -261,18 +320,15 @@ theme bugs:
   re-launches itself under `SysWOW64`.
 - **Playnite's assemblies**, for the CLR types the Views reference by `clr-namespace`.
 - **An `Application` object**, because `StaticResource` falls back to
-  `Application.Current.Resources` — that is *how* one theme file resolves a key another
-  defines. Playnite's default theme, Localization and Templates are merged in first.
-- **Forced realization.** `ResourceDictionary` defers its values, so a broken
-  `StaticResource` stays invisible until something reads the key.
+  `Application.Current.Resources` — which is the *only* thing separating phase 1 from phase 2.
 
-⚠️ A clean run is **`78 realized, 1 expected failure`**, not zero failures. `Media.xaml`
-always fails on a `BitmapImage`: `{ThemeFile}` resolves against a *deployed* theme directory
-and `source/` is not one (hard rule 7). Any *other* failure is real. Exit code is 0 on a
-clean run and 1 on an unexpected failure, so it can be chained.
+⚠️ A clean run is **1 expected failure**, not zero. `Media.xaml` always fails on a
+`BitmapImage`: `{ThemeFile}` resolves against a *deployed* theme directory and `source/` is
+not one (hard rule 7). Any *other* failure is real. Exit 0 clean, 1 otherwise, so it chains.
 
 It cannot run in CI — Windows plus a Playnite install — so a green GitHub Actions run is
-weaker evidence than a green local one. Run it before opening a PR that touches XAML.
+weaker evidence than a green local one. Run it before opening a PR that touches XAML, and
+before every deploy.
 
 **XAML well-formedness** (every file must parse as XML):
 
