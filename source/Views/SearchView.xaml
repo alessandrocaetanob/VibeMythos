@@ -210,9 +210,9 @@
                             <ControlTemplate TargetType="{x:Type ListBoxItem}">
                                 <Grid Margin="16,0,16,0">
                                     <Border x:Name="HoverRectangle" IsHitTestVisible="False" Visibility="Collapsed"
-                                            Background="{DynamicResource ControlHoverBackgroundBrush}" CornerRadius="8" />
+                                            Background="{DynamicResource ControlHoverBackgroundBrush}" CornerRadius="{DynamicResource ControlCornerRadiusMedium}" />
                                     <Border x:Name="SelectedRectangle" IsHitTestVisible="False" Visibility="Collapsed"
-                                            Background="{DynamicResource ControlSelectedBackgroundBrush}" CornerRadius="8"/>
+                                            Background="{DynamicResource ControlSelectedBackgroundBrush}" CornerRadius="{DynamicResource ControlCornerRadiusMedium}"/>
                                     <Border Padding="{TemplateBinding Padding}" Background="Transparent">
                                         <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}"

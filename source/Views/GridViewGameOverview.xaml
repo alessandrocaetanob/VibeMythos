@@ -275,7 +275,7 @@
                                                                         </Style>
                                                                         <Style TargetType="TextBlock" x:Key="HltbGridTextStyle" BasedOn="{StaticResource BaseTextBlockStyle}">
                                                                             <Setter Property="Foreground" Value="White"/>
-                                                                            <Setter Property="Margin" Value="8,8,8,8" />
+                                                                            <Setter Property="Margin" Value="{DynamicResource Inset2}" />
                                                                             <Setter Property="FontSize" Value="{DynamicResource FontSizeLarge}"/>
                                                                             <Setter Property="FontWeight" Value="Medium"/>
                                                                             <Setter Property="Visibility" Value="Visible" />

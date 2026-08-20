@@ -345,11 +345,11 @@
                     <Grid Height="{TemplateBinding Height}">
                         <!-- Background layer -->
                         <Border x:Name="HoverBg"
-                                CornerRadius="15"
+                                CornerRadius="{DynamicResource RadiusPill}"
                                 Background="{TemplateBinding Background}"/>
                         <!-- Overlay border layer -->
                         <Border x:Name="BorderOverlay"
-                                CornerRadius="15"
+                                CornerRadius="{DynamicResource RadiusPill}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 Background="Transparent"
@@ -397,7 +397,7 @@
                     <Grid Background="Transparent">
                         <Border x:Name="HoverBg"
                                 Background="{TemplateBinding Background}"
-                                CornerRadius="15"
+                                CornerRadius="{DynamicResource RadiusPill}"
                                 Visibility="Collapsed"/>
                         <Path x:Name="IconPath" Data="{Binding Content, RelativeSource={RelativeSource TemplatedParent}}"
                             Stroke="{DynamicResource TextBrush}"
@@ -460,7 +460,7 @@
                     <Grid Background="Transparent" Margin="{DynamicResource Inset1}">
                         <Border x:Name="HoverBg"
                                 Background="{TemplateBinding Background}"
-                                CornerRadius="20"
+                                CornerRadius="{DynamicResource RadiusPill}"
                                 Opacity="1"
                                 Visibility="Visible"/>
                         <TextBlock FontSize="{TemplateBinding FontSize}"
