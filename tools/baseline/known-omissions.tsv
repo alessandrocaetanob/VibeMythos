@@ -1,0 +1,35 @@
+# PART_* names Playnite's default theme declares that this theme deliberately omits.
+#
+# check_baseline.py fails on any omission NOT listed here, which is the HYP-203/204
+# failure class: a template part silently dropped, taking its functionality with it.
+# It also reports entries here that are no longer missing, so the file cannot rot.
+#
+# Adding a line is a decision, not a formality. Confirm the functionality is genuinely
+# replaced or genuinely unwanted before silencing it.
+#
+# file<TAB>PART name<TAB>reason
+Views/DetailsViewGameOverview.xaml	PART_ButtonInstallDirectory	theme does not surface the install-directory row
+Views/DetailsViewGameOverview.xaml	PART_ButtonVersion	theme does not surface the version row
+Views/DetailsViewGameOverview.xaml	PART_ElemInstallDirectory	theme does not surface the install-directory row
+Views/DetailsViewGameOverview.xaml	PART_ElemRecentActivity	theme shows Last Played via PART_TextLastActivity instead
+Views/DetailsViewGameOverview.xaml	PART_ElemVersion	theme does not surface the version row
+Views/DetailsViewGameOverview.xaml	PART_ItemsAgeRatings	theme does not surface age ratings
+Views/DetailsViewGameOverview.xaml	PART_ItemsFeatures	theme binds Game.Features itself
+Views/DetailsViewGameOverview.xaml	PART_ItemsGenres	theme binds Game.Genres itself; PART_ElemGenres wrapper is kept
+Views/DetailsViewGameOverview.xaml	PART_ItemsLinks	theme binds Game.Links itself; PART_ElemLinks wrapper is kept
+Views/DetailsViewGameOverview.xaml	PART_ItemsTags	theme binds Game.Tags itself; PART_ElemTags wrapper is kept
+Views/DetailsViewGameOverview.xaml	PART_TextRecentActivity	theme shows Last Played via PART_TextLastActivity instead
+Views/GridViewGameOverview.xaml	PART_ButtonInstallDirectory	theme does not surface the install-directory row
+Views/GridViewGameOverview.xaml	PART_ButtonVersion	theme does not surface the version row
+Views/GridViewGameOverview.xaml	PART_ElemFeatures	grid drawer does not surface features
+Views/GridViewGameOverview.xaml	PART_ElemGenres	grid drawer renders genres inline, no visibility wrapper
+Views/GridViewGameOverview.xaml	PART_ElemInstallDirectory	theme does not surface the install-directory row
+Views/GridViewGameOverview.xaml	PART_ElemLinks	grid drawer renders links inline, no visibility wrapper
+Views/GridViewGameOverview.xaml	PART_ElemNotes	grid drawer does not surface notes (details view does)
+Views/GridViewGameOverview.xaml	PART_ElemVersion	theme does not surface the version row
+Views/GridViewGameOverview.xaml	PART_ItemsAgeRatings	theme does not surface age ratings
+Views/GridViewGameOverview.xaml	PART_ItemsFeatures	theme binds Game.Features itself
+Views/GridViewGameOverview.xaml	PART_ItemsGenres	theme binds Game.Genres itself; PART_ElemGenres wrapper is kept
+Views/GridViewGameOverview.xaml	PART_ItemsLinks	theme binds Game.Links itself; PART_ElemLinks wrapper is kept
+Views/GridViewGameOverview.xaml	PART_ItemsTags	theme binds Game.Tags itself; PART_ElemTags wrapper is kept
+Views/GridViewGameOverview.xaml	PART_TextNotes	grid drawer does not surface notes (details view does)

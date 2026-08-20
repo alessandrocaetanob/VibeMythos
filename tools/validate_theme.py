@@ -29,12 +29,16 @@ from pathlib import Path
 X_NS = "http://schemas.microsoft.com/winfx/2006/xaml"
 KEY_ATTR = f"{{{X_NS}}}Key"
 
-# Keys Playnite itself, or an installed plugin, puts in the merged dictionary.
-# A theme is allowed to consume these without defining them.
+# Plugin-supplied keys. CLAUDE.md is explicit that any <Plugin>_* key is an external API,
+# so these stay as prefixes: the plugin set is not knowable from a Playnite install, and a
+# theme is allowed to consume them without defining them.
+#
+# "LOC" and "Glyph" used to live here too. They are gone because tools/baseline/ now carries
+# the real names (HYP-213) - a prefix cannot tell "Playnite defines this" from "nobody
+# defines this", which is precisely how a typo'd LOC key used to pass. As of the 10.56.0
+# baseline these prefixes match nothing at all; they are kept for the next plugin binding.
 EXTERNAL_KEY_PREFIXES = (
-    "LOC",              # Playnite localization
-    "Glyph",            # Playnite glyph set
-    "SuccessStory",     # plugin-supplied
+    "SuccessStory",
     "PlayniteAchievements",
     "HowLongToBeat",
     "ThemeExtras",
@@ -43,11 +47,39 @@ EXTERNAL_KEY_PREFIXES = (
     "UPS_",
 )
 
-# Keys Playnite defines in GlobalResources.xaml or its own default theme, which is
-# merged immediately before ours (default/X.xaml -> theme/X.xaml, per file — see
-# ThemeManager.ApplyTheme). Consuming these without defining them is legal.
+# tools/baseline/, pinned from a real install by tools/refresh_baseline.py. Names only, no
+# markup: nothing third-party is redistributed. Optional so the checker still runs if the
+# fixture is absent, but a run without it is materially weaker - see load_baseline_keys.
+BASELINE_DIR = Path(__file__).resolve().parent / "baseline"
+BASELINE_KEY_FILES = ("default-theme-keys.txt", "external-keys.txt")
+
+
+def load_baseline_keys() -> set[str]:
+    """Key names Playnite ships on disk: its default theme, templates and localization."""
+    keys: set[str] = set()
+    for name in BASELINE_KEY_FILES:
+        path = BASELINE_DIR / name
+        if not path.exists():
+            continue
+        keys |= {
+            line.strip()
+            for line in path.read_text(encoding="utf-8").splitlines()
+            if line.strip() and not line.startswith("#")
+        }
+    return keys
+
+# The residue that tools/baseline/ cannot reach: GlobalResources.xaml is compiled into
+# Playnite.DesktopApp.exe as globalresources.baml, so it is not on disk to be harvested and
+# these names have to be listed by hand. Everything Playnite ships as a .xaml file now comes
+# from the baseline instead (HYP-213), which is why this list is 21 entries rather than the
+# ~1,350 it would otherwise need to be.
+#
+# The default-theme style entries below sit here for the same reason in reverse: they ARE in
+# the baseline, and are kept only so the checker still behaves sensibly when the fixture is
+# missing. Consuming any of these without defining them is legal - ThemeManager.ApplyTheme
+# merges default/X.xaml immediately before theme/X.xaml, per file.
 EXTERNAL_KEYS = {
-    # GlobalResources.xaml
+    # GlobalResources.xaml (compiled in; not harvestable)
     "True",
     "False",
     "ObjectToStringConverter",
@@ -247,7 +279,16 @@ def main() -> int:
     ok = report("well-formed XAML", check_well_formed(files))
 
     keys = defined_keys(files)
-    ok &= report("resource keys resolve", check_resources(files, keys))
+    baseline = load_baseline_keys()
+    if baseline:
+        print(f"baseline: {len(baseline)} Playnite key names from {BASELINE_DIR.name}/\n")
+    else:
+        print(
+            f"WARN  no key manifest under {BASELINE_DIR} - falling back to the hand-listed\n"
+            f"      allowlist, which cannot tell a typo from a Playnite-supplied key.\n"
+            f"      Regenerate it with tools/refresh_baseline.py.\n"
+        )
+    ok &= report("resource keys resolve", check_resources(files, keys | baseline))
     ok &= report("localization parity", check_localization(source))
 
     constants_keys = defined_keys([source / "Constants.xaml"])

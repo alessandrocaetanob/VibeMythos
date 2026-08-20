@@ -650,7 +650,7 @@
                                 <!-- Right margin clears the window caption buttons, which live in
                                      the same band: 3 x 30px WinSysButton + 2 x 5px gaps + the
                                      StackPanel's own 12px margin = 112px reserved
-                                     (DerivedStyles/MainWindowStyle.xaml, Simplebutton.xaml). -->
+                                     (DerivedStyles/MainWindowStyle.xaml, SimpleButton.xaml). -->
                                 <Border.Style>
                                     <Style TargetType="Border">
                                         <Setter Property="Margin" Value="0,0,124,0"/>
