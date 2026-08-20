@@ -382,6 +382,17 @@
     <SolidColorBrush x:Key="TextSubtleLighterBrush" Color="{DynamicResource TextSubtleLighterColor}" />
     <SolidColorBrush x:Key="SubtalBrush" Color="{DynamicResource TextSubtleColor}" />
     <SolidColorBrush x:Key="SubtalBrushLighter" Color="{DynamicResource TextSubtleLighterColor}" />
+    <!-- Near-white foreground family (HYP-197). IdleBrush / HoverBrush / SelectedBrush are the
+         same #E7E9EA, used as a bright FOREGROUND on dark surfaces - the names are historical,
+         not roles. HoverBrush in particular is a foreground colour and must never paint a
+         Background or Fill; the three sites that did (Menu header hover, the RoundedThumb
+         slider handle) were the inconsistent-hover source and were retired in HYP-197.
+
+         Hover BACKGROUNDS use one of two sanctioned ramps instead, chosen by surface material:
+           - dark chrome  -> ContentBrushOverlay (#1AFFFFFF) rest, ContentBrushOverlayHover
+                             (#33FFFFFF) hover: a translucent white overlay that lifts the surface.
+           - input fields -> GlassControlBrushDark (#40000000): a dark glass fill; these give
+                             focus feedback (an AccentHighlightBrush border), not a hover colour. -->
     <SolidColorBrush x:Key="IdleBrush" Color="#E7E9EA" />
     <SolidColorBrush x:Key="HoverBrush" Color="#E7E9EA" />
     <SolidColorBrush x:Key="SelectedBrush" Color="#E7E9EA" />
