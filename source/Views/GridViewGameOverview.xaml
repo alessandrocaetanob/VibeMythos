@@ -457,25 +457,25 @@
                                                             </StackPanel.Resources>
 
                                                                 <!-- Comp Status -->
-                                                                <Border x:Name="PART_ElemCompletionStatus" Padding="0,11,0,11" BorderBrush="{DynamicResource ContentBorderBrushOverlay}" BorderThickness="0,0,0,1" >
+                                                                <Border x:Name="PART_ElemCompletionStatus" Style="{DynamicResource MetadataRowBorder}">
                                                                     <Grid>
                                                                         <Grid.ColumnDefinitions>
                                                                             <ColumnDefinition Width="Auto" SharedSizeGroup="Left"/>
                                                                             <ColumnDefinition Width="*" />
                                                                         </Grid.ColumnDefinitions>
-                                                                        <Label Grid.Column="0" Content="{DynamicResource LOCMythos_CompStatus}" VerticalAlignment="Center"/>
+                                                                        <Label Style="{DynamicResource MetadataRowLabel}" Content="{DynamicResource LOCMythos_CompStatus}"/>
                                                                         <Button Grid.Column="1" Name="PART_ButtonCompletionStatus" HorizontalAlignment="Right" Margin="0,0,4,0"/>
                                                                     </Grid>
                                                                 </Border>
 
                                                                 <!-- User Score -->
-                                                                <Border x:Name="PART_ElemUserScore" Padding="0,11,0,11" BorderBrush="{DynamicResource ContentBorderBrushOverlay}" BorderThickness="0,0,0,1" >
+                                                                <Border x:Name="PART_ElemUserScore" Style="{DynamicResource MetadataRowBorder}">
                                                                     <Grid>
                                                                         <Grid.ColumnDefinitions>
                                                                             <ColumnDefinition Width="Auto" SharedSizeGroup="Left"/>
                                                                             <ColumnDefinition Width="*" />
                                                                         </Grid.ColumnDefinitions>
-                                                                        <Label Grid.Column="0" Content="{DynamicResource LOCMythos_UserRating}" VerticalAlignment="Center"/>
+                                                                        <Label Style="{DynamicResource MetadataRowLabel}" Content="{DynamicResource LOCMythos_UserRating}"/>
                                                                         <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Right"
                                                                                     Visibility="{Binding ElementName=PART_TextUserScore, Path=Visibility}">
                                                                             <ContentControl Content="{Binding Game.UserScore}"
@@ -492,13 +492,13 @@
                                                                 </Border>
 
                                                                 <!-- Critic Score -->
-                                                                <Border x:Name="PART_ElemCriticScore" Padding="0,11,0,11" BorderBrush="{DynamicResource ContentBorderBrushOverlay}" BorderThickness="0,0,0,1" >
+                                                                <Border x:Name="PART_ElemCriticScore" Style="{DynamicResource MetadataRowBorder}">
                                                                     <Grid>
                                                                         <Grid.ColumnDefinitions>
                                                                             <ColumnDefinition Width="Auto" SharedSizeGroup="Left"/>
                                                                             <ColumnDefinition Width="*" />
                                                                         </Grid.ColumnDefinitions>
-                                                                        <Label Grid.Column="0" Content="{DynamicResource LOCMythos_CriticRating}" VerticalAlignment="Center"/>
+                                                                        <Label Style="{DynamicResource MetadataRowLabel}" Content="{DynamicResource LOCMythos_CriticRating}"/>
                                                                         <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Right"
                                                                                     Visibility="{Binding ElementName=PART_TextCriticScore, Path=Visibility}">
                                                                             <ContentControl Content="{Binding Game.CriticScore}"
@@ -515,13 +515,13 @@
                                                                 </Border>
 
                                                                 <!-- Community Score -->
-                                                                <Border x:Name="PART_ElemCommunityScore" Padding="0,11,0,11" BorderBrush="{DynamicResource ContentBorderBrushOverlay}" BorderThickness="0,0,0,1" >
+                                                                <Border x:Name="PART_ElemCommunityScore" Style="{DynamicResource MetadataRowBorder}">
                                                                     <Grid>
                                                                         <Grid.ColumnDefinitions>
                                                                             <ColumnDefinition Width="Auto" SharedSizeGroup="Left"/>
                                                                             <ColumnDefinition Width="*" />
                                                                         </Grid.ColumnDefinitions>
-                                                                        <Label Grid.Column="0" Content="{DynamicResource LOCMythos_CommRating}" VerticalAlignment="Center"/>
+                                                                        <Label Style="{DynamicResource MetadataRowLabel}" Content="{DynamicResource LOCMythos_CommRating}"/>
                                                                         <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Right"
                                                                                     Visibility="{Binding ElementName=PART_TextCommunityScore, Path=Visibility}">
                                                                             <ContentControl Content="{Binding Game.CommunityScore}"
@@ -538,145 +538,145 @@
                                                                 </Border>
 
                                                                 <!-- Install Size -->
-                                                                <Border x:Name="PART_ElemInstallSize" Padding="0,11,0,11" BorderBrush="{DynamicResource ContentBorderBrushOverlay}" BorderThickness="0,0,0,1" >
+                                                                <Border x:Name="PART_ElemInstallSize" Style="{DynamicResource MetadataRowBorder}">
                                                                     <Grid>
                                                                         <Grid.ColumnDefinitions>
                                                                             <ColumnDefinition Width="Auto" SharedSizeGroup="Left"/>
                                                                             <ColumnDefinition Width="*" />
                                                                         </Grid.ColumnDefinitions>
-                                                                        <Label Grid.Column="0" Content="{DynamicResource LOCInstallSizeLabel}" VerticalAlignment="Center"/>
+                                                                        <Label Style="{DynamicResource MetadataRowLabel}" Content="{DynamicResource LOCInstallSizeLabel}"/>
                                                                         <TextBlock Grid.Column="1" Name="PART_TextInstallSize" Typography.NumeralAlignment="Tabular" HorizontalAlignment="Right" Margin="0,0,4,0"/>
                                                                     </Grid>
                                                                 </Border>
 
                                                                 <!-- Time Played -->
-                                                                <Border x:Name="PART_ElemPlayTime" Padding="0,11,0,11" BorderBrush="{DynamicResource ContentBorderBrushOverlay}" BorderThickness="0,0,0,1" >
+                                                                <Border x:Name="PART_ElemPlayTime" Style="{DynamicResource MetadataRowBorder}">
                                                                     <Grid>
                                                                         <Grid.ColumnDefinitions>
                                                                             <ColumnDefinition Width="Auto" SharedSizeGroup="Left"/>
                                                                             <ColumnDefinition Width="*" />
                                                                         </Grid.ColumnDefinitions>
-                                                                        <Label Grid.Column="0" Content="{DynamicResource LOCMythos_PlayTime}" VerticalAlignment="Center"/>
+                                                                        <Label Style="{DynamicResource MetadataRowLabel}" Content="{DynamicResource LOCMythos_PlayTime}"/>
                                                                         <TextBlock Grid.Column="1" Name="PART_TextPlayTime" Typography.NumeralAlignment="Tabular" HorizontalAlignment="Right" Margin="0,0,4,0"/>
                                                                     </Grid>
                                                                 </Border>
 
                                                                 <!-- Recent Activity -->
-                                                                <Border x:Name="PART_ElemLastPlayed" Padding="0,11,0,11" BorderBrush="{DynamicResource ContentBorderBrushOverlay}" BorderThickness="0,0,0,1" >
+                                                                <Border x:Name="PART_ElemLastPlayed" Style="{DynamicResource MetadataRowBorder}">
                                                                     <Grid>
                                                                         <Grid.ColumnDefinitions>
                                                                             <ColumnDefinition Width="Auto" SharedSizeGroup="Left"/>
                                                                             <ColumnDefinition Width="*" />
                                                                         </Grid.ColumnDefinitions>
-                                                                        <Label Grid.Column="0" Content="{DynamicResource LOCMythos_RecentActivity}" VerticalAlignment="Center"/>
+                                                                        <Label Style="{DynamicResource MetadataRowLabel}" Content="{DynamicResource LOCMythos_RecentActivity}"/>
                                                                         <TextBlock Grid.Column="1" Name="PART_TextLastActivity" HorizontalAlignment="Right" Margin="0,0,4,0"/>
                                                                     </Grid>
                                                                 </Border>
 
                                                                 <!-- Series -->
-                                                                <Border x:Name="PART_ElemSeries" Padding="0,11,0,11" BorderBrush="{DynamicResource ContentBorderBrushOverlay}" BorderThickness="0,0,0,1" >
+                                                                <Border x:Name="PART_ElemSeries" Style="{DynamicResource MetadataRowBorder}">
                                                                     <Grid>
                                                                         <Grid.ColumnDefinitions>
                                                                             <ColumnDefinition Width="Auto" SharedSizeGroup="Left"/>
                                                                             <ColumnDefinition Width="*" />
                                                                         </Grid.ColumnDefinitions>
-                                                                        <Label Grid.Column="0" Content="{DynamicResource LOCSeriesLabel}" VerticalAlignment="Center"/>
+                                                                        <Label Style="{DynamicResource MetadataRowLabel}" Content="{DynamicResource LOCSeriesLabel}"/>
                                                                         <ItemsControl Grid.Column="1" Name="PART_ItemsSeries" HorizontalAlignment="Right" Margin="0,-4,4,0"/>
                                                                     </Grid>
                                                                 </Border>
 
                                                                 <!-- Developers -->
-                                                                <Border x:Name="PART_ElemDevelopers" Padding="0,11,0,11" BorderBrush="{DynamicResource ContentBorderBrushOverlay}" BorderThickness="0,0,0,1" >
+                                                                <Border x:Name="PART_ElemDevelopers" Style="{DynamicResource MetadataRowBorder}">
                                                                     <Grid>
                                                                         <Grid.ColumnDefinitions>
                                                                             <ColumnDefinition Width="Auto" SharedSizeGroup="Left"/>
                                                                             <ColumnDefinition Width="*" />
                                                                         </Grid.ColumnDefinitions>
-                                                                        <Label Grid.Column="0" Content="{DynamicResource LOCDeveloperLabel}" VerticalAlignment="Center"/>
+                                                                        <Label Style="{DynamicResource MetadataRowLabel}" Content="{DynamicResource LOCDeveloperLabel}"/>
                                                                         <ItemsControl Grid.Column="1" Name="PART_ItemsDevelopers" HorizontalAlignment="Right" Margin="0,-4,4,0"/>
                                                                     </Grid>
                                                                 </Border>
 
                                                                 <!-- Publishers -->
-                                                                <Border x:Name="PART_ElemPublishers" Padding="0,11,0,11" BorderBrush="{DynamicResource ContentBorderBrushOverlay}" BorderThickness="0,0,0,1" >
+                                                                <Border x:Name="PART_ElemPublishers" Style="{DynamicResource MetadataRowBorder}">
                                                                     <Grid>
                                                                         <Grid.ColumnDefinitions>
                                                                             <ColumnDefinition Width="Auto" SharedSizeGroup="Left"/>
                                                                             <ColumnDefinition Width="*" />
                                                                         </Grid.ColumnDefinitions>
-                                                                        <Label Grid.Column="0" Content="{DynamicResource LOCPublisherLabel}" VerticalAlignment="Center"/>
+                                                                        <Label Style="{DynamicResource MetadataRowLabel}" Content="{DynamicResource LOCPublisherLabel}"/>
                                                                         <ItemsControl Grid.Column="1" Name="PART_ItemsPublishers" HorizontalAlignment="Right" Margin="0,-4,4,0"/>
                                                                     </Grid>
                                                                 </Border>
 
                                                                 <!-- Source -->
-                                                                <Border x:Name="PART_ElemSource" Padding="0,11,0,11" BorderBrush="{DynamicResource ContentBorderBrushOverlay}" BorderThickness="0,0,0,1" >
+                                                                <Border x:Name="PART_ElemSource" Style="{DynamicResource MetadataRowBorder}">
                                                                     <Grid>
                                                                         <Grid.ColumnDefinitions>
                                                                             <ColumnDefinition Width="Auto" SharedSizeGroup="Left"/>
                                                                             <ColumnDefinition Width="*" />
                                                                         </Grid.ColumnDefinitions>
-                                                                        <Label Grid.Column="0" Content="{DynamicResource LOCSourceLabel}" VerticalAlignment="Center"/>
+                                                                        <Label Style="{DynamicResource MetadataRowLabel}" Content="{DynamicResource LOCSourceLabel}"/>
                                                                         <Button Grid.Column="1" Name="PART_ButtonSource" HorizontalAlignment="Right" Margin="0,0,4,0"/>
                                                                     </Grid>
                                                                 </Border>
 
                                                                 <!-- Release Date -->
-                                                                <Border x:Name="PART_ElemReleaseDate" Padding="0,11,0,11" BorderBrush="{DynamicResource ContentBorderBrushOverlay}" BorderThickness="0,0,0,1" >
+                                                                <Border x:Name="PART_ElemReleaseDate" Style="{DynamicResource MetadataRowBorder}">
                                                                     <Grid>
                                                                         <Grid.ColumnDefinitions>
                                                                             <ColumnDefinition Width="Auto" SharedSizeGroup="Left"/>
                                                                             <ColumnDefinition Width="*" />
                                                                         </Grid.ColumnDefinitions>
-                                                                        <Label Grid.Column="0" Content="{DynamicResource LOCGameReleaseDateTitle}" VerticalAlignment="Center"/>
+                                                                        <Label Style="{DynamicResource MetadataRowLabel}" Content="{DynamicResource LOCGameReleaseDateTitle}"/>
                                                                         <Button Grid.Column="1" Name="PART_ButtonReleaseDate" HorizontalAlignment="Right" Margin="0,0,4,0"/>
                                                                     </Grid>
                                                                 </Border>
 
                                                                 <!-- Region -->
-                                                                <Border x:Name="PART_ElemRegion" Padding="0,11,0,11" BorderBrush="{DynamicResource ContentBorderBrushOverlay}" BorderThickness="0,0,0,1" >
+                                                                <Border x:Name="PART_ElemRegion" Style="{DynamicResource MetadataRowBorder}">
                                                                     <Grid>
                                                                         <Grid.ColumnDefinitions>
                                                                             <ColumnDefinition Width="Auto" SharedSizeGroup="Left"/>
                                                                             <ColumnDefinition Width="*" />
                                                                         </Grid.ColumnDefinitions>
-                                                                        <Label Grid.Column="0" Content="{DynamicResource LOCRegionLabel}" VerticalAlignment="Center"/>
+                                                                        <Label Style="{DynamicResource MetadataRowLabel}" Content="{DynamicResource LOCRegionLabel}"/>
                                                                         <ItemsControl Grid.Column="1" Name="PART_ItemsRegions" HorizontalAlignment="Right" Margin="0,0,4,0"/>
                                                                     </Grid>
                                                                 </Border>
 
                                                                 <!-- Added -->
-                                                                <Border x:Name="PART_ElemAdded" Padding="0,11,0,11" BorderBrush="{DynamicResource ContentBorderBrushOverlay}" BorderThickness="0,0,0,1" >
+                                                                <Border x:Name="PART_ElemAdded" Style="{DynamicResource MetadataRowBorder}">
                                                                     <Grid>
                                                                         <Grid.ColumnDefinitions>
                                                                             <ColumnDefinition Width="Auto" SharedSizeGroup="Left"/>
                                                                             <ColumnDefinition Width="*" />
                                                                         </Grid.ColumnDefinitions>
-                                                                        <Label Grid.Column="0" Content="{DynamicResource LOCDateAddedLabel}" VerticalAlignment="Center"/>
+                                                                        <Label Style="{DynamicResource MetadataRowLabel}" Content="{DynamicResource LOCDateAddedLabel}"/>
                                                                         <TextBlock Grid.Column="1" Name="PART_TextAdded" HorizontalAlignment="Right" Margin="0,0,4,0" />
                                                                     </Grid>
                                                                 </Border>
 
                                                                 <!--Categories -->
-                                                                <Border x:Name="PART_ElemCategories" Padding="0,11,0,11" BorderBrush="{DynamicResource ContentBorderBrushOverlay}" BorderThickness="0,0,0,1" >
+                                                                <Border x:Name="PART_ElemCategories" Style="{DynamicResource MetadataRowBorder}">
                                                                     <Grid>
                                                                         <Grid.ColumnDefinitions>
                                                                             <ColumnDefinition Width="Auto" SharedSizeGroup="Left"/>
                                                                             <ColumnDefinition Width="*" />
                                                                         </Grid.ColumnDefinitions>
-                                                                        <Label Grid.Column="0" Content="{DynamicResource LOCGameCategoriesTitle}" VerticalAlignment="Center"/>
+                                                                        <Label Style="{DynamicResource MetadataRowLabel}" Content="{DynamicResource LOCGameCategoriesTitle}"/>
                                                                         <ItemsControl Grid.Column="1" Name="PART_ItemsCategories" HorizontalAlignment="Right" Margin="0,0,4,0"/>
                                                                     </Grid>
                                                                 </Border>
 
                                                                 <!-- Library -->
-                                                                <Border x:Name="PART_ElemLibrary" Padding="0,11,0,11" BorderBrush="{DynamicResource ContentBorderBrushOverlay}" BorderThickness="0,0,0,1" >
+                                                                <Border x:Name="PART_ElemLibrary" Style="{DynamicResource MetadataRowBorder}">
                                                                     <Grid>
                                                                         <Grid.ColumnDefinitions>
                                                                             <ColumnDefinition Width="Auto" SharedSizeGroup="Left"/>
                                                                             <ColumnDefinition Width="*" />
                                                                         </Grid.ColumnDefinitions>
-                                                                        <Label Grid.Column="0" Content="{DynamicResource LOCGameProviderTitle}" VerticalAlignment="Center"/>
+                                                                        <Label Style="{DynamicResource MetadataRowLabel}" Content="{DynamicResource LOCGameProviderTitle}"/>
                                                                         <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
                                                                             <!-- Selector index 2: a third placement needs its own
                                                                                  index and matching numbered styles, or
@@ -698,13 +698,13 @@
                                                                 </Border>
 
                                                                 <!-- Platform -->
-                                                                <Border x:Name="PART_ElemPlatform" Padding="0,11,0,11" BorderBrush="{DynamicResource ContentBorderBrushOverlay}" BorderThickness="0,0,0,1" >
+                                                                <Border x:Name="PART_ElemPlatform" Style="{DynamicResource MetadataRowBorder}">
                                                                     <Grid>
                                                                         <Grid.ColumnDefinitions>
                                                                             <ColumnDefinition Width="Auto" SharedSizeGroup="Left"/>
                                                                             <ColumnDefinition Width="*" />
                                                                         </Grid.ColumnDefinitions>
-                                                                        <Label Grid.Column="0" Content="{DynamicResource LOCGamePlatformTitle}" VerticalAlignment="Center"/>
+                                                                        <Label Style="{DynamicResource MetadataRowLabel}" Content="{DynamicResource LOCGamePlatformTitle}"/>
                                                                         <!--<ItemsControl Grid.Column="1" Name="PART_ItemsPlatforms" HorizontalAlignment="Right" Margin="0,0,4,0"/>-->
                                                                         <Image Grid.Column="1"
                                                                             Source="{ThemeFileBinding Game.Platforms[0].SpecificationId, PathFormat='Icons/Labels/{0}.png'}"

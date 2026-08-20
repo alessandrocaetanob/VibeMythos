@@ -144,4 +144,39 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    <!-- ==================== Metadata row chrome (HYP-196) ====================
+
+         The metadata block exists twice - once in DetailsViewGameOverview, once in the Grid
+         View drawer - and its chrome was identical at all 34 sites: same padding, same
+         divider, same label alignment. These two styles are that chrome, in one place.
+
+         ⚠️ CHROME ONLY. The Border and Label elements themselves stay inline in both views,
+         and every x:Name="PART_Elem*" stays with them. Playnite resolves PART_* by name
+         within the *view's* namescope, and a shared DataTemplate or ControlTemplate creates
+         a new one - the row would render and silently stop being populated, which is the
+         same failure class as the dropped progress-bar parts in HYP-155. Styles do not
+         create a namescope, which is exactly why this is the safe half to share.
+
+         The 34 <Grid.ColumnDefinitions> blocks with SharedSizeGroup="Left" cannot join them:
+         ColumnDefinitions is a read-only collection, so no Setter can supply it, and the
+         only other route is a template. They stay inline.
+
+         The two views are NOT symmetric, so nothing here assumes they are - it is per-element
+         styling, applied wherever a row exists. Details carries three rows Grid does not
+         (PART_ElemFeatures, PART_ElemGenres, PART_ElemNotes).
+
+         Padding stays 0,11,0,11 rather than moving onto the 4px grid. That is a 2px change to
+         the height of all 34 rows and wants eyes on a running Playnite; the point of this
+         change is that it is now one edit rather than 34. -->
+    <Style x:Key="MetadataRowBorder" TargetType="Border">
+        <Setter Property="Padding" Value="0,11,0,11" />
+        <Setter Property="BorderBrush" Value="{DynamicResource ContentBorderBrushOverlay}" />
+        <Setter Property="BorderThickness" Value="0,0,0,1" />
+    </Style>
+
+    <Style x:Key="MetadataRowLabel" TargetType="Label">
+        <Setter Property="Grid.Column" Value="0" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+    </Style>
 </ResourceDictionary>
