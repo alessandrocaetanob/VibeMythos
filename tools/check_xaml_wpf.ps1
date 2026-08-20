@@ -154,6 +154,41 @@ if (Test-Path $loc) { $files += Get-ChildItem $loc -Filter *.xaml }
 
 $expected = 'Media.xaml'   # {ThemeFile} cannot resolve outside a deployed theme dir
 
+
+function Get-MergeOrder([string] $playnite) {
+    # App.xaml's merge list survives in the BAML as ordered relative paths.
+    $exe = Join-Path $playnite 'Playnite.DesktopApp.exe'
+    if (-not (Test-Path $exe)) { return @() }
+    $bytes = [IO.File]::ReadAllBytes($exe)
+    $ascii = [Text.Encoding]::ASCII.GetString($bytes)
+    $seen = New-Object Collections.Generic.List[string]
+    foreach ($m in [regex]::Matches($ascii, 'Themes/Desktop/Default/(?:[A-Za-z]+/)?[A-Za-z]+\.xaml')) {
+        $rel = ($m.Value -replace '^Themes/Desktop/Default/', '') -replace '/', '\'
+        if (-not $seen.Contains($rel)) { $seen.Add($rel) }
+    }
+    return $seen
+}
+
+function Load-InScope($stream, $scope, $base) {
+    # Parse with only ($base + $scope) in Application resources, so StaticResource sees exactly
+    # what ApplyTheme would have merged so far.
+    #
+    # $base is Playnite's Templates\Themes and Localization. Those are NOT part of App.xaml's
+    # theme merge list - they are already in the app when ApplyTheme runs - so clearing them
+    # invents failures. It flagged LOCSaveLabel, LOCInstallGame and False on a tree that was
+    # fine; keep them pinned.
+    $app = [Windows.Application]::Current
+    $saved = @($app.Resources.MergedDictionaries)
+    $app.Resources.MergedDictionaries.Clear()
+    foreach ($d in $base) { $app.Resources.MergedDictionaries.Add($d) }
+    $app.Resources.MergedDictionaries.Add($scope)
+    try { [Windows.Markup.XamlReader]::Load($stream) }
+    finally {
+        $app.Resources.MergedDictionaries.Clear()
+        foreach ($d in $saved) { $app.Resources.MergedDictionaries.Add($d) }
+    }
+}
+
 function Show-Error($rel, $ex) {
     $message = $ex.Message -replace "`r?`n", ' '
     $inner = $ex.InnerException
@@ -189,6 +224,56 @@ if ($PreFlight) {
     if ($preFail -gt 0) { Write-Host "FAIL  $preFail file(s) would drop the user to Playnite's default theme"; exit 1 }
     Write-Host 'ok    pre-flight clean'
     exit 0
+}
+
+# ---------------- PHASE 1b: merge order ----------------
+# ApplyTheme's SECOND pass (Themes.cs:197) re-loads each file while merging progressively, so a
+# file sees only what App.xaml merged BEFORE it. That pass is NOT inside the pre-flight try/catch:
+# a throw there does not fall back to the default theme, it stops Playnite from starting.
+#
+# This is what catches BasedOn="{StaticResource {x:Type Border}}" in Common.xaml - position 2,
+# while DefaultControls/Border.xaml is 4 and Label.xaml is 16. Phase 1 misses it because it has
+# Playnite's whole default theme in scope.
+Write-Host ''
+Write-Host 'phase 1b: merge order (each file sees only what App.xaml merged before it)'
+$order = Get-MergeOrder $Playnite
+if ($order.Count -lt 40) {
+    Write-Host "  skipped - could not read App.xaml's merge order from the binary"
+} else {
+    $ordFail = 0; $ordPass = 0; $ordKnown = 0
+    $acc = New-Object Windows.ResourceDictionary
+    # Playnite's own globals stay in scope throughout - see Load-InScope.
+    $baseScope = @()
+    foreach ($root in 'Templates\Themes','Localization') {
+        $d = Join-Path $Playnite $root
+        if (-not (Test-Path $d)) { continue }
+        foreach ($f in Get-ChildItem $d -Recurse -Filter *.xaml) {
+            try { $s2=[IO.File]::OpenRead($f.FullName)
+                  try { $rd2=[Windows.Markup.XamlReader]::Load($s2) } finally { $s2.Dispose() }
+                  if ($rd2 -is [Windows.ResourceDictionary]) { $baseScope += $rd2 } } catch {}
+        }
+    }
+    foreach ($rel in $order) {
+        foreach ($root in @((Join-Path $Playnite 'Themes\Desktop\Default'), $Source)) {
+            $full = Join-Path $root $rel
+            if (-not (Test-Path $full)) { continue }
+            $isTheme = ($root -eq $Source)
+            try {
+                $stream = [IO.File]::OpenRead($full)
+                try { $dict = Load-InScope $stream $acc $baseScope } finally { $stream.Dispose() }
+                if ($isTheme) { $ordPass++ }
+                if ($dict -is [Windows.ResourceDictionary]) { $acc.MergedDictionaries.Add($dict) }
+            } catch {
+                if (-not $isTheme) { continue }          # Playnite's own file; not our problem
+                if ((Split-Path $rel -Leaf) -eq $expected) { $ordKnown++; continue }
+                $ordFail++
+                Write-Host "FAIL  $rel  (merged at position $($order.IndexOf($rel)+1))"
+                Show-Error $rel $_.Exception
+            }
+        }
+    }
+    Write-Host "  theme files loaded in order: $ordPass    expected: $ordKnown    STARTUP-KILLERS: $ordFail"
+    $preFail += $ordFail
 }
 
 # ---------------- PHASE 2: runtime ----------------

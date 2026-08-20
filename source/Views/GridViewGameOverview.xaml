@@ -463,7 +463,7 @@
                                                                             <ColumnDefinition Width="Auto" SharedSizeGroup="Left"/>
                                                                             <ColumnDefinition Width="*" />
                                                                         </Grid.ColumnDefinitions>
-                                                                        <Label Style="{DynamicResource MetadataRowLabel}" Content="{DynamicResource LOCMythos_CompStatus}"/>
+                                                                        <Label Grid.Column="0" Content="{DynamicResource LOCMythos_CompStatus}" VerticalAlignment="Center"/>
                                                                         <Button Grid.Column="1" Name="PART_ButtonCompletionStatus" HorizontalAlignment="Right" Margin="0,0,4,0"/>
                                                                     </Grid>
                                                                 </Border>
@@ -475,7 +475,7 @@
                                                                             <ColumnDefinition Width="Auto" SharedSizeGroup="Left"/>
                                                                             <ColumnDefinition Width="*" />
                                                                         </Grid.ColumnDefinitions>
-                                                                        <Label Style="{DynamicResource MetadataRowLabel}" Content="{DynamicResource LOCMythos_UserRating}"/>
+                                                                        <Label Grid.Column="0" Content="{DynamicResource LOCMythos_UserRating}" VerticalAlignment="Center"/>
                                                                         <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Right"
                                                                                     Visibility="{Binding ElementName=PART_TextUserScore, Path=Visibility}">
                                                                             <ContentControl Content="{Binding Game.UserScore}"
@@ -498,7 +498,7 @@
                                                                             <ColumnDefinition Width="Auto" SharedSizeGroup="Left"/>
                                                                             <ColumnDefinition Width="*" />
                                                                         </Grid.ColumnDefinitions>
-                                                                        <Label Style="{DynamicResource MetadataRowLabel}" Content="{DynamicResource LOCMythos_CriticRating}"/>
+                                                                        <Label Grid.Column="0" Content="{DynamicResource LOCMythos_CriticRating}" VerticalAlignment="Center"/>
                                                                         <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Right"
                                                                                     Visibility="{Binding ElementName=PART_TextCriticScore, Path=Visibility}">
                                                                             <ContentControl Content="{Binding Game.CriticScore}"
@@ -521,7 +521,7 @@
                                                                             <ColumnDefinition Width="Auto" SharedSizeGroup="Left"/>
                                                                             <ColumnDefinition Width="*" />
                                                                         </Grid.ColumnDefinitions>
-                                                                        <Label Style="{DynamicResource MetadataRowLabel}" Content="{DynamicResource LOCMythos_CommRating}"/>
+                                                                        <Label Grid.Column="0" Content="{DynamicResource LOCMythos_CommRating}" VerticalAlignment="Center"/>
                                                                         <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Right"
                                                                                     Visibility="{Binding ElementName=PART_TextCommunityScore, Path=Visibility}">
                                                                             <ContentControl Content="{Binding Game.CommunityScore}"
@@ -544,7 +544,7 @@
                                                                             <ColumnDefinition Width="Auto" SharedSizeGroup="Left"/>
                                                                             <ColumnDefinition Width="*" />
                                                                         </Grid.ColumnDefinitions>
-                                                                        <Label Style="{DynamicResource MetadataRowLabel}" Content="{DynamicResource LOCInstallSizeLabel}"/>
+                                                                        <Label Grid.Column="0" Content="{DynamicResource LOCInstallSizeLabel}" VerticalAlignment="Center"/>
                                                                         <TextBlock Grid.Column="1" Name="PART_TextInstallSize" Typography.NumeralAlignment="Tabular" HorizontalAlignment="Right" Margin="0,0,4,0"/>
                                                                     </Grid>
                                                                 </Border>
@@ -556,7 +556,7 @@
                                                                             <ColumnDefinition Width="Auto" SharedSizeGroup="Left"/>
                                                                             <ColumnDefinition Width="*" />
                                                                         </Grid.ColumnDefinitions>
-                                                                        <Label Style="{DynamicResource MetadataRowLabel}" Content="{DynamicResource LOCMythos_PlayTime}"/>
+                                                                        <Label Grid.Column="0" Content="{DynamicResource LOCMythos_PlayTime}" VerticalAlignment="Center"/>
                                                                         <TextBlock Grid.Column="1" Name="PART_TextPlayTime" Typography.NumeralAlignment="Tabular" HorizontalAlignment="Right" Margin="0,0,4,0"/>
                                                                     </Grid>
                                                                 </Border>
@@ -568,7 +568,7 @@
                                                                             <ColumnDefinition Width="Auto" SharedSizeGroup="Left"/>
                                                                             <ColumnDefinition Width="*" />
                                                                         </Grid.ColumnDefinitions>
-                                                                        <Label Style="{DynamicResource MetadataRowLabel}" Content="{DynamicResource LOCMythos_RecentActivity}"/>
+                                                                        <Label Grid.Column="0" Content="{DynamicResource LOCMythos_RecentActivity}" VerticalAlignment="Center"/>
                                                                         <TextBlock Grid.Column="1" Name="PART_TextLastActivity" HorizontalAlignment="Right" Margin="0,0,4,0"/>
                                                                     </Grid>
                                                                 </Border>
@@ -580,7 +580,7 @@
                                                                             <ColumnDefinition Width="Auto" SharedSizeGroup="Left"/>
                                                                             <ColumnDefinition Width="*" />
                                                                         </Grid.ColumnDefinitions>
-                                                                        <Label Style="{DynamicResource MetadataRowLabel}" Content="{DynamicResource LOCSeriesLabel}"/>
+                                                                        <Label Grid.Column="0" Content="{DynamicResource LOCSeriesLabel}" VerticalAlignment="Center"/>
                                                                         <ItemsControl Grid.Column="1" Name="PART_ItemsSeries" HorizontalAlignment="Right" Margin="0,-4,4,0"/>
                                                                     </Grid>
                                                                 </Border>
@@ -592,7 +592,7 @@
                                                                             <ColumnDefinition Width="Auto" SharedSizeGroup="Left"/>
                                                                             <ColumnDefinition Width="*" />
                                                                         </Grid.ColumnDefinitions>
-                                                                        <Label Style="{DynamicResource MetadataRowLabel}" Content="{DynamicResource LOCDeveloperLabel}"/>
+                                                                        <Label Grid.Column="0" Content="{DynamicResource LOCDeveloperLabel}" VerticalAlignment="Center"/>
                                                                         <ItemsControl Grid.Column="1" Name="PART_ItemsDevelopers" HorizontalAlignment="Right" Margin="0,-4,4,0"/>
                                                                     </Grid>
                                                                 </Border>
@@ -604,7 +604,7 @@
                                                                             <ColumnDefinition Width="Auto" SharedSizeGroup="Left"/>
                                                                             <ColumnDefinition Width="*" />
                                                                         </Grid.ColumnDefinitions>
-                                                                        <Label Style="{DynamicResource MetadataRowLabel}" Content="{DynamicResource LOCPublisherLabel}"/>
+                                                                        <Label Grid.Column="0" Content="{DynamicResource LOCPublisherLabel}" VerticalAlignment="Center"/>
                                                                         <ItemsControl Grid.Column="1" Name="PART_ItemsPublishers" HorizontalAlignment="Right" Margin="0,-4,4,0"/>
                                                                     </Grid>
                                                                 </Border>
@@ -616,7 +616,7 @@
                                                                             <ColumnDefinition Width="Auto" SharedSizeGroup="Left"/>
                                                                             <ColumnDefinition Width="*" />
                                                                         </Grid.ColumnDefinitions>
-                                                                        <Label Style="{DynamicResource MetadataRowLabel}" Content="{DynamicResource LOCSourceLabel}"/>
+                                                                        <Label Grid.Column="0" Content="{DynamicResource LOCSourceLabel}" VerticalAlignment="Center"/>
                                                                         <Button Grid.Column="1" Name="PART_ButtonSource" HorizontalAlignment="Right" Margin="0,0,4,0"/>
                                                                     </Grid>
                                                                 </Border>
@@ -628,7 +628,7 @@
                                                                             <ColumnDefinition Width="Auto" SharedSizeGroup="Left"/>
                                                                             <ColumnDefinition Width="*" />
                                                                         </Grid.ColumnDefinitions>
-                                                                        <Label Style="{DynamicResource MetadataRowLabel}" Content="{DynamicResource LOCGameReleaseDateTitle}"/>
+                                                                        <Label Grid.Column="0" Content="{DynamicResource LOCGameReleaseDateTitle}" VerticalAlignment="Center"/>
                                                                         <Button Grid.Column="1" Name="PART_ButtonReleaseDate" HorizontalAlignment="Right" Margin="0,0,4,0"/>
                                                                     </Grid>
                                                                 </Border>
@@ -640,7 +640,7 @@
                                                                             <ColumnDefinition Width="Auto" SharedSizeGroup="Left"/>
                                                                             <ColumnDefinition Width="*" />
                                                                         </Grid.ColumnDefinitions>
-                                                                        <Label Style="{DynamicResource MetadataRowLabel}" Content="{DynamicResource LOCRegionLabel}"/>
+                                                                        <Label Grid.Column="0" Content="{DynamicResource LOCRegionLabel}" VerticalAlignment="Center"/>
                                                                         <ItemsControl Grid.Column="1" Name="PART_ItemsRegions" HorizontalAlignment="Right" Margin="0,0,4,0"/>
                                                                     </Grid>
                                                                 </Border>
@@ -652,7 +652,7 @@
                                                                             <ColumnDefinition Width="Auto" SharedSizeGroup="Left"/>
                                                                             <ColumnDefinition Width="*" />
                                                                         </Grid.ColumnDefinitions>
-                                                                        <Label Style="{DynamicResource MetadataRowLabel}" Content="{DynamicResource LOCDateAddedLabel}"/>
+                                                                        <Label Grid.Column="0" Content="{DynamicResource LOCDateAddedLabel}" VerticalAlignment="Center"/>
                                                                         <TextBlock Grid.Column="1" Name="PART_TextAdded" HorizontalAlignment="Right" Margin="0,0,4,0" />
                                                                     </Grid>
                                                                 </Border>
@@ -664,7 +664,7 @@
                                                                             <ColumnDefinition Width="Auto" SharedSizeGroup="Left"/>
                                                                             <ColumnDefinition Width="*" />
                                                                         </Grid.ColumnDefinitions>
-                                                                        <Label Style="{DynamicResource MetadataRowLabel}" Content="{DynamicResource LOCGameCategoriesTitle}"/>
+                                                                        <Label Grid.Column="0" Content="{DynamicResource LOCGameCategoriesTitle}" VerticalAlignment="Center"/>
                                                                         <ItemsControl Grid.Column="1" Name="PART_ItemsCategories" HorizontalAlignment="Right" Margin="0,0,4,0"/>
                                                                     </Grid>
                                                                 </Border>
@@ -676,7 +676,7 @@
                                                                             <ColumnDefinition Width="Auto" SharedSizeGroup="Left"/>
                                                                             <ColumnDefinition Width="*" />
                                                                         </Grid.ColumnDefinitions>
-                                                                        <Label Style="{DynamicResource MetadataRowLabel}" Content="{DynamicResource LOCGameProviderTitle}"/>
+                                                                        <Label Grid.Column="0" Content="{DynamicResource LOCGameProviderTitle}" VerticalAlignment="Center"/>
                                                                         <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
                                                                             <!-- Selector index 2: a third placement needs its own
                                                                                  index and matching numbered styles, or
@@ -704,7 +704,7 @@
                                                                             <ColumnDefinition Width="Auto" SharedSizeGroup="Left"/>
                                                                             <ColumnDefinition Width="*" />
                                                                         </Grid.ColumnDefinitions>
-                                                                        <Label Style="{DynamicResource MetadataRowLabel}" Content="{DynamicResource LOCGamePlatformTitle}"/>
+                                                                        <Label Grid.Column="0" Content="{DynamicResource LOCGamePlatformTitle}" VerticalAlignment="Center"/>
                                                                         <!--<ItemsControl Grid.Column="1" Name="PART_ItemsPlatforms" HorizontalAlignment="Right" Margin="0,0,4,0"/>-->
                                                                         <Image Grid.Column="1"
                                                                             Source="{ThemeFileBinding Game.Platforms[0].SpecificationId, PathFormat='Icons/Labels/{0}.png'}"

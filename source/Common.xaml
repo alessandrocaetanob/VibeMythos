@@ -169,19 +169,20 @@
          Padding stays 0,11,0,11 rather than moving onto the 4px grid. That is a 2px change to
          the height of all 34 rows and wants eyes on a running Playnite; the point of this
          change is that it is now one edit rather than 34. -->
-    <!-- BasedOn is load-bearing on both of these. Setting Style="..." on an element REPLACES
-         the implicit style for its type, it does not add to it - and Playnite's default theme
-         supplies both. Dropping them cost the metadata labels their Foreground AND their
-         ControlTemplate (black text on a near-black panel, shipped 2026-08-20), and cost every
-         divider its SnapsToDevicePixels. Neither failure produces an error. -->
-    <Style x:Key="MetadataRowBorder" TargetType="Border" BasedOn="{StaticResource {x:Type Border}}">
+    <!-- ⚠️ NO BasedOn here, and none is possible. App.xaml merges Common.xaml at position 2,
+         but DefaultControls/Border.xaml is 4 and Label.xaml is 16 - so the implicit styles this
+         file would want to build on are not in scope yet when ThemeManager.ApplyTheme loads it.
+         A BasedOn="{StaticResource {x:Type Border}}" here throws in Xaml.FromFile at Themes.cs:197,
+         which is OUTSIDE the pre-flight try/catch: Playnite does not fall back to the default
+         theme, it fails to start at all. Shipped and confirmed that way on 2026-08-20.
+
+         So this style carries SnapsToDevicePixels itself rather than inheriting it. Anything else
+         Playnite's implicit Border style gains in future has to be copied here by hand - which is
+         the cost of a shared style at position 2. -->
+    <Style x:Key="MetadataRowBorder" TargetType="Border">
+        <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Padding" Value="0,11,0,11" />
         <Setter Property="BorderBrush" Value="{DynamicResource ContentBorderBrushOverlay}" />
         <Setter Property="BorderThickness" Value="0,0,0,1" />
-    </Style>
-
-    <Style x:Key="MetadataRowLabel" TargetType="Label" BasedOn="{StaticResource {x:Type Label}}">
-        <Setter Property="Grid.Column" Value="0" />
-        <Setter Property="VerticalAlignment" Value="Center" />
     </Style>
 </ResourceDictionary>
