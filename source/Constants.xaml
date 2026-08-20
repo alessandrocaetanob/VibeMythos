@@ -79,6 +79,12 @@
     <sys:Double x:Key="FontSizeLarger">20</sys:Double>
     <sys:Double x:Key="FontSizeLargest">29</sys:Double>
 
+    <!-- Hero numeral, Nightglass (HYP-249). One surface only: the achievement-completion
+         percentage on the Details trophy showcase. Deliberately NOT applied to the game
+         titles - the Grid title is pinned to FontSizeLarge22 to avoid wrapping in the 300px
+         column, and 52 would make that worse. No consumers wired in this issue. -->
+    <sys:Double x:Key="FontSizeDisplay">52</sys:Double>
+
     <!-- Weight tokens. Named for the role, not the number, so a weight change is one edit.
          Deliberately NOT called FontDisplay/FontBody/FontLabel as the issue proposed: WPF
          keeps family and weight on separate properties, so a single resource cannot carry
@@ -178,6 +184,10 @@
     <CornerRadius x:Key="RadiusPanel">22</CornerRadius>
     <CornerRadius x:Key="RadiusPill">999</CornerRadius>
 
+    <!-- Off-grid 2px exception, Nightglass (HYP-249). The 4px grid is the rule; Space0 is the
+         sanctioned escape for tight icon padding, matching Fluent's own rationale for its
+         2/6/10 values. Use sparingly - prefer Space1 unless a site genuinely needs 2px. -->
+    <sys:Double x:Key="Space0">2</sys:Double>
     <sys:Double x:Key="Space1">4</sys:Double>
     <sys:Double x:Key="Space2">8</sys:Double>
     <sys:Double x:Key="Space3">12</sys:Double>
@@ -308,6 +318,12 @@
     <SolidColorBrush x:Key="ControlIdleBorderBrushOverlay" Color="#2EFFFFFF" />
     <SolidColorBrush x:Key="ControlIdleBackgroundBrushOverlay" Color="#E618181B" />
     <SolidColorBrush x:Key="ContentBorderBrushOverlay" Color="#1AFFFFFF" />
+    <!-- Below-rest tint steps, Nightglass (HYP-249). Extend the ContentBrushOverlay white-alpha
+         ramp (10/15/20% below) downward to 5% and 8%, so a card can rise from below-rest up to
+         the 20% cap. Material 3 dark-elevation math: depth by tint, not shadow. No consumers
+         wired in this issue. -->
+    <SolidColorBrush x:Key="ElevationTint0" Color="#0DFFFFFF" />
+    <SolidColorBrush x:Key="ElevationTint1" Color="#14FFFFFF" />
     <SolidColorBrush x:Key="ContentBrushOverlay" Color="#1AFFFFFF" />
     <SolidColorBrush x:Key="ContentBrushOverlayTwo" Color="#26FFFFFF" />
     <SolidColorBrush x:Key="ContentBrushOverlayHover" Color="#33FFFFFF" />
@@ -540,6 +556,12 @@
     <Duration x:Key="MotionFast">0:0:0.12</Duration>
     <Duration x:Key="MotionBase">0:0:0.22</Duration>
     <Duration x:Key="MotionSlow">0:0:0.4</Duration>
+    <!-- Documentation only, Nightglass (HYP-249). The dwell before the ambient backdrop commits
+         a crossfade. A Style-hosted storyboard cannot reach this key (hard rule 12: a frozen
+         storyboard resolves StaticResource in pre-flight, before Constants.xaml is in scope), so
+         every consumer duplicates the 400ms literal locally - exactly as the durations above
+         are. This key is the canonical record of intent, never referenced. -->
+    <Duration x:Key="DwellDelay">0:0:0.4</Duration>
     <CubicEase x:Key="EaseStandard" EasingMode="EaseOut"/>
     <BackEase x:Key="EaseEmphasized" EasingMode="EaseOut" Amplitude="0.3"/>
 
