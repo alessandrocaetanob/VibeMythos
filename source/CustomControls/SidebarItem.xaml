@@ -1,5 +1,25 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!-- ⚠️ Motion tokens are duplicated here on purpose. Do not "clean this up" by pointing
+         them at Constants.xaml - that is exactly what broke the theme on 2026-08-20.
+
+         ThemeManager.ApplyTheme pre-flights EVERY theme file through Xaml.FromFile before it
+         merges ANY of them, so during that pass StaticResource resolves against Playnite's
+         default theme only - Constants.xaml is parsed but not yet in scope. A storyboard
+         inside a Style or ControlTemplate must be frozen for the timing system, and freezing
+         forces its StaticResource to resolve THEN, eagerly, instead of being deferred the way
+         an ordinary Setter value is. So a motion token in Constants.xaml is unreachable from
+         here: DynamicResource cannot freeze, and StaticResource resolves too early.
+
+         Same values as Constants.xaml, which stays the source of truth for what they mean.
+         Change one, change them all - tools/check_xaml_wpf.ps1 -PreFlight catches the failure
+         mode, but not a value that has drifted. -->
+    <Duration x:Key="MotionFast">0:0:0.12</Duration>
+    <Duration x:Key="MotionBase">0:0:0.22</Duration>
+    <Duration x:Key="MotionSlow">0:0:0.4</Duration>
+    <CubicEase x:Key="EaseStandard" EasingMode="EaseOut"/>
+    <BackEase x:Key="EaseEmphasized" EasingMode="EaseOut" Amplitude="0.3"/>
+
 
     <Style TargetType="{x:Type SidebarItem}">
         <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True" />

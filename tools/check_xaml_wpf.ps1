@@ -13,20 +13,35 @@
     This script is the check that catches that class. It cannot run in CI, because it needs
     Windows and a Playnite install; run it before opening a PR that touches XAML.
 
-    Four things have to be true or the run measures the harness instead of the theme:
+    It runs TWO phases, because Playnite does two different things and only one of them was
+    modelled before 2026-08-20 - which is how a theme-killing bug shipped past a green run.
+
+    PHASE 1, pre-flight. ThemeManager.ApplyTheme parses EVERY theme file through Xaml.FromFile
+    BEFORE it merges ANY of them. So during that pass a StaticResource resolves against
+    Playnite's default theme only: the theme's own Constants.xaml has been parsed but is not
+    yet in scope. Phase 1 reproduces that exactly - Playnite's dictionaries merged, zero theme
+    dictionaries - and it is the phase that matters, because one failure here costs the user
+    the entire theme.
+
+    The trap it exists to catch: a Storyboard inside a Style or ControlTemplate must be frozen
+    for the timing system, and freezing forces its StaticResource to resolve eagerly, right
+    there in pre-flight, instead of being deferred the way an ordinary Setter value is. So a
+    Duration or easing key in Constants.xaml is unreachable from a storyboard - DynamicResource
+    cannot freeze, and StaticResource resolves too early. Define those locally in the file.
+
+    PHASE 2, runtime. Merge as you go and force every dictionary value to realize, which is
+    roughly the state after ApplyTheme succeeds. This catches deferred breakage that pre-flight
+    legitimately does not see, since a normal Setter's StaticResource is resolved late.
+
+    Three things have to be true or the run measures the harness instead of the theme:
 
     1. 32-BIT POWERSHELL. Playnite.DesktopApp.exe is PE32/x86, so a 64-bit host cannot load
        its assemblies and every Views/*.xaml fails with "Failed to create a 'Type' from the
-       text 'TopPanel'". This single detail is the difference between 28 and 78 passing
-       files. The script re-launches itself under SysWOW64 automatically.
-    2. PLAYNITE'S ASSEMBLIES. Its CLR types (TopPanel, Sidebar, WindowBase, GameListItem)
-       are referenced by clr-namespace from the theme's Views.
+       text 'TopPanel'". This single detail is the difference between 28 and 78 passing files.
+       The script re-launches itself under SysWOW64 automatically.
+    2. PLAYNITE'S ASSEMBLIES, for the CLR types the theme's Views reference by clr-namespace.
     3. AN APPLICATION OBJECT. StaticResource falls back to Application.Current.Resources,
-       which is how one theme file resolves a key another file defines. Playnite's default
-       theme, Localization and Templates are merged into it first, then the theme's own
-       files as they parse - mirroring what ApplyTheme ends up with.
-    4. FORCED REALIZATION. ResourceDictionary defers its values, so a broken StaticResource
-       stays invisible until something reads the key. Every value is read explicitly.
+       which is what makes phase 1 and phase 2 differ at all.
 
     EXPECTED FAILURE: Media.xaml always fails on a BitmapImage. {ThemeFile} resolves against
     a deployed theme directory, which source/ is not (hard rule 7). Treat any OTHER failure
@@ -45,7 +60,9 @@
 [CmdletBinding()]
 param(
     [string] $Source,
-    [string] $Playnite = 'F:\Playnite'
+    [string] $Playnite = 'F:\Playnite',
+    # Run only phase 1. Faster, and it is the phase that decides whether the theme loads.
+    [switch] $PreFlight
 )
 
 $ErrorActionPreference = 'Stop'
@@ -64,7 +81,9 @@ if ([Environment]::Is64BitProcess) {
         exit 2
     }
     Write-Host "relaunching under 32-bit PowerShell (Playnite is x86)..."
-    & $wow -NoProfile -ExecutionPolicy Bypass -File $PSCommandPath -Source $Source -Playnite $Playnite
+    $fwd = @('-NoProfile','-ExecutionPolicy','Bypass','-File',$PSCommandPath,'-Source',$Source,'-Playnite',$Playnite)
+    if ($PreFlight) { $fwd += '-PreFlight' }
+    & $wow @fwd
     exit $LASTEXITCODE
 }
 
@@ -123,45 +142,80 @@ function Merge-Dir([string] $dir) {
 $context  = Merge-Dir (Join-Path $Playnite 'Templates\Themes')
 $context += Merge-Dir (Join-Path $Playnite 'Localization')
 $context += Merge-Dir (Join-Path $Playnite 'Themes\Desktop\Default')
-Write-Host "context: merged $context dictionaries from Playnite"
+Write-Host "context: merged $context dictionaries from Playnite, 0 from the theme"
 if ($context -lt 40) {
     Write-Host "FAIL  Playnite context barely merged - results would be meaningless. Check -Playnite."
     exit 2
 }
 
-# --- 4. parse and realize the theme -----------------------------------------------------
 $files = @(Get-OrderedXaml $Source -SkipLocalization)
 $loc = Join-Path $Source 'Localization'
 if (Test-Path $loc) { $files += Get-ChildItem $loc -Filter *.xaml }
 
 $expected = 'Media.xaml'   # {ThemeFile} cannot resolve outside a deployed theme dir
-$pass = 0; $unexpected = 0; $known = 0
+
+function Show-Error($rel, $ex) {
+    $message = $ex.Message -replace "`r?`n", ' '
+    $inner = $ex.InnerException
+    while ($inner) { $message += "  <-- " + ($inner.Message -replace "`r?`n", ' '); $inner = $inner.InnerException }
+    if ($message.Length -gt 300) { $message = $message.Substring(0, 300) + '...' }
+    Write-Host "FAIL  $rel"
+    Write-Host "      $message"
+}
+
+# ---------------- PHASE 1: pre-flight ----------------
+# Exactly ApplyTheme's pre-flight: parse every file with NOTHING of the theme's own merged.
+# A failure here is a theme-killer, so this phase alone decides the exit code.
+Write-Host ''
+Write-Host 'phase 1: pre-flight (no theme dictionaries merged)'
+$preFail = 0; $preKnown = 0; $prePass = 0
+foreach ($file in $files) {
+    $rel = $file.FullName.Substring($Source.Length + 1)
+    try {
+        $stream = [IO.File]::OpenRead($file.FullName)
+        try { [void][Windows.Markup.XamlReader]::Load($stream) } finally { $stream.Dispose() }
+        $prePass++
+    } catch {
+        if ($file.Name -eq $expected) {
+            $preKnown++
+            Write-Host "known $rel (hard rule 7: {ThemeFile} needs a deployed theme dir)"
+        } else { $preFail++; Show-Error $rel $_.Exception }
+    }
+}
+Write-Host "  parsed: $prePass    expected failures: $preKnown    THEME-KILLERS: $preFail"
+
+if ($PreFlight) {
+    Write-Host ''
+    if ($preFail -gt 0) { Write-Host "FAIL  $preFail file(s) would drop the user to Playnite's default theme"; exit 1 }
+    Write-Host 'ok    pre-flight clean'
+    exit 0
+}
+
+# ---------------- PHASE 2: runtime ----------------
+# Merge as we go and force every value to realize - roughly the state after ApplyTheme
+# succeeds. Catches deferred breakage pre-flight legitimately cannot see.
+Write-Host ''
+Write-Host 'phase 2: runtime (merge as we go, force realization)'
+$runFail = 0; $runKnown = 0; $runPass = 0
 foreach ($file in $files) {
     $rel = $file.FullName.Substring($Source.Length + 1)
     try {
         $stream = [IO.File]::OpenRead($file.FullName)
         try { $dict = [Windows.Markup.XamlReader]::Load($stream) } finally { $stream.Dispose() }
         if ($dict -is [Windows.ResourceDictionary]) {
-            foreach ($key in @($dict.Keys)) { $null = $dict[$key] }   # force deferred values
+            foreach ($key in @($dict.Keys)) { $null = $dict[$key] }
             $app.Resources.MergedDictionaries.Add($dict)
         }
-        $pass++
+        $runPass++
     } catch {
-        $message = $_.Exception.Message -replace "`r?`n", ' '
-        if ($message.Length -gt 260) { $message = $message.Substring(0, 260) + '...' }
-        if ($file.Name -eq $expected) {
-            $known++
-            Write-Host "known $rel (hard rule 7: {ThemeFile} needs a deployed theme dir)"
-        } else {
-            $unexpected++
-            Write-Host "FAIL  $rel"
-            Write-Host "      $message"
-        }
+        if ($file.Name -eq $expected) { $runKnown++ }
+        else { $runFail++; Show-Error $rel $_.Exception }
     }
 }
+Write-Host "  realized: $runPass    expected failures: $runKnown    unexpected: $runFail"
 
 Write-Host ''
-Write-Host "parsed and realized: $pass    expected failures: $known    unexpected: $unexpected"
-if ($unexpected -gt 0) { exit 1 }
-Write-Host 'ok    every theme file parses and realizes against real WPF'
+if ($preFail -gt 0) { Write-Host "FAIL  $preFail pre-flight failure(s) - the theme would not load at all"; exit 1 }
+if ($runFail -gt 0) { Write-Host "FAIL  $runFail runtime failure(s)"; exit 1 }
+Write-Host 'ok    both phases clean'
 exit 0
