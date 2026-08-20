@@ -61,7 +61,7 @@
                             <TextBlock Text="&#xE710;"
                                     FontFamily="{DynamicResource IconFontFamily}"
                                     FontSize="11"
-                                    FontWeight="Regular"
+                                    FontWeight="{DynamicResource FontWeightBody}"
                                     HorizontalAlignment="Center"
                                     VerticalAlignment="Center"
                                     TextAlignment="Center"/>

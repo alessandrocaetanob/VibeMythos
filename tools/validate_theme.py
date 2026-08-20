@@ -68,12 +68,10 @@ EXTERNAL_KEYS = {
     "ScrollViewer",
     "TextBlockBaseStyle",
     "BaseTextBlockStyle",
-    # Default theme Constants.xaml:8-9 (20 and 29). The theme consumes these but does
-    # not define them, so they resolve only because Playnite's default merges first.
-    # Legal, but it does mean the theme does not own its own display size - HYP-211
-    # brings them in-theme, after which these entries become harmless no-ops.
-    "FontSizeLarger",
-    "FontSizeLargest",
+    # NOTE: FontSizeLarger / FontSizeLargest used to be listed here, because the theme
+    # consumed them while only Playnite's default theme defined them. HYP-211 brought both
+    # in-theme at the same 20 / 29, so the entries were removed rather than left as no-ops:
+    # while they sat in this allowlist the checker could not report them going missing.
 }
 
 # NOTE on the two lists above: a hand-maintained allowlist is the weak point of this

@@ -57,7 +57,7 @@
                     </TextBox.Style>
                 </TextBox>
                 <Button x:Name="PART_ButtonClearFilter" Foreground="{DynamicResource PromptBrush}"
-                        Margin="0,1,20,0" FontSize="13" Background="Transparent"
+                        Margin="0,1,20,0" FontSize="{DynamicResource FontSize}" Background="Transparent"
                         HorizontalAlignment="Right" VerticalAlignment="Center"
                         BorderThickness="0" Padding="4,0,4,0"
                         ContentTemplate="{DynamicResource ClearTextIconTemplate}">

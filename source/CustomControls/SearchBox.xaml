@@ -12,10 +12,10 @@
                         <TextBox x:Name="PART_TextInpuText" Style="{DynamicResource SearchSmallTextBox}"
                                  VerticalContentAlignment="Center" Padding="4,0,24,0"/>
                         <ContentControl x:Name="PART_SeachIcon" ContentTemplate="{DynamicResource SearchTextIconTemplate}"
-                                        VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,10,0" FontSize="13"
+                                        VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,10,0" FontSize="{DynamicResource FontSize}"
                                         Foreground="{DynamicResource SubtalBrushLighter}" />
                         <ContentControl x:Name="PART_ClearTextIcon" ContentTemplate="{DynamicResource ClearTextIconTemplate}" 
-                                        VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,2,8,0" FontSize="13"
+                                        VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,2,8,0" FontSize="{DynamicResource FontSize}"
                                         Foreground="{DynamicResource SubtalBrushLighter}" />
                     </Grid>
                 </ControlTemplate>
@@ -55,10 +55,10 @@
                                 VerticalContentAlignment="Center" Padding="10,0,30,1"/>
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center" IsHitTestVisible="False">
                             <ContentControl x:Name="PART_SeachIcon" ContentTemplate="{DynamicResource SearchTextIconTemplate}"
-                                            FontSize="16" VerticalAlignment="Center" Margin="8,0,8,0"
+                                            FontSize="{DynamicResource FontSizeLarge}" VerticalAlignment="Center" Margin="8,0,8,0"
                                             Foreground="{DynamicResource ControlContrastBorderBrushBrightest}"/>
                             <TextBlock x:Name="Prompt" Text="{DynamicResource LOCMythos_Search}" FontFamily="{DynamicResource FontFamily}"
-                                    FontSize="15" VerticalAlignment="Center"
+                                    FontSize="{DynamicResource FontSizeLarge}" VerticalAlignment="Center"
                                     Foreground="{DynamicResource ControlContrastBorderBrushBrightest}"/>
                         </StackPanel>
                         <ContentControl x:Name="PART_ClearTextIcon"
