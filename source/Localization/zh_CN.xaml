@@ -28,7 +28,7 @@
     <sys:String x:Key="LOCMythos_RecentActivity">最近游玩</sys:String>
     <sys:String x:Key="LOCMythos_ReadMore">阅读更多</sys:String>
     <sys:String x:Key="LOCMythos_ReadLess">收起</sys:String>
-    <sys:String x:Key="LOCMythos_SocialLinks">社交链接</sys:String>
+    <sys:String x:Key="LOCMythos_SocialLinks">链接</sys:String>
     <sys:String x:Key="LOCMythos_Tags">标签:</sys:String>
     <sys:String x:Key="LOCMythos_AchievementsTitle">成就</sys:String>
     <sys:String x:Key="LOCMythos_NowPlaying">正在播放</sys:String>
