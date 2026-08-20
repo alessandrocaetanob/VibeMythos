@@ -387,7 +387,9 @@
         </Setter>
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="true">
-                <Setter Property="Foreground" Value="{DynamicResource WhiteBrush}" />
+                <!-- WhiteBrush is #18181B (inverted palette); using it here rendered the hover
+                     label near-black on the dark hover fill. TrueWhiteBrush is actually white. -->
+                <Setter Property="Foreground" Value="{DynamicResource TrueWhiteBrush}" />
                 <Setter Property="Background" Value="#333333" />
             </Trigger>
         </Style.Triggers>

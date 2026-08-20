@@ -48,10 +48,10 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsFocused" Value="True" />
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Fill" Value="{DynamicResource HoverBrush}" TargetName="HoverRectangle" />
+                            <Setter Property="Fill" Value="{DynamicResource TrueWhiteBrush}" TargetName="HoverRectangle" />
                         </Trigger>
                         <DataTrigger Binding="{Binding IsFocused, RelativeSource={RelativeSource AncestorType=Track}}" Value="True">
-                            <Setter Property="Fill" Value="{DynamicResource HoverBrush}" TargetName="HoverRectangle" />
+                            <Setter Property="Fill" Value="{DynamicResource TrueWhiteBrush}" TargetName="HoverRectangle" />
                         </DataTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
