@@ -28,7 +28,7 @@
     <sys:String x:Key="LOCMythos_RecentActivity">마지막 플레이</sys:String>
     <sys:String x:Key="LOCMythos_ReadMore">더 읽기</sys:String>
     <sys:String x:Key="LOCMythos_ReadLess">접기</sys:String>
-    <sys:String x:Key="LOCMythos_SocialLinks">소셜 링크</sys:String>
+    <sys:String x:Key="LOCMythos_SocialLinks">링크</sys:String>
     <sys:String x:Key="LOCMythos_Tags">태그:</sys:String>
     <sys:String x:Key="LOCMythos_AchievementsTitle">도전 과제</sys:String>
     <sys:String x:Key="LOCMythos_NowPlaying">재생 중</sys:String>

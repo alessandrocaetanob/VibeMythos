@@ -28,7 +28,7 @@
     <sys:String x:Key="LOCMythos_RecentActivity">Последний запуск</sys:String>
     <sys:String x:Key="LOCMythos_ReadMore">Читать далее</sys:String>
     <sys:String x:Key="LOCMythos_ReadLess">Свернуть</sys:String>
-    <sys:String x:Key="LOCMythos_SocialLinks">Социальные ссылки</sys:String>
+    <sys:String x:Key="LOCMythos_SocialLinks">Ссылки</sys:String>
     <sys:String x:Key="LOCMythos_Tags">Теги:</sys:String>
     <sys:String x:Key="LOCMythos_AchievementsTitle">Достижения</sys:String>
     <sys:String x:Key="LOCMythos_NowPlaying">СЕЙЧАС ИГРАЕТ</sys:String>
