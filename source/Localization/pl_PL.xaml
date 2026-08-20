@@ -28,7 +28,7 @@
     <sys:String x:Key="LOCMythos_RecentActivity">Ostatnio grano</sys:String>
     <sys:String x:Key="LOCMythos_ReadMore">Czytaj więcej</sys:String>
     <sys:String x:Key="LOCMythos_ReadLess">Czytaj mniej</sys:String>
-    <sys:String x:Key="LOCMythos_SocialLinks">Linki społecznościowe</sys:String>
+    <sys:String x:Key="LOCMythos_SocialLinks">Odnośniki</sys:String>
     <sys:String x:Key="LOCMythos_Tags">Tagi:</sys:String>
     <sys:String x:Key="LOCMythos_AchievementsTitle">Osiągnięcia</sys:String>
     <sys:String x:Key="LOCMythos_NowPlaying">TERAZ ODTWARZANE</sys:String>
