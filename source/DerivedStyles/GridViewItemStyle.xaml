@@ -44,17 +44,17 @@
                                     <DoubleAnimation
                                         Storyboard.TargetProperty="RenderTransform.ScaleX"
                                         To="1.0175"
-                                        Duration="0:0:0.3">
+                                        Duration="{StaticResource MotionBase}">
                                         <DoubleAnimation.EasingFunction>
-                                            <CubicEase EasingMode="EaseOut"/>
+                                            <StaticResource ResourceKey="EaseStandard"/>
                                         </DoubleAnimation.EasingFunction>
                                     </DoubleAnimation>
                                     <DoubleAnimation
                                         Storyboard.TargetProperty="RenderTransform.ScaleY"
                                         To="1.0175"
-                                        Duration="0:0:0.3">
+                                        Duration="{StaticResource MotionBase}">
                                         <DoubleAnimation.EasingFunction>
-                                            <CubicEase EasingMode="EaseOut"/>
+                                            <StaticResource ResourceKey="EaseStandard"/>
                                         </DoubleAnimation.EasingFunction>
                                     </DoubleAnimation>
                                 </Storyboard>
@@ -66,17 +66,17 @@
                                     <DoubleAnimation
                                         Storyboard.TargetProperty="RenderTransform.ScaleX"
                                         To="1"
-                                        Duration="0:0:0.3">
+                                        Duration="{StaticResource MotionBase}">
                                         <DoubleAnimation.EasingFunction>
-                                            <CubicEase EasingMode="EaseOut"/>
+                                            <StaticResource ResourceKey="EaseStandard"/>
                                         </DoubleAnimation.EasingFunction>
                                     </DoubleAnimation>
                                     <DoubleAnimation
                                         Storyboard.TargetProperty="RenderTransform.ScaleY"
                                         To="1"
-                                        Duration="0:0:0.3">
+                                        Duration="{StaticResource MotionBase}">
                                         <DoubleAnimation.EasingFunction>
-                                            <CubicEase EasingMode="EaseOut"/>
+                                            <StaticResource ResourceKey="EaseStandard"/>
                                         </DoubleAnimation.EasingFunction>
                                     </DoubleAnimation>
                                 </Storyboard>

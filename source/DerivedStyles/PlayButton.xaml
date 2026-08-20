@@ -133,23 +133,23 @@
                                     <Storyboard>
                                         <DoubleAnimation Storyboard.TargetName="DefaultBorder"
                                                         Storyboard.TargetProperty="Opacity"
-                                                        To="0.8" Duration="0:0:0.2">
+                                                        To="0.8" Duration="{StaticResource MotionBase}">
                                             <DoubleAnimation.EasingFunction>
-                                                <CubicEase EasingMode="EaseOut"/>
+                                                <StaticResource ResourceKey="EaseStandard"/>
                                             </DoubleAnimation.EasingFunction>
                                         </DoubleAnimation>
                                         <DoubleAnimation Storyboard.TargetName="ScaleTransform"
                                                         Storyboard.TargetProperty="ScaleX"
-                                                        To="1.02" Duration="0:0:0.4">
+                                                        To="1.02" Duration="{StaticResource MotionSlow}">
                                             <DoubleAnimation.EasingFunction>
-                                                <BackEase EasingMode="EaseOut"/>
+                                                <StaticResource ResourceKey="EaseEmphasized"/>
                                             </DoubleAnimation.EasingFunction>
                                         </DoubleAnimation>
                                         <DoubleAnimation Storyboard.TargetName="ScaleTransform"
                                                         Storyboard.TargetProperty="ScaleY"
-                                                        To="1.02" Duration="0:0:0.4">
+                                                        To="1.02" Duration="{StaticResource MotionSlow}">
                                             <DoubleAnimation.EasingFunction>
-                                                <BackEase EasingMode="EaseOut"/>
+                                                <StaticResource ResourceKey="EaseEmphasized"/>
                                             </DoubleAnimation.EasingFunction>
                                         </DoubleAnimation>
                                     </Storyboard>
@@ -160,23 +160,23 @@
                                     <Storyboard>
                                         <DoubleAnimation Storyboard.TargetName="DefaultBorder"
                                                         Storyboard.TargetProperty="Opacity"
-                                                        To="1" Duration="0:0:0.2">
+                                                        To="1" Duration="{StaticResource MotionBase}">
                                             <DoubleAnimation.EasingFunction>
-                                                <CubicEase EasingMode="EaseOut"/>
+                                                <StaticResource ResourceKey="EaseStandard"/>
                                             </DoubleAnimation.EasingFunction>
                                         </DoubleAnimation>
                                         <DoubleAnimation Storyboard.TargetName="ScaleTransform"
                                                         Storyboard.TargetProperty="ScaleX"
-                                                        To="1.0" Duration="0:0:0.4">
+                                                        To="1.0" Duration="{StaticResource MotionSlow}">
                                             <DoubleAnimation.EasingFunction>
-                                                <BackEase EasingMode="EaseOut"/>
+                                                <StaticResource ResourceKey="EaseEmphasized"/>
                                             </DoubleAnimation.EasingFunction>
                                         </DoubleAnimation>
                                         <DoubleAnimation Storyboard.TargetName="ScaleTransform"
                                                         Storyboard.TargetProperty="ScaleY"
-                                                        To="1.0" Duration="0:0:0.4">
+                                                        To="1.0" Duration="{StaticResource MotionSlow}">
                                             <DoubleAnimation.EasingFunction>
-                                                <BackEase EasingMode="EaseOut"/>
+                                                <StaticResource ResourceKey="EaseEmphasized"/>
                                             </DoubleAnimation.EasingFunction>
                                         </DoubleAnimation>
                                     </Storyboard>
@@ -243,23 +243,23 @@
                                     <Storyboard>
                                         <DoubleAnimation Storyboard.TargetName="DefaultBorder"
                                                         Storyboard.TargetProperty="Opacity"
-                                                        To="0.8" Duration="0:0:0.2">
+                                                        To="0.8" Duration="{StaticResource MotionBase}">
                                             <DoubleAnimation.EasingFunction>
-                                                <CubicEase EasingMode="EaseOut"/>
+                                                <StaticResource ResourceKey="EaseStandard"/>
                                             </DoubleAnimation.EasingFunction>
                                         </DoubleAnimation>
                                         <DoubleAnimation Storyboard.TargetName="ScaleTransform"
                                                         Storyboard.TargetProperty="ScaleX"
-                                                        To="1.02" Duration="0:0:0.4">
+                                                        To="1.02" Duration="{StaticResource MotionSlow}">
                                             <DoubleAnimation.EasingFunction>
-                                                <BackEase EasingMode="EaseOut"/>
+                                                <StaticResource ResourceKey="EaseEmphasized"/>
                                             </DoubleAnimation.EasingFunction>
                                         </DoubleAnimation>
                                         <DoubleAnimation Storyboard.TargetName="ScaleTransform"
                                                         Storyboard.TargetProperty="ScaleY"
-                                                        To="1.02" Duration="0:0:0.4">
+                                                        To="1.02" Duration="{StaticResource MotionSlow}">
                                             <DoubleAnimation.EasingFunction>
-                                                <BackEase EasingMode="EaseOut"/>
+                                                <StaticResource ResourceKey="EaseEmphasized"/>
                                             </DoubleAnimation.EasingFunction>
                                         </DoubleAnimation>
                                     </Storyboard>
@@ -271,23 +271,23 @@
                                     <Storyboard>
                                         <DoubleAnimation Storyboard.TargetName="DefaultBorder"
                                                         Storyboard.TargetProperty="Opacity"
-                                                        To="1" Duration="0:0:0.2">
+                                                        To="1" Duration="{StaticResource MotionBase}">
                                             <DoubleAnimation.EasingFunction>
-                                                <CubicEase EasingMode="EaseOut"/>
+                                                <StaticResource ResourceKey="EaseStandard"/>
                                             </DoubleAnimation.EasingFunction>
                                         </DoubleAnimation>
                                         <DoubleAnimation Storyboard.TargetName="ScaleTransform"
                                                         Storyboard.TargetProperty="ScaleX"
-                                                        To="1.0" Duration="0:0:0.4">
+                                                        To="1.0" Duration="{StaticResource MotionSlow}">
                                             <DoubleAnimation.EasingFunction>
-                                                <BackEase EasingMode="EaseOut"/>
+                                                <StaticResource ResourceKey="EaseEmphasized"/>
                                             </DoubleAnimation.EasingFunction>
                                         </DoubleAnimation>
                                         <DoubleAnimation Storyboard.TargetName="ScaleTransform"
                                                         Storyboard.TargetProperty="ScaleY"
-                                                        To="1.0" Duration="0:0:0.4">
+                                                        To="1.0" Duration="{StaticResource MotionSlow}">
                                             <DoubleAnimation.EasingFunction>
-                                                <BackEase EasingMode="EaseOut"/>
+                                                <StaticResource ResourceKey="EaseEmphasized"/>
                                             </DoubleAnimation.EasingFunction>
                                         </DoubleAnimation>
                                     </Storyboard>

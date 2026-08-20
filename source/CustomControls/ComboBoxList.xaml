@@ -237,7 +237,7 @@
                                             <EasingDoubleKeyFrame KeyTime="0:0:0.0" Value="0"/>
                                             <EasingDoubleKeyFrame KeyTime="0:0:0.15" Value="1.2">
                                                 <EasingDoubleKeyFrame.EasingFunction>
-                                                    <BackEase EasingMode="EaseOut" Amplitude="0.3"/>
+                                                    <StaticResource ResourceKey="EaseEmphasized"/>
                                                 </EasingDoubleKeyFrame.EasingFunction>
                                             </EasingDoubleKeyFrame>
                                             <EasingDoubleKeyFrame KeyTime="0:0:0.25" Value="1"/>
@@ -246,7 +246,7 @@
                                             <EasingDoubleKeyFrame KeyTime="0:0:0.0" Value="0"/>
                                             <EasingDoubleKeyFrame KeyTime="0:0:0.15" Value="1.2">
                                                 <EasingDoubleKeyFrame.EasingFunction>
-                                                    <BackEase EasingMode="EaseOut" Amplitude="0.3"/>
+                                                    <StaticResource ResourceKey="EaseEmphasized"/>
                                                 </EasingDoubleKeyFrame.EasingFunction>
                                             </EasingDoubleKeyFrame>
                                             <EasingDoubleKeyFrame KeyTime="0:0:0.25" Value="1"/>
@@ -257,8 +257,8 @@
                             <Trigger.ExitActions>
                                 <BeginStoryboard>
                                     <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="CheckScale" Storyboard.TargetProperty="ScaleX" To="0" Duration="0:0:0.1"/>
-                                        <DoubleAnimation Storyboard.TargetName="CheckScale" Storyboard.TargetProperty="ScaleY" To="0" Duration="0:0:0.1"/>
+                                        <DoubleAnimation Storyboard.TargetName="CheckScale" Storyboard.TargetProperty="ScaleX" To="0" Duration="{StaticResource MotionFast}" EasingFunction="{StaticResource EaseStandard}"/>
+                                        <DoubleAnimation Storyboard.TargetName="CheckScale" Storyboard.TargetProperty="ScaleY" To="0" Duration="{StaticResource MotionFast}" EasingFunction="{StaticResource EaseStandard}"/>
                                     </Storyboard>
                                 </BeginStoryboard>
                             </Trigger.ExitActions>

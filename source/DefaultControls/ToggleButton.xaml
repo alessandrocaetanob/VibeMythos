@@ -93,7 +93,7 @@
                                     <Storyboard>
                                         <ColorAnimation Storyboard.TargetName="HoverBg"
                                                          Storyboard.TargetProperty="Background.Color" 
-                                                         To="#CCCCCC" Duration="0:0:0.4">
+                                                         To="#CCCCCC" Duration="{StaticResource MotionSlow}">
                                         </ColorAnimation>
                                     </Storyboard>
                                 </BeginStoryboard>
@@ -103,7 +103,7 @@
                                     <Storyboard>
                                         <ColorAnimation Storyboard.TargetName="HoverBg"
                                                          Storyboard.TargetProperty="Background.Color" 
-                                                         To="#DBDBDB" Duration="0:0:0.4">
+                                                         To="#DBDBDB" Duration="{StaticResource MotionSlow}">
                                         </ColorAnimation>
                                     </Storyboard>
                                 </BeginStoryboard>
