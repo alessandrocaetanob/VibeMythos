@@ -47,5 +47,9 @@ Constants:
     - LOCPlayGame: 'Launch Button Label'
     - LOCMythos_More: 'Manage Button Label'
     - LOCMythos_Edit: 'Settings Button Label'
-    - LOCMythos_SocialLinks: 'Social Links Section Label'
+    # Key name kept deliberately: ThemeModifier persists a user's terminology override
+    # against the KEY, so renaming it would silently reset anyone who has customised this
+    # label. The section was never social links - it is the game's own links (store page,
+    # wikis, HowLongToBeat), so the default value now matches Playnite's own LOCLinksLabel.
+    - LOCMythos_SocialLinks: 'Links Section Label'
     - LOCMythos_AchievementsTitle: 'Achievements Section Label'

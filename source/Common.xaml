@@ -169,13 +169,18 @@
          Padding stays 0,11,0,11 rather than moving onto the 4px grid. That is a 2px change to
          the height of all 34 rows and wants eyes on a running Playnite; the point of this
          change is that it is now one edit rather than 34. -->
-    <Style x:Key="MetadataRowBorder" TargetType="Border">
+    <!-- BasedOn is load-bearing on both of these. Setting Style="..." on an element REPLACES
+         the implicit style for its type, it does not add to it - and Playnite's default theme
+         supplies both. Dropping them cost the metadata labels their Foreground AND their
+         ControlTemplate (black text on a near-black panel, shipped 2026-08-20), and cost every
+         divider its SnapsToDevicePixels. Neither failure produces an error. -->
+    <Style x:Key="MetadataRowBorder" TargetType="Border" BasedOn="{StaticResource {x:Type Border}}">
         <Setter Property="Padding" Value="0,11,0,11" />
         <Setter Property="BorderBrush" Value="{DynamicResource ContentBorderBrushOverlay}" />
         <Setter Property="BorderThickness" Value="0,0,0,1" />
     </Style>
 
-    <Style x:Key="MetadataRowLabel" TargetType="Label">
+    <Style x:Key="MetadataRowLabel" TargetType="Label" BasedOn="{StaticResource {x:Type Label}}">
         <Setter Property="Grid.Column" Value="0" />
         <Setter Property="VerticalAlignment" Value="Center" />
     </Style>

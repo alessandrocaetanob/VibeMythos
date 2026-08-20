@@ -28,7 +28,7 @@
     <sys:String x:Key="LOCMythos_RecentActivity">最終プレイ</sys:String>
     <sys:String x:Key="LOCMythos_ReadMore">続きを読む</sys:String>
     <sys:String x:Key="LOCMythos_ReadLess">閉じる</sys:String>
-    <sys:String x:Key="LOCMythos_SocialLinks">ソーシャルリンク</sys:String>
+    <sys:String x:Key="LOCMythos_SocialLinks">関連リンク</sys:String>
     <sys:String x:Key="LOCMythos_Tags">タグ:</sys:String>
     <sys:String x:Key="LOCMythos_AchievementsTitle">実績</sys:String>
     <sys:String x:Key="LOCMythos_NowPlaying">再生中</sys:String>
