@@ -163,7 +163,7 @@
                                                             <TextBlock Name="PART_TextDisplayName"
                                                                        FontFamily="{DynamicResource TightFont}"
                                                                        FontSize="{DynamicResource FontSizeLarge22}"
-                                                                       FontWeight="Bold"
+                                                                       FontWeight="{DynamicResource FontWeightDisplay}"
                                                                        TextWrapping="Wrap"
                                                                        TextAlignment="Center"
                                                                        HorizontalAlignment="Center"
@@ -719,7 +719,7 @@
 
                                                         <StackPanel Name="PART_ElemTags" Margin="0,0,0,10">
                                                             <TextBlock Text="{DynamicResource LOCMythos_Tags}"
-                                                                        Foreground="{DynamicResource SubtalBrush}"
+                                                                        Foreground="{DynamicResource TextSubtleBrush}"
                                                                         FontWeight="{DynamicResource FontWeightBody}"
                                                                         FontSize="{DynamicResource FontSize}"
                                                                         Margin="0,0,0,10" />
@@ -757,7 +757,7 @@
                                                             <TextBlock Text="{DynamicResource LOCGameDescriptionTitle}"
                                                                         Tag="{DynamicResource DetailsViewDescSubHeader}"
                                                                         Visibility="{Binding RelativeSource={RelativeSource Self}, Path=Tag, Converter={StaticResource BooleanToVisibilityConverter}}"
-                                                                        Foreground="{DynamicResource SubtalBrush}"
+                                                                        Foreground="{DynamicResource TextSubtleBrush}"
                                                                         FontWeight="{DynamicResource FontWeightBody}"
                                                                         FontSize="{DynamicResource FontSize}"
                                                                         Margin="0,0,0,10" />

@@ -13,10 +13,10 @@
                                  VerticalContentAlignment="Center" Padding="4,0,24,0"/>
                         <ContentControl x:Name="PART_SeachIcon" ContentTemplate="{DynamicResource SearchTextIconTemplate}"
                                         VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,10,0" FontSize="{DynamicResource FontSize}"
-                                        Foreground="{DynamicResource SubtalBrushLighter}" />
+                                        Foreground="{DynamicResource TextSubtleLighterBrush}" />
                         <ContentControl x:Name="PART_ClearTextIcon" ContentTemplate="{DynamicResource ClearTextIconTemplate}" 
                                         VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,2,8,0" FontSize="{DynamicResource FontSize}"
-                                        Foreground="{DynamicResource SubtalBrushLighter}" />
+                                        Foreground="{DynamicResource TextSubtleLighterBrush}" />
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>

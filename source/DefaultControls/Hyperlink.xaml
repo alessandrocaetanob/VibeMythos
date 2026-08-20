@@ -21,7 +21,7 @@
                 <Setter Property="TextDecorations" Value="Underline" />
             </Trigger>
             <Trigger Property="IsEnabled" Value="False">
-                <Setter Property="Foreground" Value="{DynamicResource SubtalBrush}" />
+                <Setter Property="Foreground" Value="{DynamicResource TextSubtleBrush}" />
             </Trigger>
         </Style.Triggers>
     </Style>

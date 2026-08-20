@@ -94,7 +94,7 @@
 
     <Style TargetType="{x:Type TabItem}" BasedOn="{StaticResource BaseStyle}">
         <Setter Property="SnapsToDevicePixels" Value="True" />
-        <Setter Property="Foreground" Value="{DynamicResource SubtalBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource TextSubtleBrush}" />
         <Setter Property="FontSize" Value="{DynamicResource FontSize }"/>
         <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="Template">
@@ -153,7 +153,7 @@
 
     <Style x:Key="DetailViewTabItem" TargetType="{x:Type TabItem}" BasedOn="{StaticResource BaseStyle}">
         <Setter Property="SnapsToDevicePixels" Value="True" />
-        <Setter Property="Foreground" Value="{DynamicResource SubtalBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource TextSubtleBrush}" />
         <Setter Property="FontSize" Value="{DynamicResource FontSize }"/>
         <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="Template">

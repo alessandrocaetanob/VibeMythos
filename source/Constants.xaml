@@ -266,8 +266,8 @@
     <!-- Blue Colors -->
 
     <SolidColorBrush x:Key="GreenBrush" Color="{DynamicResource GreenColor}" />
-    <!-- Completion gold, for a fully unlocked achievement set. Distinct from FavBrush's
-         pure Yellow, which reads as harsh against the dark surfaces. -->
+    <!-- Completion gold, for a fully unlocked achievement set. A cooler, muted gold, kept
+         distinct from FavBrush's brighter favourite gold. -->
     <Color x:Key="PlatinumColor">#E0B84C</Color>
     <SolidColorBrush x:Key="PlatinumBrush" Color="{DynamicResource PlatinumColor}" />
 
@@ -372,16 +372,13 @@
 
     <SolidColorBrush x:Key="DisabledBrush" Color="#323236" />
     <SolidColorBrush x:Key="PromptBrush" Color="#999999" />
-    <!-- "Subtal" is a misspelling of Subtle, load-bearing across 13 files. Aliased rather
-         than renamed (HYP-197): both keys resolve to one Color, so callers can migrate to
-         TextSubtleBrush at their own pace and nothing breaks mid-migration. Delete the
-         SubtalBrush* pair once the last consumer is gone. -->
+    <!-- Subtle text foreground. Canonical name is TextSubtle*; the historical misspelled
+         aliases SubtalBrush / SubtalBrushLighter (HYP-197) were retired in HYP-251 once the
+         last of their 16 callers had migrated here. -->
     <Color x:Key="TextSubtleColor">#888991</Color>
     <Color x:Key="TextSubtleLighterColor">#9d9ea5</Color>
     <SolidColorBrush x:Key="TextSubtleBrush" Color="{DynamicResource TextSubtleColor}" />
     <SolidColorBrush x:Key="TextSubtleLighterBrush" Color="{DynamicResource TextSubtleLighterColor}" />
-    <SolidColorBrush x:Key="SubtalBrush" Color="{DynamicResource TextSubtleColor}" />
-    <SolidColorBrush x:Key="SubtalBrushLighter" Color="{DynamicResource TextSubtleLighterColor}" />
     <!-- Near-white foreground family (HYP-197). IdleBrush / HoverBrush / SelectedBrush are the
          same #E7E9EA, used as a bright FOREGROUND on dark surfaces - the names are historical,
          not roles. HoverBrush in particular is a foreground colour and must never paint a
@@ -398,7 +395,10 @@
     <SolidColorBrush x:Key="SelectedBrush" Color="#E7E9EA" />
 
     <SolidColorBrush x:Key="AccentDisabledBrush" Color="#024DA3" />
-    <SolidColorBrush x:Key="FavBrush" Color="Yellow" />
+    <!-- Favourite affordance (grid badge, favourite toggle, add/remove-favourite icons).
+         Retired from literal Yellow (HYP-251): pure Yellow read as harsh on the dark surfaces.
+         A warm favourite gold, distinct from PlatinumColor's achievement-completion gold. -->
+    <SolidColorBrush x:Key="FavBrush" Color="#F2C24E" />
 
     <SolidColorBrush x:Key="TextBrush" Color="{DynamicResource TextColor}" />
     <SolidColorBrush x:Key="TextBrushDarker" Color="{DynamicResource TextColorDarker}" />
@@ -417,7 +417,6 @@
     <SolidColorBrush x:Key="PanelSeparatorBrush" Color="{DynamicResource PanelSeparatorColor}" />
 
     <SolidColorBrush x:Key="CardBackgroundBrush" Color="#18181B" />
-    <SolidColorBrush x:Key="CardBorderBrush" Color="#D4D0B8" />
 
     <SolidColorBrush x:Key="CheckBoxCheckMarkBkBrush" Color="{DynamicResource MainColorDark}" />
     <SolidColorBrush x:Key="CheckBoxBorderBrush" Color="#5C5C60" />
