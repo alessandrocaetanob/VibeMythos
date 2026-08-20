@@ -31,8 +31,8 @@
     <TextBlock x:Key="OpenFolderIcon" Text="&#xE8B7;" FontFamily="{DynamicResource IconFontFamily}" />
     <TextBlock x:Key="InstallSizeIcon" Text="&#xE8EF;" FontFamily="{DynamicResource IconFontFamily}" />
     <TextBlock x:Key="DesktopShortcutIcon" Text="&#xE836;" FontFamily="{DynamicResource IconFontFamily}" />
-    <TextBlock x:Key="AddFavoritesIcon" Text="&#xE734;" FontFamily="{DynamicResource IconFontFamily}" Foreground="Yellow"/>
-    <TextBlock x:Key="RemoveFavoritesIcon" Text="&#xE735;" FontFamily="{DynamicResource IconFontFamily}" Foreground="Yellow"/>
+    <TextBlock x:Key="AddFavoritesIcon" Text="&#xE734;" FontFamily="{DynamicResource IconFontFamily}" Foreground="{DynamicResource FavBrush}"/>
+    <TextBlock x:Key="RemoveFavoritesIcon" Text="&#xE735;" FontFamily="{DynamicResource IconFontFamily}" Foreground="{DynamicResource FavBrush}"/>
     <TextBlock x:Key="HideIcon" Text="&#xe052;" FontFamily="{DynamicResource IconFontFamily}" />
     <TextBlock x:Key="UnHideIcon" Text="&#xed1a;" FontFamily="{DynamicResource IconFontFamily}" />
     <TextBlock x:Key="HdrIcon" Text="&#xeef2;" FontFamily="{DynamicResource IconFontFamily}" />

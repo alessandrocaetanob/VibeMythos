@@ -13,7 +13,7 @@
         <Setter Property="FontSize" Value="{DynamicResource FontSize}"/>
         <Style.Triggers>
             <Trigger Property="Tag" Value="{StaticResource False}">
-                <Setter Property="Foreground" Value="{DynamicResource SubtalBrush}"/>
+                <Setter Property="Foreground" Value="{DynamicResource TextSubtleBrush}"/>
             </Trigger>
         </Style.Triggers>
     </Style>

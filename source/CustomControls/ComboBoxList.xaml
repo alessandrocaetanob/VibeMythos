@@ -102,7 +102,7 @@
             <Grid>
                 <DockPanel>
                     <Viewbox Margin="0,1,10,0" DockPanel.Dock="Right" Width="10">
-                        <TextBlock Text="&#xE96E;" Foreground="{DynamicResource SubtalBrush}"
+                        <TextBlock Text="&#xE96E;" Foreground="{DynamicResource TextSubtleBrush}"
                                    Style="{StaticResource IconFontStyle}"/>
                     </Viewbox>
                     <TextBlock x:Name="PART_TextFilterString"

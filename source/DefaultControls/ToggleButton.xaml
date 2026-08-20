@@ -159,7 +159,7 @@
 
     <Style x:Key="FavoriteTubeToggleButton" TargetType="{x:Type ToggleButton}">
         <Setter Property="Background" Value="{DynamicResource ControlHoverBackgroundBrush}" />
-        <Setter Property="Foreground" Value="Yellow" />
+        <Setter Property="Foreground" Value="{DynamicResource FavBrush}" />
         <Setter Property="Width" Value="Auto"/>
         <Setter Property="Height" Value="48"/>
         <Setter Property="FontWeight" Value="Bold"/>

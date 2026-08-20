@@ -27,7 +27,7 @@
                                         <DockPanel LastChildFill="False" Background="Transparent">
                                             <Viewbox DockPanel.Dock="Right" Width="10" Margin="0,0,10,0">
                                                 <TextBlock Text="&#xE96E;" Style="{DynamicResource IconFontStyle}" 
-                                                           Foreground="{DynamicResource SubtalBrush}" />
+                                                           Foreground="{DynamicResource TextSubtleBrush}" />
                                             </Viewbox>
                                         </DockPanel>
                                     </ControlTemplate>
@@ -143,7 +143,7 @@
                                         <DockPanel LastChildFill="False" Background="Transparent">
                                             <Viewbox DockPanel.Dock="Right" Width="10" Margin="0,0,8,0">
                                                 <TextBlock Text="&#xf08e;" Style="{DynamicResource IconFontStyle}" 
-                                                           Foreground="{DynamicResource SubtalBrush}" FontSize="{DynamicResource FontSizeSmaller}"/>
+                                                           Foreground="{DynamicResource TextSubtleBrush}" FontSize="{DynamicResource FontSizeSmaller}"/>
                                             </Viewbox>
                                         </DockPanel>
                                     </ControlTemplate>

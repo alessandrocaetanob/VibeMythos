@@ -37,7 +37,7 @@
                         <Border x:Name="Border" Grid.Row="1" Margin="0" Height="4" CornerRadius="{DynamicResource RadiusPill}"
                                 Background="{TemplateBinding Background}" />
                         <Border Grid.Row="1" Margin="0" Height="4" VerticalAlignment="Center" HorizontalAlignment="Left"
-                                Background="{DynamicResource SubtalBrush}" CornerRadius="2,0,0,2"
+                                Background="{DynamicResource TextSubtleBrush}" CornerRadius="2,0,0,2"
                                 Width="{Binding ActualWidth, ElementName=ButtonDecrease}" />
                         <Track Grid.Row="1" x:Name="PART_Track" Height="{TemplateBinding Height}">
                             <Track.Thumb>

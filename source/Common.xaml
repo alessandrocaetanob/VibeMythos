@@ -31,7 +31,7 @@
         <Setter Property="FontSize" Value="{DynamicResource FontSizeLarge}" />
         <Setter Property="FontFamily" Value="{DynamicResource FontFamily}" />
         <Setter Property="Foreground" Value="{DynamicResource SelectedBrush}" />
-        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="FontWeight" Value="{DynamicResource FontWeightDisplay}"/>
         <Style.Triggers>
             <Trigger Property="IsEnabled" Value="False">
                 <Setter Property="Opacity" Value="{DynamicResource OpacitySecondary}" />
@@ -136,8 +136,6 @@
 
     <Style x:Key="DetailViewCardBorder" TargetType="Border">
         <Setter Property="Background" Value="{DynamicResource CardBackgroundBrush}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource CardBorderBrush}" />
-        <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Effect">
             <Setter.Value>
                 <DropShadowEffect BlurRadius="2" Color="Black" Opacity="0.2" ShadowDepth="1" Direction="270"/>

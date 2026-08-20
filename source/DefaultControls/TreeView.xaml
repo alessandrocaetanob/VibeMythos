@@ -51,7 +51,7 @@
 
 <Style TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource BaseStyle}">
     <Setter Property="SnapsToDevicePixels" Value="True"/>
-    <Setter Property="Foreground" Value="{DynamicResource SubtalBrushLighter}"/>
+    <Setter Property="Foreground" Value="{DynamicResource TextSubtleLighterBrush}"/>
     <Setter Property="Background" Value="{DynamicResource ControlBackgroundBrush}"/>
     <Setter Property="Padding" Value="0,6,0,6"/>
     <Setter Property="Margin" Value="0,1,0,1"/>

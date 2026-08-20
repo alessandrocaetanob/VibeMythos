@@ -17,7 +17,7 @@
                     <Grid >
                         <Border Height="35" Style="{DynamicResource HighlightBgList}">
                             <TextBlock Style="{DynamicResource BaseTextBlockStyle}" VerticalAlignment="Center" 
-                                       x:Name="ColumnHeader" Foreground="{DynamicResource SubtalBrush}" Margin="10,0,10,0" >
+                                       x:Name="ColumnHeader" Foreground="{DynamicResource TextSubtleBrush}" Margin="10,0,10,0" >
                                 <ContentPresenter VerticalAlignment="Center"/>
                             </TextBlock>
                         </Border>

@@ -702,7 +702,7 @@
 					<!--New Tags-->
                                         <StackPanel Name="PART_ElemTags" Margin="0,0,0,10">
                                             <TextBlock Text="{DynamicResource LOCMythos_Tags}"
-                                                        Foreground="{DynamicResource SubtalBrush}"
+                                                        Foreground="{DynamicResource TextSubtleBrush}"
                                                         FontWeight="{DynamicResource FontWeightBody}"
                                                         FontSize="{DynamicResource FontSize}"
                                                         Margin="0,0,0,10" />
@@ -753,7 +753,7 @@
                                                         FontFamily="{DynamicResource TightFont}"
                                                         Name="PART_TextDisplayName"
                                                         FontSize="{DynamicResource FontSizeLargest}"
-                                                        FontWeight="Bold"
+                                                        FontWeight="{DynamicResource FontWeightDisplay}"
                                                         TextWrapping="Wrap"
                                                         VerticalAlignment="Center"
                                                         Foreground="{DynamicResource TextBrush}"/>
@@ -1489,7 +1489,7 @@
 
                                                     <TextBlock Grid.Column="0"
                                                             Text="{DynamicResource LOCMythos_AchievementsTitle}"
-                                                            FontWeight="Bold"
+                                                            FontWeight="{DynamicResource FontWeightDisplay}"
                                                             FontSize="{DynamicResource FontSizeLarger}"
                                                             Foreground="{DynamicResource TextBrush}"
                                                             VerticalAlignment="Center" />
@@ -1688,7 +1688,7 @@
                                                         </StackPanel.Resources>
 
                                             		<TextBlock Tag="{DynamicResource DetailsViewDescSubHeader}" FontFamily="{DynamicResource FontFamily}" Text="{StaticResource LOCGameDescriptionTitle}" Margin="0,0,0,20"
-                                                       		FontSize="{DynamicResource FontSizeLarger}" FontWeight="Bold"
+                                                       		FontSize="{DynamicResource FontSizeLarger}" FontWeight="{DynamicResource FontWeightDisplay}"
                                                        		TextWrapping="Wrap" VerticalAlignment="Center" Foreground="{DynamicResource TextBrush}"
 								Visibility="{Binding RelativeSource={RelativeSource Self}, Path=Tag, Converter={StaticResource BooleanToVisibilityConverter}}">
                                             		</TextBlock>
@@ -1772,7 +1772,7 @@
                                                 <TextBlock Tag="{DynamicResource DetailsViewSocialSubHeader}" Text="{DynamicResource LOCMythos_SocialLinks}"
                                                         FontFamily="{DynamicResource FontFamily}"
                                                         FontSize="{DynamicResource FontSizeLarger}"
-                                                        FontWeight="Bold"
+                                                        FontWeight="{DynamicResource FontWeightDisplay}"
                                                         TextWrapping="Wrap"
                                                         HorizontalAlignment="Left"
                                                         Foreground="{DynamicResource TextBrush}"
