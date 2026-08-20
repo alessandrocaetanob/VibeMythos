@@ -33,7 +33,7 @@
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding Tag, RelativeSource={RelativeSource Self}}" Value="True">
                                             <Setter Property="Background" Value="{DynamicResource GlassControlBrushLight}"/>
-                                            <Setter Property="CornerRadius" Value="15"/>
+                                            <Setter Property="CornerRadius" Value="{DynamicResource RadiusCard}"/>
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
@@ -104,7 +104,7 @@
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding Tag, RelativeSource={RelativeSource Self}}" Value="True">
                                             <Setter Property="BorderThickness" Value="1"/>
-                                            <Setter Property="CornerRadius" Value="{DynamicResource ControlCornerRadiusLarge}"/>
+                                            <Setter Property="CornerRadius" Value="{DynamicResource RadiusCard}"/>
                                             <Setter Property="BorderBrush" Value="{DynamicResource ContentBrushOverlay}"/>
                                         </DataTrigger>
                                     </Style.Triggers>

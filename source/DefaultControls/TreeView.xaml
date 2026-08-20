@@ -37,7 +37,7 @@
                     <Border BorderThickness="{TemplateBinding BorderThickness}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             Background="{DynamicResource SubtlePopUpBackgroundBrush}"
-                            CornerRadius="{DynamicResource ControlCornerRadiusLarge}">
+                            CornerRadius="{DynamicResource RadiusCard}">
                         <ScrollViewer Focusable="False" Padding="8,7,8,6" Margin="0"
                                     HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
                                     VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}">

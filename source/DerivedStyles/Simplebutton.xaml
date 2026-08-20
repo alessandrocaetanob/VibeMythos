@@ -31,7 +31,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Border x:Name="Border" Height="48" CornerRadius="24"
+                    <Border x:Name="Border" Height="48" CornerRadius="{DynamicResource RadiusPill}"
                             Background="{DynamicResource ControlHoverBackgroundBrush}">
                         <TextBlock FontSize="{TemplateBinding FontSize}" HorizontalAlignment="Center" VerticalAlignment="Center"
                                    Foreground="{TemplateBinding Foreground}" FontWeight="{TemplateBinding FontWeight}"
@@ -105,11 +105,11 @@
                     <Grid>
                         <!-- Background layer -->
                         <Border x:Name="HoverBg"
-                                CornerRadius="{DynamicResource ControlCornerRadiusLarge}"
+                                CornerRadius="{DynamicResource RadiusCard}"
                                 Background="{TemplateBinding Background}"/>
                         <!-- Overlay border layer -->
                         <Border x:Name="BorderOverlay"
-                                CornerRadius="{DynamicResource ControlCornerRadiusLarge}"
+                                CornerRadius="{DynamicResource RadiusCard}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 Background="Transparent"
@@ -156,7 +156,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Border x:Name="Border" Height="50" Width="50" CornerRadius="25" VerticalAlignment="Center" HorizontalAlignment="Center"
+                    <Border x:Name="Border" Height="50" Width="50" CornerRadius="{DynamicResource RadiusPill}" VerticalAlignment="Center" HorizontalAlignment="Center"
                             Background="{TemplateBinding Background}" >
                         <TextBlock FontSize="{TemplateBinding FontSize}" HorizontalAlignment="Center" VerticalAlignment="Center"
                                    Foreground="{TemplateBinding Foreground}"
@@ -457,7 +457,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
                     <!-- Expand hit area slightly with margin -->
-                    <Grid Background="Transparent" Margin="4">
+                    <Grid Background="Transparent" Margin="{DynamicResource Inset1}">
                         <Border x:Name="HoverBg"
                                 Background="{TemplateBinding Background}"
                                 CornerRadius="20"

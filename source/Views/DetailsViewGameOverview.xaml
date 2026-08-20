@@ -138,7 +138,7 @@
                                                                 <Border Background="Black"
                                                                     BorderBrush="{DynamicResource ContentBorderBrushOverlay}"
                                                                         BorderThickness="1"
-                                                                        CornerRadius="10"/>
+                                                                        CornerRadius="{DynamicResource RadiusInner}"/>
 
                                                                 <Image x:Name="AgeRatingIcon"
                                                                     MaxHeight="1024"
@@ -829,7 +829,7 @@
                                                 <!-- Play/Pause buttons -->
                                                 <Grid HorizontalAlignment="Left"
                                                     VerticalAlignment="Bottom"
-                                                    Margin="20"
+                                                    Margin="{DynamicResource Inset5}"
                                                     IsHitTestVisible="True">
 
                                                     <!-- Play button -->
@@ -1492,11 +1492,11 @@
                                                                             <Grid>
                                                                                 <Border x:Name="HoverBg"
                                                                                         Background="{TemplateBinding Background}"
-                                                                                        CornerRadius="16"/>
+                                                                                        CornerRadius="{DynamicResource RadiusCard}"/>
                                                                                 <Border x:Name="BorderOverlay"
                                                                                         BorderBrush="{TemplateBinding BorderBrush}"
                                                                                         BorderThickness="{TemplateBinding BorderThickness}"
-                                                                                        CornerRadius="16"
+                                                                                        CornerRadius="{DynamicResource RadiusCard}"
                                                                                         Background="Transparent"
                                                                                         Visibility="Collapsed"
                                                                                         IsHitTestVisible="False"/>
@@ -1588,7 +1588,7 @@
                                                     </Grid.Style>
 
                                                     <Border Background="{DynamicResource ControlIdleBackgroundBrush}"
-                                                            CornerRadius="{DynamicResource ControlCornerRadiusLarge}"
+                                                            CornerRadius="{DynamicResource RadiusCard}"
                                                             IsHitTestVisible="False" />
 
                                                     <ContentControl x:Name="SuccessStory_PluginList" MinHeight="265" Margin="0,-6,0,0" />
@@ -1610,7 +1610,7 @@
                                                     </Grid.Style>
 
                                                     <Border Background="Transparent"
-                                                            CornerRadius="{DynamicResource ControlCornerRadiusLarge}"
+                                                            CornerRadius="{DynamicResource RadiusCard}"
                                                             IsHitTestVisible="False" />
 
                                                     <ContentControl x:Name="SuccessStory_PluginCompactList" MinHeight="80" Margin="-15,-6,0,0" />
@@ -1761,7 +1761,7 @@
 
                                                 <Border Background="{DynamicResource ControlIdleBackgroundBrush}"
                                                         CornerRadius="12"
-                                                        Padding="20"
+                                                        Padding="{DynamicResource Inset5}"
                                                         HorizontalAlignment="Stretch"
                                                         MinHeight="50">
 
@@ -1786,7 +1786,7 @@
                                                                             ToolTip="{Binding Name}"
                                                                             Width="48"
                                                                             Height="48"
-                                                                            Margin="8"
+                                                                            Margin="{DynamicResource Inset2}"
                                                                             Padding="0"
                                                                             Background="Transparent"
                                                                             BorderThickness="0"

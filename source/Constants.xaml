@@ -124,14 +124,58 @@
     <FontFamily x:Key="IconFontFamily">Segoe Fluent Icons, Segoe MDL2 Assets</FontFamily>
 
     <sys:Double x:Key="EllipseBorderThickness">1</sys:Double>
+    <!-- ============================ Shape and space (HYP-198) ============================
+
+         Five radius tiers, a 4px spacing ladder, and the two opacity values the base styles
+         used to hardcode. New work uses these; the legacy radius keys below are being
+         retired onto them as each surface is verified.
+
+         RadiusPill is a sentinel, not a measurement. WPF's Border clamps CornerRadius to
+         half the smaller dimension, so 999 renders a true pill or circle at whatever size
+         the element happens to be - verified pixel-for-pixel: a 48x48 Border at 999 is
+         byte-identical to the same Border at 24. That makes it strictly better than the
+         half-height literals it replaces, which quietly stop being pills the moment
+         somebody changes the control's height. ToggleButton.xaml was already in that
+         state: CornerRadius="24" against a TemplateBinding Height, correct only at 48.
+
+         Space* (Double) and Inset* (Thickness) are the same ladder in the two shapes XAML
+         needs; the split is deliberate, since Margin/Padding want a Thickness and things
+         like Width or a StackPanel spacing want a Double. -->
+    <CornerRadius x:Key="RadiusControl">6</CornerRadius>
+    <CornerRadius x:Key="RadiusInner">10</CornerRadius>
+    <CornerRadius x:Key="RadiusCard">16</CornerRadius>
+    <CornerRadius x:Key="RadiusPanel">22</CornerRadius>
+    <CornerRadius x:Key="RadiusPill">999</CornerRadius>
+
+    <sys:Double x:Key="Space1">4</sys:Double>
+    <sys:Double x:Key="Space2">8</sys:Double>
+    <sys:Double x:Key="Space3">12</sys:Double>
+    <sys:Double x:Key="Space4">16</sys:Double>
+    <sys:Double x:Key="Space5">20</sys:Double>
+    <sys:Double x:Key="Space6">24</sys:Double>
+    <sys:Double x:Key="Space7">28</sys:Double>
+    <sys:Double x:Key="Space8">32</sys:Double>
+
+    <Thickness x:Key="Inset1">4</Thickness>
+    <Thickness x:Key="Inset2">8</Thickness>
+    <Thickness x:Key="Inset3">12</Thickness>
+    <Thickness x:Key="Inset4">16</Thickness>
+    <Thickness x:Key="Inset5">20</Thickness>
+    <Thickness x:Key="Inset6">24</Thickness>
+    <Thickness x:Key="Inset7">28</Thickness>
+    <Thickness x:Key="Inset8">32</Thickness>
+
+    <sys:Double x:Key="OpacityDisabled">0.4</sys:Double>
+    <sys:Double x:Key="OpacitySecondary">0.6</sys:Double>
+    <!-- ================================================================================== -->
+
+    <!-- Legacy radius keys. ControlCornerRadius is Playnite-global (core chrome reads it by
+         name), so it stays defined whatever happens to the rest. The others are theme-only
+         and are being folded into the tiers above; what remains here are the values that do
+         not sit on a tier and still need a surface-by-surface visual call. -->
     <CornerRadius x:Key="ControlCornerRadius">6</CornerRadius>
-    <CornerRadius x:Key="ControlCornerRadiusSmall">4</CornerRadius>
     <CornerRadius x:Key="ControlCornerRadiusMedium">8</CornerRadius>
-    <CornerRadius x:Key="ControlCornerRadiusLarge">16</CornerRadius>
-    <CornerRadius x:Key="ControlCornerRadiusLarger">22</CornerRadius>
-    <CornerRadius x:Key="ControlCornerRadiusLargeX">24</CornerRadius>
     <CornerRadius x:Key="SteamLinksBorderCornerRadius">21</CornerRadius>
-    <CornerRadius x:Key="MenuCornerRadius">14</CornerRadius>
     <CornerRadius x:Key="VideoCornerRadius">18</CornerRadius>
     <CornerRadius x:Key="VideoControlsCornerRadius">18,18,0,0</CornerRadius>
 
@@ -143,7 +187,6 @@
 
     <CornerRadius x:Key="GridCornerRadius">14</CornerRadius>
     <CornerRadius x:Key="GridCornerRadiusBorder">17</CornerRadius>
-    <CornerRadius x:Key="GridCornerDetailsPanel">22</CornerRadius>
     
     <Thickness x:Key="PopupBorderThickness">1</Thickness>
     <Thickness x:Key="ControlBorderThickness">1</Thickness>

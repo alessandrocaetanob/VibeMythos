@@ -120,7 +120,7 @@
                                 <Border.Style>
                                     <Style TargetType="Border">
                                         <Setter Property="Visibility" Value="Collapsed"/>
-                                        <Setter Property="CornerRadius" Value="{DynamicResource ControlCornerRadiusLarge}"/>
+                                        <Setter Property="CornerRadius" Value="{DynamicResource RadiusCard}"/>
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding Tag, RelativeSource={RelativeSource Self}, FallbackValue=False}" Value="True">
                                                 <Setter Property="Visibility" Value="Visible"/>

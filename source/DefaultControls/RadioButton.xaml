@@ -18,7 +18,7 @@
                     <Border Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}">
                         <DockPanel>
                             <Border x:Name="BulletBorder" DockPanel.Dock="Left" VerticalAlignment="Center"
-                                    CornerRadius="{DynamicResource ControlCornerRadiusLarge}"
+                                    CornerRadius="{DynamicResource RadiusCard}"
                                     BorderThickness="{TemplateBinding BorderThickness}"
                                     BorderBrush="{TemplateBinding BorderBrush}">
                                 <Grid Width="20" Height="20">
