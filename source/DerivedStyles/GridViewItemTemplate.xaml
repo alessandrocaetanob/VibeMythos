@@ -80,7 +80,7 @@
                                     </Grid>
                                 </Border>
 
-                                <Border Tag="{DynamicResource GridViewShowFavorites}" Background="{DynamicResource FavBrush}" Width="30" Height="30" CornerRadius="8" Margin="16,8,8,16"
+                                <Border Tag="{DynamicResource GridViewShowFavorites}" Background="{DynamicResource FavBrush}" Width="30" Height="30" CornerRadius="{DynamicResource ControlCornerRadiusMedium}" Margin="16,8,8,16"
                                         VerticalAlignment="Top" HorizontalAlignment="Right">
                                     <Border.Style>
                                         <Style TargetType="Border">
