@@ -14,7 +14,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="CalendarItem">
-                    <Border Background="{TemplateBinding Background}" CornerRadius="{StaticResource ControlCornerRadiusLarge}" Padding="8"
+                    <Border Background="{TemplateBinding Background}" CornerRadius="{StaticResource RadiusCard}" Padding="{DynamicResource Inset2}"
                             BorderThickness="{TemplateBinding BorderThickness}"
                             BorderBrush="{TemplateBinding BorderBrush}">
                         <DockPanel Name="PART_Root" LastChildFill="True" >
@@ -129,7 +129,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type CalendarDayButton}">
-                    <Border x:Name="HoverBg" Background="Transparent" CornerRadius="40" Margin="2">
+                    <Border x:Name="HoverBg" Background="Transparent" CornerRadius="{DynamicResource RadiusPill}" Margin="2">
                         <ContentPresenter
                         Content="{TemplateBinding ContentControl.Content}"
                         ContentTemplate="{TemplateBinding ContentControl.ContentTemplate}"

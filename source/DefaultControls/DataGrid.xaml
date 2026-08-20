@@ -263,7 +263,7 @@
                 <ControlTemplate TargetType="{x:Type DataGridColumnHeader}">
                     <Grid>
                         <Border x:Name="columnHeaderBorder" BorderThickness="1"
-                                Padding="4"
+                                Padding="{DynamicResource Inset1}"
                                 BorderBrush="{DynamicResource NormalBorderBrush}"
                                 Background="{DynamicResource ControlBackgroundBrush}">
                             <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"

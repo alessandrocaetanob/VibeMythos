@@ -135,7 +135,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ToggleButton}">
                     <Grid>
-                        <Border x:Name="Border" Background="{TemplateBinding Background}" CornerRadius="24"
+                        <Border x:Name="Border" Background="{TemplateBinding Background}" CornerRadius="{DynamicResource RadiusPill}"
                                 Height="{TemplateBinding Height}" Width="{TemplateBinding Width}">
                             <TextBlock x:Name="FavoriteAction" Text="{DynamicResource LOCRemoveFavoriteGame}"
                                        FontSize="{TemplateBinding FontSize}" Foreground="{TemplateBinding Foreground}" FontWeight="{TemplateBinding FontWeight}"

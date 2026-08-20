@@ -107,9 +107,9 @@
             <Popup IsOpen="{Binding Path=IsSubmenuOpen, RelativeSource={RelativeSource TemplatedParent}}" Placement="Right"
                    Focusable="False" AllowsTransparency="True" VerticalOffset="-10">
                 <Border BorderBrush="{DynamicResource PopupBorderBrush}" Background="{DynamicResource SubtlePopUpBackgroundBrush}"
-                        BorderThickness="{DynamicResource PopupBorderThickness}" CornerRadius="{DynamicResource ControlCornerRadiusLarge}">
+                        BorderThickness="{DynamicResource PopupBorderThickness}" CornerRadius="{DynamicResource RadiusCard}">
                     <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto"
-                                  Padding="8">
+                                  Padding="{DynamicResource Inset2}">
                         <StackPanel Grid.IsSharedSizeScope="True" IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Cycle"/>
                     </ScrollViewer>
                 </Border>

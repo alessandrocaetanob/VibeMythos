@@ -11,7 +11,7 @@
         <Setter Property="FontFamily" Value="{DynamicResource FontFamily}" />
         <Style.Triggers>
             <Trigger Property="IsEnabled" Value="False">
-                <Setter Property="Opacity" Value="0.4" />
+                <Setter Property="Opacity" Value="{DynamicResource OpacityDisabled}" />
             </Trigger>
         </Style.Triggers>
     </Style>
@@ -22,7 +22,7 @@
         <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
         <Style.Triggers>
             <Trigger Property="IsEnabled" Value="False">
-                <Setter Property="Opacity" Value="0.6" />
+                <Setter Property="Opacity" Value="{DynamicResource OpacitySecondary}" />
             </Trigger>
         </Style.Triggers>
     </Style>
@@ -34,7 +34,7 @@
         <Setter Property="FontWeight" Value="Bold"/>
         <Style.Triggers>
             <Trigger Property="IsEnabled" Value="False">
-                <Setter Property="Opacity" Value="0.6" />
+                <Setter Property="Opacity" Value="{DynamicResource OpacitySecondary}" />
             </Trigger>
         </Style.Triggers>
     </Style>
@@ -47,7 +47,7 @@
         <Setter Property="HorizontalAlignment" Value="Center"/>
         <Style.Triggers>
             <Trigger Property="IsEnabled" Value="False">
-                <Setter Property="Opacity" Value="0.6" />
+                <Setter Property="Opacity" Value="{DynamicResource OpacitySecondary}" />
             </Trigger>
         </Style.Triggers>
     </Style>
@@ -82,7 +82,7 @@
                             BorderBrush="{DynamicResource ContentBorderBrushOverlay}"
                             BorderThickness="1"
                             CornerRadius="{DynamicResource ControlCornerRadius}"
-                            Padding="4">
+                            Padding="{DynamicResource Inset1}">
                         <Image Source="{Binding Icon}"
                                Stretch="Uniform"
                                RenderOptions.BitmapScalingMode="Fant" />

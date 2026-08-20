@@ -18,7 +18,7 @@
                         <DockPanel>
                             <Border x:Name="BulletBorder" DockPanel.Dock="Left" VerticalAlignment="Center"
                                     Width="40" Height="22"
-                                    CornerRadius="11"
+                                    CornerRadius="{DynamicResource RadiusPill}"
                                     Background="{DynamicResource ControlIdleBackgroundBrush}">
                                 <Grid>
                                     <Ellipse x:Name="Dot"
@@ -36,7 +36,7 @@
                                         </Ellipse.RenderTransform>
                                     </Ellipse>
                                     <Border x:Name="BorderOverlay"
-                                            CornerRadius="11"
+                                            CornerRadius="{DynamicResource RadiusPill}"
                                             BorderThickness="1"
                                             BorderBrush="{DynamicResource ControlIdleBorderBrush}"
                                             Background="Transparent"

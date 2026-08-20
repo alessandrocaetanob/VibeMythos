@@ -3,7 +3,7 @@
 
     <ControlTemplate x:Key="NumericBoxTemplate" TargetType="{x:Type TextBox}">
         <Border x:Name="HoverBg"
-                Padding="4"
+                Padding="{DynamicResource Inset1}"
                 CornerRadius="{DynamicResource ControlCornerRadius}"
                 Background="{DynamicResource GlassControlBrushDark}"
                 BorderBrush="{DynamicResource ControlIdleBorderBrush}"

@@ -77,13 +77,13 @@
                     MaxHeight="300" MinWidth="{Binding ActualWidth, ElementName=MainToggle}" VerticalOffset="5">
                     <Border Background="{DynamicResource SubtlePopUpBackgroundBrush}"
                             BorderThickness="{DynamicResource PopupBorderThickness}"
-                            BorderBrush="{DynamicResource PopupBorderBrush}" CornerRadius="{DynamicResource ControlCornerRadiusLarge}">
+                            BorderBrush="{DynamicResource PopupBorderBrush}" CornerRadius="{DynamicResource RadiusCard}">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
-                            <DockPanel Grid.Row="0" Margin="8" Name="PART_ElemSearchHost">
+                            <DockPanel Grid.Row="0" Margin="{DynamicResource Inset2}" Name="PART_ElemSearchHost">
                                 <SearchBox DockPanel.Dock="Left" Margin="0" x:Name="PART_SearchBox"/>
                             </DockPanel>
                             <ItemsControl x:Name="PART_ItemsPanel" Grid.Row="1"/>

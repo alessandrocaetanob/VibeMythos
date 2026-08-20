@@ -130,13 +130,13 @@
                        MaxHeight="300" MinWidth="{Binding ActualWidth, ElementName=MainToggle}" VerticalOffset="5">
                     <Border Background="{DynamicResource SubtlePopUpBackgroundBrush}"
                             BorderThickness="{DynamicResource PopupBorderThickness}"
-                            BorderBrush="{DynamicResource PopupBorderBrush}" CornerRadius="{DynamicResource ControlCornerRadiusLarge}">
+                            BorderBrush="{DynamicResource PopupBorderBrush}" CornerRadius="{DynamicResource RadiusCard}">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto"/>
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
-                            <DockPanel Grid.Row="0" Margin="8" Name="PART_ElemSearchHost">
+                            <DockPanel Grid.Row="0" Margin="{DynamicResource Inset2}" Name="PART_ElemSearchHost">
                                 <!-- "Show only selected" - Playnite binds it by name, so dropping it
                                      silently removed the control that lets you review your current
                                      selection. That is exactly what you need once a filter has more
@@ -179,7 +179,7 @@
                     <Border Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}">
                         <DockPanel>
                             <Border x:Name="BulletBorder" DockPanel.Dock="Left" VerticalAlignment="Center"
-                                    CornerRadius="{DynamicResource ControlCornerRadiusLarge}"
+                                    CornerRadius="{DynamicResource RadiusCard}"
                                     BorderThickness="{TemplateBinding BorderThickness}"
                                     BorderBrush="{TemplateBinding BorderBrush}"
                                     RenderTransformOrigin="0.5,0.5">
