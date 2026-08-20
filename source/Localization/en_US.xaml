@@ -4,16 +4,41 @@
 
     <!-- {DynamicResource LOCMythos_} -->
 
+    <!-- ================= Deliberate overrides of Playnite-global keys =================
+
+         Everything after this block is theme-owned (LOCMythos_*) and safe to edit freely.
+         These four are Playnite's own strings, so changing them changes Playnite's UI and
+         not just the theme's. Each survived the HYP-166 audit on purpose; the rest were
+         dropped. Do not add to this list without the same deliberation.
+
+         The two blanks are U+2800 BRAILLE PATTERN BLANK - not whitespace, not a typo.
+         Playnite will not take an empty string here, so a character that renders as nothing
+         is how the notice gets suppressed. Confirmed intended 2026-08-20: the restart notice
+         and the "* requires restart" marker are considered visually intrusive. The cost is
+         real and accepted - somebody who installs an unrelated addon is no longer told a
+         restart is needed. All 10 locales now carry the same blank, so the behaviour no
+         longer depends on the user's language.
+
+         LOCExitAppLabel / LOCOpenPlaynite are the Windows notification-area entries, i.e.
+         outside the application entirely. Branded on purpose (HYP-200), reaffirmed 2026-08-20.
+
+         LOCPlayGame is exposed as a ThemeModifier terminology setting (thememodifier.yaml,
+         "Launch Button Label") and is the only override with a real theme consumer,
+         DerivedStyles/PlayButton.xaml.
+
+         Dropped by HYP-166, recorded so they are not reintroduced:
+           LOCVersionLabel  was "Play Button" - it relabelled Playnite's *version* field,
+                            had no theme consumer and was absent from thememodifier.yaml.
+           LOCNotesLabel    was "Synopsis" - the theme's own Notes section renders no label,
+                            so it only ever changed Playnite's own dialogs. -->
     <sys:String x:Key="LOCAddonChangesRestart">⠀</sys:String>
     <sys:String x:Key="LOCSettingsRestartNotification">⠀</sys:String>
-
-    <sys:String x:Key="LOCVersionLabel">Play Button</sys:String>
-    <sys:String x:Key="LOCNotesLabel">Synopsis</sys:String>
 
     <sys:String x:Key="LOCExitAppLabel">Exit VibeMythos</sys:String>
     <sys:String x:Key="LOCOpenPlaynite">Open VibeMythos</sys:String>
 
     <sys:String x:Key="LOCPlayGame">Launch</sys:String>
+    <!-- ============================================================================== -->
 
 
     <sys:String x:Key="LOCMythos_Search">Search</sys:String>

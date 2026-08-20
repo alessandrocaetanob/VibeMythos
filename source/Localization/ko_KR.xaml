@@ -2,8 +2,8 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:sys="clr-namespace:System;assembly=mscorlib">
 
-    <sys:String x:Key="LOCVersionLabel">플레이 버튼</sys:String>
-    <sys:String x:Key="LOCNotesLabel">시놉시스</sys:String>
+    <sys:String x:Key="LOCAddonChangesRestart">⠀</sys:String>
+    <sys:String x:Key="LOCSettingsRestartNotification">⠀</sys:String>
     <sys:String x:Key="LOCExitAppLabel">VibeMythos 종료</sys:String>
     <sys:String x:Key="LOCOpenPlaynite">VibeMythos 열기</sys:String>
 
@@ -31,6 +31,7 @@
     <sys:String x:Key="LOCMythos_SocialLinks">소셜 링크</sys:String>
     <sys:String x:Key="LOCMythos_Tags">태그:</sys:String>
     <sys:String x:Key="LOCMythos_AchievementsTitle">도전 과제</sys:String>
+    <sys:String x:Key="LOCMythos_NowPlaying">재생 중</sys:String>
     <sys:String x:Key="LOCMythos_ShowAll">전체 보기</sys:String>
     <sys:String x:Key="LOCMythos_Unlocked">달성:</sys:String>
     <sys:String x:Key="LOCMythos_Of">/</sys:String>

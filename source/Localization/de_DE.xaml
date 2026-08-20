@@ -2,8 +2,8 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:sys="clr-namespace:System;assembly=mscorlib">
 
-    <sys:String x:Key="LOCVersionLabel">Play-Schaltfläche</sys:String>
-    <sys:String x:Key="LOCNotesLabel">Zusammenfassung</sys:String>
+    <sys:String x:Key="LOCAddonChangesRestart">⠀</sys:String>
+    <sys:String x:Key="LOCSettingsRestartNotification">⠀</sys:String>
     <sys:String x:Key="LOCExitAppLabel">VibeMythos beenden</sys:String>
     <sys:String x:Key="LOCOpenPlaynite">VibeMythos öffnen</sys:String>
 
@@ -31,6 +31,7 @@
     <sys:String x:Key="LOCMythos_SocialLinks">Soziale Links</sys:String>
     <sys:String x:Key="LOCMythos_Tags">Tags:</sys:String>
     <sys:String x:Key="LOCMythos_AchievementsTitle">Errungenschaften</sys:String>
+    <sys:String x:Key="LOCMythos_NowPlaying">JETZT LÄUFT</sys:String>
     <sys:String x:Key="LOCMythos_ShowAll">Alle anzeigen</sys:String>
     <sys:String x:Key="LOCMythos_Unlocked">Freigeschaltet:</sys:String>
     <sys:String x:Key="LOCMythos_Of">von</sys:String>
