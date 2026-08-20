@@ -29,12 +29,16 @@ from pathlib import Path
 X_NS = "http://schemas.microsoft.com/winfx/2006/xaml"
 KEY_ATTR = f"{{{X_NS}}}Key"
 
-# Keys Playnite itself, or an installed plugin, puts in the merged dictionary.
-# A theme is allowed to consume these without defining them.
+# Plugin-supplied keys. CLAUDE.md is explicit that any <Plugin>_* key is an external API,
+# so these stay as prefixes: the plugin set is not knowable from a Playnite install, and a
+# theme is allowed to consume them without defining them.
+#
+# "LOC" and "Glyph" used to live here too. They are gone because tools/baseline/ now carries
+# the real names (HYP-213) - a prefix cannot tell "Playnite defines this" from "nobody
+# defines this", which is precisely how a typo'd LOC key used to pass. As of the 10.56.0
+# baseline these prefixes match nothing at all; they are kept for the next plugin binding.
 EXTERNAL_KEY_PREFIXES = (
-    "LOC",              # Playnite localization
-    "Glyph",            # Playnite glyph set
-    "SuccessStory",     # plugin-supplied
+    "SuccessStory",
     "PlayniteAchievements",
     "HowLongToBeat",
     "ThemeExtras",
@@ -43,11 +47,39 @@ EXTERNAL_KEY_PREFIXES = (
     "UPS_",
 )
 
-# Keys Playnite defines in GlobalResources.xaml or its own default theme, which is
-# merged immediately before ours (default/X.xaml -> theme/X.xaml, per file — see
-# ThemeManager.ApplyTheme). Consuming these without defining them is legal.
+# tools/baseline/, pinned from a real install by tools/refresh_baseline.py. Names only, no
+# markup: nothing third-party is redistributed. Optional so the checker still runs if the
+# fixture is absent, but a run without it is materially weaker - see load_baseline_keys.
+BASELINE_DIR = Path(__file__).resolve().parent / "baseline"
+BASELINE_KEY_FILES = ("default-theme-keys.txt", "external-keys.txt")
+
+
+def load_baseline_keys() -> set[str]:
+    """Key names Playnite ships on disk: its default theme, templates and localization."""
+    keys: set[str] = set()
+    for name in BASELINE_KEY_FILES:
+        path = BASELINE_DIR / name
+        if not path.exists():
+            continue
+        keys |= {
+            line.strip()
+            for line in path.read_text(encoding="utf-8").splitlines()
+            if line.strip() and not line.startswith("#")
+        }
+    return keys
+
+# The residue that tools/baseline/ cannot reach: GlobalResources.xaml is compiled into
+# Playnite.DesktopApp.exe as globalresources.baml, so it is not on disk to be harvested and
+# these names have to be listed by hand. Everything Playnite ships as a .xaml file now comes
+# from the baseline instead (HYP-213), which is why this list is 21 entries rather than the
+# ~1,350 it would otherwise need to be.
+#
+# The default-theme style entries below sit here for the same reason in reverse: they ARE in
+# the baseline, and are kept only so the checker still behaves sensibly when the fixture is
+# missing. Consuming any of these without defining them is legal - ThemeManager.ApplyTheme
+# merges default/X.xaml immediately before theme/X.xaml, per file.
 EXTERNAL_KEYS = {
-    # GlobalResources.xaml
+    # GlobalResources.xaml (compiled in; not harvestable)
     "True",
     "False",
     "ObjectToStringConverter",
@@ -74,17 +106,22 @@ EXTERNAL_KEYS = {
     # while they sat in this allowlist the checker could not report them going missing.
 }
 
-# NOTE on the two lists above: a hand-maintained allowlist is the weak point of this
-# checker. It cannot distinguish "Playnite defines this" from "nobody defines this",
-# so a genuinely broken key that happens to match a prefix slips through, and every
-# new Playnite release risks a fresh false positive.
+# This block used to warn that a hand-maintained allowlist was the weak point of the
+# checker - it could not distinguish "Playnite defines this" from "nobody defines this", so
+# a broken key that happened to match a prefix slipped through. HYP-213 fixed that: the
+# frozen manifest in tools/baseline/ carries the real names for everything Playnite ships
+# as a .xaml, so the "LOC" and "Glyph" prefixes are gone and a typo in one now fails.
 #
-# The PowerShell version in CLAUDE.md avoids this by reading all four real resource
-# roots, but that needs a Playnite install and so cannot run in CI. HYP-168 replaces
-# both approaches with a frozen key manifest (~31 KB, the union of the three external
-# roots as newline-delimited names): no install needed, nothing third-party
-# redistributed, and no guessing by prefix. Until then, treat a pass here as weaker
-# evidence than a pass from the PowerShell check.
+# What is left above is genuinely irreducible, and worth knowing before trusting a pass:
+#   - the plugin prefixes cannot be enumerated from a Playnite install at all
+#   - the 21 GlobalResources names are compiled into Playnite.DesktopApp.exe as
+#     globalresources.baml and are not on disk to harvest
+#
+# One gap the manifest does not close: this checks that keys *resolve*, not that the file
+# is valid XAML. Xaml.FromFile also throws on an unknown property or a bad type converter,
+# and by hard rule 10 that costs the user the entire theme. tools/check_xaml_wpf.ps1 covers
+# it by parsing against real WPF, but it needs Windows and a Playnite install, so it cannot
+# run here - a green CI run is not the same as a green local one.
 
 RESOURCE_RE = re.compile(r"\{\s*(?:Dynamic|Static)Resource\s+([^},\s]+)\s*[,}]")
 # `{DynamicResource {x:Static ...}}` and friends are not plain key lookups.
@@ -247,7 +284,16 @@ def main() -> int:
     ok = report("well-formed XAML", check_well_formed(files))
 
     keys = defined_keys(files)
-    ok &= report("resource keys resolve", check_resources(files, keys))
+    baseline = load_baseline_keys()
+    if baseline:
+        print(f"baseline: {len(baseline)} Playnite key names from {BASELINE_DIR.name}/\n")
+    else:
+        print(
+            f"WARN  no key manifest under {BASELINE_DIR} - falling back to the hand-listed\n"
+            f"      allowlist, which cannot tell a typo from a Playnite-supplied key.\n"
+            f"      Regenerate it with tools/refresh_baseline.py.\n"
+        )
+    ok &= report("resource keys resolve", check_resources(files, keys | baseline))
     ok &= report("localization parity", check_localization(source))
 
     constants_keys = defined_keys([source / "Constants.xaml"])

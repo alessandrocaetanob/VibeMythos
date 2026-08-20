@@ -43,6 +43,19 @@ jobs:
       - name: Theme static checks
         run: python tools/validate_theme.py
 
+      # The theme ships ~68 near-verbatim copies of Playnite's default-theme files, each
+      # merged OVER Playnite's. A copy that falls behind silently overrides whatever
+      # Playnite ships next - HYP-203/204 (a dropped PART_* taking its functionality with
+      # it) and HYP-202 (a core brush never retinted, so plugin windows rendered navy)
+      # were all that failure. This diffs source/ against the pinned name manifest in
+      # tools/baseline/, so it needs no Playnite install. stdlib only, same as above.
+      #
+      # It compares against the FIXTURE, never against a live Playnite: a release that
+      # adds a file or key is invisible until somebody runs tools/refresh_baseline.py on
+      # a Windows box and reviews the diff. See tools/baseline/README.md.
+      - name: Default-theme baseline diff
+        run: python tools/check_baseline.py
+
       # Hard rules 7 and 9. The theme Id keys the deployed folder name, and Constants.xaml
       # embeds that folder name in three font chains; the same Id is repeated in three more
       # manifests. Every failure mode here is silent at runtime - fonts quietly degrade to

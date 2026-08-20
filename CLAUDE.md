@@ -237,6 +237,43 @@ Only raise it once a Playnite release actually raises `DesktopApiVersion`.
 
 There is no compiler, so these checks are the only automated safety net. All are verified to run in this repo's PowerShell.
 
+**Start here: `tools/check_xaml_wpf.ps1`.** It is the closest thing this repo has to a
+compiler, and the only check that covers hard rule 10 properly — it parses *and realizes*
+every file against real WPF in a Playnite-shaped context.
+
+```powershell
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File tools/check_xaml_wpf.ps1
+```
+
+Everything below, and `tools/validate_theme.py` in CI, proves the files are well-formed XML
+and that their resource keys resolve. `Xaml.FromFile` also throws on an unknown property or
+a bad type converter, and neither an `[xml]` cast nor the Python checker can see that.
+Demonstrated rather than asserted: a `<Setter Property="NoSuchProperty">` in `Button.xaml`
+passes both Python checks and fails this one at the exact file and line.
+
+Four things make it work, and getting any of them wrong measures the harness instead of the
+theme. The script handles all four; they are listed because the failure modes look like
+theme bugs:
+
+- **32-bit host.** Playnite is PE32/x86, so a 64-bit PowerShell cannot load its assemblies
+  and every `Views/*.xaml` fails with `Failed to create a 'Type' from the text 'TopPanel'`.
+  This one detail is the difference between **28** and **78** passing files. The script
+  re-launches itself under `SysWOW64`.
+- **Playnite's assemblies**, for the CLR types the Views reference by `clr-namespace`.
+- **An `Application` object**, because `StaticResource` falls back to
+  `Application.Current.Resources` — that is *how* one theme file resolves a key another
+  defines. Playnite's default theme, Localization and Templates are merged in first.
+- **Forced realization.** `ResourceDictionary` defers its values, so a broken
+  `StaticResource` stays invisible until something reads the key.
+
+⚠️ A clean run is **`78 realized, 1 expected failure`**, not zero failures. `Media.xaml`
+always fails on a `BitmapImage`: `{ThemeFile}` resolves against a *deployed* theme directory
+and `source/` is not one (hard rule 7). Any *other* failure is real. Exit code is 0 on a
+clean run and 1 on an unexpected failure, so it can be chained.
+
+It cannot run in CI — Windows plus a Playnite install — so a green GitHub Actions run is
+weaker evidence than a green local one. Run it before opening a PR that touches XAML.
+
 **XAML well-formedness** (every file must parse as XML):
 
 ```powershell
@@ -498,6 +535,30 @@ Scope note: there is no compiled language here, so Sonar's value is the **XML an
 
 **Upstream sync** — Mythos ships *all* default-theme style files, so any Playnite release that changes theme files may require a diff pass (track via [Playnite#1259](https://github.com/JosefNemec/Playnite/issues/1259)).
 
+**The baseline is pinned at Playnite 10.56.0** (HYP-213), in `tools/baseline/` — names only,
+no Playnite markup: 84 default-theme file paths, 177 default keys, 1,177 template and
+localization keys, 42 paint keys, and the `PART_*` names per file. `tools/check_baseline.py`
+diffs `source/` against it on every PR and fails on a dropped `PART_*` (the HYP-203/204
+class), a core `Color`/`Brush` the theme never redefines (HYP-202), or a `.xaml` at a path
+the default theme does not have (hard rule 1).
+
+Two things follow that are easy to get wrong:
+
+- **It compares against the fixture, never against the Playnite on your disk.** CI has no
+  install — that is what lets it run on a Linux runner. A Playnite release that adds a file
+  or a key stays invisible until somebody regenerates and reads the diff:
+
+  ```powershell
+  python tools/refresh_baseline.py --playnite "F:\Playnite"
+  ```
+
+- **The key manifest is also what makes `validate_theme.py` trustworthy.** It used to accept
+  any key starting with `LOC` or `Glyph`, so a typo in one was indistinguishable from a real
+  Playnite string. Those prefixes are gone; the plugin prefixes stay, because CLAUDE.md
+  treats `<Plugin>_*` as an external API and no install can enumerate it. The residue is 21
+  hand-listed names from `GlobalResources.xaml`, which is compiled into
+  `Playnite.DesktopApp.exe` as `globalresources.baml` and cannot be harvested from disk.
+
 ### Tooling worth reaching for
 
 - **Microsoft Learn MCP** (`microsoft_docs_search` / `microsoft_code_sample_search`) — the best source for WPF/XAML specifics: storyboards, triggers, `VisualStateManager`, binding modes, render-transform performance.
@@ -514,7 +575,7 @@ Verified against the current tree — useful context before touching these areas
 - ~~**Global task progress is missing.**~~ **Shipped (HYP-155).** `PART_ProgressGlobal`, `PART_TextProgressText` and `PART_ButtonProgressCancel` now live in `Views/TopPanel.xaml`. Still open: the per-plugin indicator in Sidebar items, which uses `PART_ProgressStatus` (`CustomControls/SidebarItem.xaml`) → HYP-156.
 - **7 Playnite-global `LOC*` keys are overridden** in `Localization/en_US.xaml` (of 38 total keys), leaking theme terminology outside the theme: `LOCAddonChangesRestart`, `LOCExitAppLabel`, `LOCNotesLabel`, `LOCOpenPlaynite`, `LOCPlayGame`, `LOCSettingsRestartNotification`, `LOCVersionLabel`. The other 31 are theme-owned `LOCMythos_*`. Additionally, every locale is missing **3** keys present in `en_US` (`LOCAddonChangesRestart`, `LOCSettingsRestartNotification`, `LOCMythos_NowPlaying` — the last never back-filled after the toast shipped in `b86b04e`, so the Now Playing string is untranslated in all 10 locales), . `de_DE.xaml`'s 9 stale keys are **gone** — re-verified 2026-08-17, all 10 locales now sit at exactly 35 keys with 0 extras, so the only remaining parity work is back-filling those 3. → HYP-166.
 - **Plugin wiring is broadening but still shallow.** Ten plugin-injected controls are declared: `ExtraMetadataLoader_LogoLoaderControl(Grid)` ×2 each, `ExtraMetadataLoader_VideoLoaderControl`, `ThemeExtras_Banner`, `SuccessStory_Plugin{List,CompactList}`, `PlayniteAchievements_AchievementButton` ×2, `DuplicateHider_SourceSelector{,1,2}`. Real `PluginStatus`/`PluginSettings` markup-extension usage — **excluding matches inside XML comments**, which is a trap this file has fallen into twice — sits in `Views/DetailsViewGameOverview.xaml` (23), `Views/GridViewGameOverview.xaml` (17), `Views/MainWindow.xaml` (4), `Views/TopPanel.xaml` (3) and `DerivedStyles/GridViewItemTemplate.xaml` (**0** — it wires `DuplicateHider_SourceSelector` purely via the `ContentControl x:Name` convention; its only match is the word inside a comment). Achievements (HYP-157/158), source badges (HYP-160) and the ambient backdrop (HYP-163) have shipped; → HYP-159, HYP-161, HYP-165, HYP-167 remain, plus the Tier 1–3 plugins in the 3.0 plan.
-- **No CI yet** — validation is manual via the commands above. → HYP-168.
+- ~~**No CI yet.**~~ **Shipped (HYP-168).** `.github/workflows/validate.yml` runs the static checks, the theme-Id/font-chain coupling and manifest YAML parsing on every PR. HYP-213 added the pinned default-theme baseline diff on top. Not covered by CI and still manual: the real WPF parse, which needs a Playnite install.
 
 ## Plugin integration cheat sheet
 
