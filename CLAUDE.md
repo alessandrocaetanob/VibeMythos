@@ -252,6 +252,43 @@ These are the constraints that are not discoverable from the code, and violating
     powershell.exe -NoProfile -ExecutionPolicy Bypass -File tools/check_xaml_wpf.ps1 -PreFlight
     ```
 
+13. **`ApplyTheme` loads every file TWICE, and the second pass is not guarded.** Rule 12 covers
+    the pre-flight at `Themes.cs:132`, whose throw is caught — `allLoaded = false`, fall back to
+    the default theme. There is a **second** `Xaml.FromFile` at `Themes.cs:197`, in the pass that
+    actually merges, and it is **outside that try/catch**. A throw there is an unhandled exception
+    in `PlayniteApplication..ctor`: Playnite does not fall back, it **fails to start at all**.
+    Shipped that way on 2026-08-20 (HYP-246) — the user could not open the app.
+
+    The two passes see different resources, so a file can pass one and fail the other:
+
+    | Pass | What is in scope | Failure |
+    |---|---|---|
+    | pre-flight `:132` | Playnite's defaults only; **no** theme file | theme falls back to Default |
+    | merge `:197` | progressive — only what App.xaml merged **before** this file | **Playnite will not start** |
+
+    The practical rule: **a theme file may only `StaticResource` something merged earlier than
+    itself.** Positions are fixed by App.xaml, not by the theme. `Constants.xaml` is 1,
+    `Common.xaml` 2, `DefaultControls/Border.xaml` 4, `Label.xaml` 16, `Views/*` 72–84.
+
+    So `Common.xaml` **cannot** carry `BasedOn="{StaticResource {x:Type Border}}"` or
+    `{x:Type Label}` — those implicit styles arrive at 4 and 16, long after it. A style at
+    position 2 has to declare what it needs itself. The same reference is perfectly legal from
+    `Views/FilterPanelView.xaml` (74) or `SearchView.xaml` (84), which is why the pattern looks
+    safe elsewhere in the tree.
+
+    ⚠️ Note this is the *opposite* shape to rule 12. There, merge order was irrelevant because
+    pre-flight merges nothing; here it is the whole story. Both are real, and a change can trip
+    either — check both.
+
+    ✅ `tools/check_xaml_wpf.ps1` phase **1b** models this pass: it walks App.xaml's real order and
+    loads each file with only its predecessors in scope, keeping Playnite's `Templates\Themes`
+    and `Localization` pinned (they are already in the app and are not part of the theme merge
+    list — clearing them invents failures on `LOCSaveLabel`, `False` and friends).
+
+    Demonstrated on the tree that would not start: phase 1 reported **0**, phase 1b reported
+    `FAIL Common.xaml (merged at position 2)`.
+
+
 ## Repository layout
 
 | Path | Purpose |
