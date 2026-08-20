@@ -8,3 +8,8 @@
 # a regex, or from a CI step) writes tools/__pycache__ next to it.
 __pycache__/
 *.py[cod]
+
+# Playnite resolves its database path against the *current working directory*, so
+# launching Playnite.DesktopApp.exe from a shell sitting in the repo builds a fresh
+# ~50MB library/ here instead of using F:\Playnite\library (hit in HYP-212).
+library/

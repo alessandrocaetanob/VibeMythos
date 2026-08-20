@@ -43,9 +43,28 @@ These are the constraints that are not discoverable from the code, and violating
    | `Views/` | `LibraryListView.xaml` |
 
    So "shared code must go in `Common.xaml`" is a *style* choice, not a hard constraint — `Border.xaml`
-   and `TextBlock.xaml` are legitimate homes for base styles. HYP-212 tracks confirming one on device
-   before the token migration leans on it. ThemeOptions (HYP-164) remains the only way to load a path
-   that is **not** on the list at all.
+   and `TextBlock.xaml` are legitimate homes for base styles. ThemeOptions (HYP-164) remains the only
+   way to load a path that is **not** on the list at all.
+
+   ✅ **Confirmed on device (HYP-212, 2026-08-19).** Both halves of the claim were exercised against
+   Playnite 10.56 on this install, with a positive control to prove the method could detect a failure
+   at all:
+
+   | Run | `source/DefaultControls/` state | Result |
+   |---|---|---|
+   | Baseline | as shipped | starts clean, no theme errors |
+   | Positive control | malformed `Button.xaml` (a path the theme **ships**) | `ThemeManager:Failed to load xaml …\Button.xaml` |
+   | Test | malformed `Border.xaml` (a path the theme has **never shipped**) | `ThemeManager:Failed to load xaml …\Border.xaml` |
+   | Precedence | valid `Border.xaml` with an implicit magenta `Style TargetType="Border"` | every Border in the UI renders magenta |
+
+   The third run proves Playnite opens and parses a theme file at an unclaimed path. The fourth proves
+   the theme's copy is merged **after** the default's and wins: the default's `Border.xaml` declares an
+   implicit Border style setting only `SnapsToDevicePixels`, and the theme's copy replaced it wholesale.
+
+   ⚠️ Two cautions that follow from the same evidence. An implicit `Style TargetType="Border"` has
+   app-wide blast radius, which is exactly why the probe was so visible, so prefer `x:Key`ed styles in
+   these files unless you genuinely mean to restyle every instance. And claiming a path means the theme
+   now owns that file's parse risk under rule 10, so a new file is a new way to lose the whole theme.
 
    Note the cascade order is fixed by App.xaml, not by the theme: `ApplyTheme` re-merges
    default→theme per file in App.xaml's order, so a theme file's position in the lookup chain is not
@@ -162,6 +181,23 @@ These are the constraints that are not discoverable from the code, and violating
     commit. Note well-formed-XML is necessary but not sufficient — `Xaml.FromFile` also throws on
     valid-XML-but-invalid-XAML (an unknown property, a bad type converter), which the `[xml]` cast
     will happily accept.
+
+    ✅ **Verified on device (HYP-212, 2026-08-19)**, including the fallback: Playnite logged the two
+    lines below to `F:\Playnite\playnite.log`, then started normally on the Default theme with all
+    plugins loaded and **no error dialog**. The failure is silent to anyone not reading the log.
+
+    ```
+    ERROR|ThemeManager:Failed to load xaml <full path to the offending file>
+    System.Windows.Markup.XamlParseException: ... em Playnite.ThemeManager.ApplyTheme(...) Themes.cs:linha 132
+    ERROR|PlayniteApplication:Failed to load theme VibeMythos, Uknown.
+    ```
+
+    The first line names the exact file, which makes `playnite.log` the fastest way to identify a bad
+    file after a deploy. Grep it with:
+
+    ```powershell
+    Select-String 'F:\Playnite\playnite.log' -Pattern 'Failed to load xaml|Failed to load theme' | Select-Object -Last 5
+    ```
 11. **A `Storyboard` inside a `Style` may not set `Storyboard.TargetName`.** WPF throws *"A Storyboard
     tree in a Style cannot specify a TargetName"* — and because of rule 10 that is a theme-wide
     failure, not a dead animation. A `Style` storyboard can only animate the styled element itself, so
@@ -355,6 +391,46 @@ Copy-Item source\* $dest -Recurse -Force
 
 Restart Playnite and select the theme in Settings → Appearance. **There is no hot reload.**
 
+### Scripting a Playnite run (verified in HYP-212)
+
+Driving Playnite from a script to check a deploy is workable, but two behaviours will silently
+invalidate a run if you do not handle them.
+
+**`F:\Playnite\safestart.flag` poisons the next launch.** Playnite writes this zero-byte marker at
+startup and clears it on a clean exit. Force-killing the process leaves it behind, and the *next*
+launch then shows a modal `Startup Error` dialog ("Playnite closed unexpectedly while starting …
+start in safe mode?"), which blocks startup and disables every add-on. A run that hits it measures
+the prompt, not the theme. Delete the flag before every scripted launch:
+
+```powershell
+Remove-Item 'F:\Playnite\safestart.flag' -Force -ErrorAction SilentlyContinue
+```
+
+The same applies when you are done: clear it after the last force-kill so the user's next manual
+launch is not met with the safe-mode prompt.
+
+**This install has `StartMinimized: True` in `config.json`,** so a scripted launch never shows the
+main window and any screenshot catches the splash or a progress dialog instead. Launching the exe a
+second time activates the running instance and brings the real window up, which avoids editing the
+user's config. Capture the window itself with `PrintWindow` (flag `2`, `PW_RENDERFULLCONTENT`) rather
+than grabbing the screen, so an unrelated foreground app cannot end up in the shot. Note the capture
+has to run under Windows PowerShell 5.1 (`powershell.exe`), because `pwsh` 7 has no GDI
+`System.Drawing`. Pick the largest visible window across *all* `Playnite*` processes.
+
+**Playnite resolves its database path against the current working directory.** Launching the exe
+from a shell sitting in the repo makes Playnite build a fresh ~50MB `library/` there and re-import
+every store plugin into it, instead of opening `F:\Playnite\library`. The real library is not touched
+and the theme still loads normally, so this is easy to miss until `git status` shows the folder.
+`library/` is gitignored for that reason. Launch with the working directory set to `F:\Playnite` to
+exercise the actual library:
+
+```powershell
+Start-Process 'F:\Playnite\Playnite.DesktopApp.exe' -WorkingDirectory 'F:\Playnite'
+```
+
+Budget roughly **3 minutes per run** on this machine: about 5s to `Application started`, then two
+minutes of library import and update checks before the UI is quiet.
+
 > A deploy once ran as a move and emptied 299 of the 305 files from `source/`. Nothing was lost — `git restore source/` recovered it — but verify the file count after deploying. At `bba0dc2` it is **311** files (79 of them `.xaml`); re-read it from the tree rather than trusting this number, since it moves with every asset change:
 >
 > ```powershell
@@ -380,6 +456,14 @@ One thing that contradicts the cheat sheet below: **SuccessStory is not installe
 
 **ThemeModifier is `playnite-thememodifier-plugin` (Lacro59, 3.0.2)** — the plugin that reads
 `thememodifier.yaml`, and where this theme's settings surface.
+
+**ThemeOptions is also already installed** (`ThemeOptions_904cbf3b-573f-48f8-9642-0a09d05c64ef`,
+version 0.32), which HYP-164 is written as though it were not. Its settings are empty
+(`SelectedPresets` and `UserSettings` are both `{}` in
+`F:\Playnite\ExtensionsData\904cbf3b-…\config.json`) and this theme ships no ThemeOptions manifest or
+directory, so it currently loads nothing for us and can be trialled without a new install. Worth
+knowing when reading a result that might otherwise be credited to it, which is why HYP-212 ruled it
+out before trusting its own.
 
 A second, unrelated plugin with a confusingly similar name — DKG Theme Modifier
 (`DKGThemeModifier_ee4ed2de-…`, David Griggs) — was also installed and has since been uninstalled.
