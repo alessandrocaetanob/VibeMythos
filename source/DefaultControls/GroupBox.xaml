@@ -8,7 +8,7 @@
 
     <Style TargetType="{x:Type GroupBox}" BasedOn="{StaticResource BaseStyle}">
         <Setter Property="SnapsToDevicePixels" Value="True" />
-        <Setter Property="Background" Value="#000000" />
+        <Setter Property="Background" Value="{DynamicResource PopupBackgroundBrush}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="Padding" Value="16,10,16,12" />
         <Setter Property="Template">

@@ -441,7 +441,7 @@
     <Setter Property="Tag" Value="Close"/>
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="#c0392b"/>
+                <Setter Property="Background" Value="{DynamicResource DestructiveBrush}"/>
             </Trigger>
         </Style.Triggers>
     </Style>

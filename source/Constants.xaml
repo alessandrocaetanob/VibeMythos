@@ -322,22 +322,66 @@
 
     <SolidColorBrush x:Key="EmptyStarBrush" Color="#8071767B" />
 
+    <!-- WhiteBrush is #18181B on purpose - see the inverted-palette note at the top of
+         CLAUDE.md. ActuallyWhiteBrushBrush is the one that is actually white, and its name
+         says so twice; TrueWhiteBrush is the replacement. Both resolve to one Color while
+         the single remaining caller migrates (HYP-197). -->
+    <Color x:Key="TrueWhiteColor">#FFFFFF</Color>
     <SolidColorBrush x:Key="WhiteBrush" Color="#18181B" />
-    <SolidColorBrush x:Key="ActuallyWhiteBrushBrush" Color="#FFFFFF" />
+    <SolidColorBrush x:Key="TrueWhiteBrush" Color="{DynamicResource TrueWhiteColor}" />
+    <SolidColorBrush x:Key="ActuallyWhiteBrushBrush" Color="{DynamicResource TrueWhiteColor}" />
+
+    <!-- HowLongToBeat's three bars. Duplicated verbatim in both overview views before
+         HYP-197; the values are HLTB's own brand colours, not part of the theme ramp,
+         which is why they are named for what they are rather than folded into it. -->
+    <Color x:Key="HltbMainColor">#008272</Color>
+    <Color x:Key="HltbMainPlusColor">#0078D4</Color>
+    <Color x:Key="HltbCompletionistColor">#2EA855</Color>
+    <SolidColorBrush x:Key="HltbMainBrush" Color="{DynamicResource HltbMainColor}" />
+    <SolidColorBrush x:Key="HltbMainPlusBrush" Color="{DynamicResource HltbMainPlusColor}" />
+    <SolidColorBrush x:Key="HltbCompletionistBrush" Color="{DynamicResource HltbCompletionistColor}" />
+
+    <!-- HtmlTextView.LinkForeground takes a Color, not a Brush - the sibling HtmlForeground
+         already binds TextColorDarker, which is also a Color. -->
+    <Color x:Key="HtmlLinkColor">#FF04A5FF</Color>
+
+    <!-- The ambient backdrop scrim's strength. Its reach is already a ThemeModifier
+         setting (AmbientBackdropScrimExtent); this is the other half of the same
+         decision. The gradient's transparent stops stay literal - #00000000 is "fade to
+         nothing", which is structure rather than a colour choice. -->
+    <Color x:Key="AmbientBackdropScrimColor">#CC000000</Color>
+
+    <!-- Scrims over cover art in the grid. Black at two strengths and a white icon fill;
+         all three were literals in GridViewItemTemplate.xaml. Values unchanged. -->
+    <SolidColorBrush x:Key="CoverScrimBrush" Color="#B3000000" />
+    <SolidColorBrush x:Key="CoverScrimLightBrush" Color="#80000000" />
+    <SolidColorBrush x:Key="CoverIconBrush" Color="#BFFFFFFF" />
 
     <SolidColorBrush x:Key="ButtonIdleBackgroundBrush" Color="#E7E9EA" />
     <SolidColorBrush x:Key="ButtonHoverBackgroundBrush" Color="#707275" />
     <SolidColorBrush x:Key="ButtonBrush" Color="#18181B" />
 
 
-    <SolidColorBrush x:Key="SecondaryButtonIdleBackgroundBrush" Color="#18181B" />
-    <SolidColorBrush x:Key="SecondaryButtonHoverBackgroundBrush" Color="#242427" />
+    <!-- Split into Colors because ToggleButton.xaml animates Background.Color and a
+         ColorAnimation's To takes a Color, not a Brush. Values unchanged. -->
+    <Color x:Key="SecondaryButtonIdleBackgroundColor">#18181B</Color>
+    <Color x:Key="SecondaryButtonHoverBackgroundColor">#242427</Color>
+    <SolidColorBrush x:Key="SecondaryButtonIdleBackgroundBrush" Color="{DynamicResource SecondaryButtonIdleBackgroundColor}" />
+    <SolidColorBrush x:Key="SecondaryButtonHoverBackgroundBrush" Color="{DynamicResource SecondaryButtonHoverBackgroundColor}" />
     <SolidColorBrush x:Key="SecondaryButtonBrush" Color="#E7E9EA" />
 
     <SolidColorBrush x:Key="DisabledBrush" Color="#323236" />
     <SolidColorBrush x:Key="PromptBrush" Color="#999999" />
-    <SolidColorBrush x:Key="SubtalBrush" Color="#888991" />
-    <SolidColorBrush x:Key="SubtalBrushLighter" Color="#9d9ea5" />
+    <!-- "Subtal" is a misspelling of Subtle, load-bearing across 13 files. Aliased rather
+         than renamed (HYP-197): both keys resolve to one Color, so callers can migrate to
+         TextSubtleBrush at their own pace and nothing breaks mid-migration. Delete the
+         SubtalBrush* pair once the last consumer is gone. -->
+    <Color x:Key="TextSubtleColor">#888991</Color>
+    <Color x:Key="TextSubtleLighterColor">#9d9ea5</Color>
+    <SolidColorBrush x:Key="TextSubtleBrush" Color="{DynamicResource TextSubtleColor}" />
+    <SolidColorBrush x:Key="TextSubtleLighterBrush" Color="{DynamicResource TextSubtleLighterColor}" />
+    <SolidColorBrush x:Key="SubtalBrush" Color="{DynamicResource TextSubtleColor}" />
+    <SolidColorBrush x:Key="SubtalBrushLighter" Color="{DynamicResource TextSubtleLighterColor}" />
     <SolidColorBrush x:Key="IdleBrush" Color="#E7E9EA" />
     <SolidColorBrush x:Key="HoverBrush" Color="#E7E9EA" />
     <SolidColorBrush x:Key="SelectedBrush" Color="#E7E9EA" />

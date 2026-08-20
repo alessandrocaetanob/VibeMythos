@@ -87,12 +87,29 @@
                             <Setter Property="TextBlock.Text" Value="&#xe00a;" TargetName="FavoriteIcon" />
                             <Setter Property="TextBlock.Foreground" Value="{DynamicResource SecondaryButtonBrush}"/>
                         </DataTrigger>
+                        <!-- ⚠️ Left as literals on purpose (HYP-197). Tokenizing these two values
+                             would dress up two bugs rather than fix them, and both need eyes on a
+                             running Playnite:
+
+                             1. This animates Background.Color, and Background is a TemplateBinding
+                                onto SecondaryButtonIdleBackgroundBrush. {DynamicResource} hands
+                                every consumer the SAME SolidColorBrush instance, it is not frozen,
+                                and WPF accepts the animation - measured. So hovering one favourite
+                                toggle repaints every control in the theme that uses that brush.
+                                The fix is a per-instance brush on this Border, which also drops the
+                                TemplateBinding, so it changes what a caller setting Background gets.
+                             2. ExitActions animates to a hard-coded #DBDBDB rather than back to the
+                                idle colour, so after the first hover the button never returns to
+                                SecondaryButtonIdleBackgroundBrush at all.
+
+                             Both belong to the hover-ramp half of HYP-197, with the accent changed
+                             in ThemeModifier and every interactive surface hovered. -->
                         <Trigger Property="IsMouseOver" Value="True">
                             <Trigger.EnterActions>
                                 <BeginStoryboard>
                                     <Storyboard>
                                         <ColorAnimation Storyboard.TargetName="HoverBg"
-                                                         Storyboard.TargetProperty="Background.Color" 
+                                                         Storyboard.TargetProperty="Background.Color"
                                                          To="#CCCCCC" Duration="{StaticResource MotionSlow}">
                                         </ColorAnimation>
                                     </Storyboard>

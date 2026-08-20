@@ -198,21 +198,21 @@
                                                                 <Setter Property="Visibility" Value="Visible" />
                                                             </Style>
                                                             <Style TargetType="Border" x:Key="HltbMainStyle">
-                                                                <Setter Property="Background" Value="#008272"/>
+                                                                <Setter Property="Background" Value="{DynamicResource HltbMainBrush}"/>
                                                                 <Setter Property="CornerRadius" Value="8,0,0,8"/>
         							<Setter Property="BorderBrush" Value="{DynamicResource ControlIdleBorderBrush}"/>
 								<Setter Property="BorderThickness" Value="0,0,1,0"/>
                                                                 <Setter Property="Visibility" Value="Visible" />
                                                             </Style>
                                                             <Style TargetType="Border" x:Key="HltbExtraStyle">
-                                                                <Setter Property="Background" Value="#0078d4"/>
+                                                                <Setter Property="Background" Value="{DynamicResource HltbMainPlusBrush}"/>
                                                                 <Setter Property="CornerRadius" Value="0"/>
         							<Setter Property="BorderBrush" Value="{DynamicResource ControlIdleBorderBrush}"/>
 								<Setter Property="BorderThickness" Value="0,0,1,0"/>
                                                                 <Setter Property="Visibility" Value="Visible" />
                                                             </Style>
                                                             <Style TargetType="Border" x:Key="HltbCompStyle">
-                                                                <Setter Property="Background" Value="#2ea855"/>
+                                                                <Setter Property="Background" Value="{DynamicResource HltbCompletionistBrush}"/>
                                                                 <Setter Property="CornerRadius" Value="0,8,8,0"/>
         							<Setter Property="BorderBrush" Value="{DynamicResource ControlIdleBorderBrush}"/>
 								<Setter Property="BorderThickness" Value="0"/>
@@ -1684,7 +1684,7 @@
                                                                             HtmlFontSize="{DynamicResource FontSize}"
                                                                             HtmlFontFamily="{DynamicResource HtmlDescriptionFontFamily}"
                                                                             HtmlForeground="{DynamicResource TextColorDarker}"
-                                                                            LinkForeground="#FF04A5FF"
+                                                                            LinkForeground="{DynamicResource HtmlLinkColor}"
                                                                             ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                                                                             ScrollViewer.VerticalScrollBarVisibility="Disabled"
                                                                             Margin="0"

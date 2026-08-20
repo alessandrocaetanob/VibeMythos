@@ -49,7 +49,7 @@
         <Setter Property="DockPanel.Dock" Value="Right"/>
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="#1AFFFFFF"/>
+                <Setter Property="Background" Value="{DynamicResource ContentBrushOverlay}"/>
             </Trigger>
         </Style.Triggers>
     </Style>
@@ -137,7 +137,7 @@
                                           DockPanel.Dock="Left" VerticalAlignment="Center"/>
                             </DockPanel>
                             <Separator Height="1" DockPanel.Dock="Top"
-                                       BorderBrush="#1AFFFFFF" Margin="0,16,0,16"
+                                       BorderBrush="{DynamicResource ContentBorderBrushOverlay}" Margin="0,16,0,16"
                                        Focusable="False" SnapsToDevicePixels="True"/>
                             <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Hidden"
                                           DockPanel.Dock="Top" Margin="0" >
